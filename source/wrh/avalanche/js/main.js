@@ -215,6 +215,7 @@ function parseAndPopulateAlerts(alerts){
 	//If our query from the API is successful, indicate it to the user.
 	else { 
 		alertDivHtml = 'Active Watches & Warnings In Effect.  Click on map above (below?) for more information';
+		alertDivHtml+= `<pre>${JSON.stringify(alerts,null,2)}</pre>`
 		//Add the alerts to the map
 		//Placeholder for Al
 
@@ -226,7 +227,7 @@ function parseAndPopulateAlerts(alerts){
 	$('#alertDisplay').html(alertDivHtml)
 }
 
-function populateStaticContent(){
+function populateStaticContent(cwa){
 	//Fill our staticContent with the base html
 	$('#staticContent').html(pageHtml.staticContent);
 
@@ -239,15 +240,20 @@ function populateStaticContent(){
 		limit : 1
 	}).getAll(parseAndPopulateAvg)
 
+	//Alerts filtered out by active CWA
 	let cwaAlerts = new NwsApi.Alert({
-		//What am I missing here?  Can't we filter warnings by office?  Wasn't that an option at one point? 
-		siteid: 'PIH',
-		event: ['Avalanche Warning','Blizzard Warning','Winter Storm Warning','Winter Storm Watch']
-	}).getAll(parseAndPopulateAlerts); //TODO Jeremy work on an edit to the NwsApi wrapper to have a function getByCWA() which will do cwa filtering without an extra call.
+		active: true,
+		event: ['Avalanche Advisory','Avalanche Warning','Avalanche Watch', 
+		        'Winter Storm Advisory','Winter Storm Warning','Winter Storm Watch',
+		        'Wind Advisory','Wind Chill Advisory','Wind Chill Warning','Wind Chill Watch',
+		        'Winter Storm Advisory','Winter Storm Warning','Winter Storm Watch',
+		        'High Wind Warning','High Wind Watch','Extreme Wind Warning',
+		        'Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch',
+		        'Blizzard Warning','Blizzard Watch','Snow Squall Warning','Freezing Rain Advisory']
+		}).getByCwa(cwa,parseAndPopulateAlerts);						
+//		}).getAll(parseAndPopulateAlerts); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
+
 }
-
-
-
 
 
 //National Standard Content Html 

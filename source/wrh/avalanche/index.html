@@ -20,20 +20,24 @@
 	<script src="/source/wrh/avalanche/js/icons.js"></script>
 
 	<script>
-	window.onload = function() {	
-		//Populate Nationally Standardized Content.
-		populateStaticContent();
+		//Configuration Options 
+		const cwa = 'SLC';
 
-		//Local offices can include office based content including it here
-		//$('#officeContent').html('Here is my local avalanche content')
-	}
+		window.onload = function() {
+			//Nationally Standardized Content.  Do not edit between these lines.
+			populateStaticContent(cwa);
+			//Nationally Standardized Content.  Do not edit between these lines.
+
+			//Local offices can include office based content including it here
+			//$('#officeContent').html('Here is my local avalanche content')
+		}
 	</script>
 <body>
-<!-- Nationally Standardized Avalanche Weather Content-->
+<!-- Nationally Standardized Avalanche Weather Content  Do not edit between these lines.-->
 <!-- TODO the center-content class is only added to allow for better offline development, and can be removed before release-->
-<div id="staticContent" class="center-content"> 
-	
-</div>
+<div id="staticContent" class="center-content"></div>
+<!-- Nationally Standardized Avalanche Weather Content  Do not edit between these lines.-->
+
 
 <!-- Local Office Customizations Go Only This Div -->
 <div id="officeContent" class="section LOCAL_CONTENT">
