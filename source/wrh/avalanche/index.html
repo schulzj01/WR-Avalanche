@@ -1,0 +1,43 @@
+<html>
+  <script src="https://www.weather.gov/js/jquery-1.10.2.min.js"></script>
+  <script src="https://www.weather.gov/js/jquery-ui-1.10.3.custom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	<script src="https://www.weather.gov/source/slc/General/files/bigPage.js"></script>
+	<script src="/source/wrh/avalanche/js/main.js"></script>
+	<script src="/source/wrh/avalanche/js/avgTestData.js"></script> <!-- TODO This file can be removed before release -->
+	<script src="/source/wrh/avalanche/js/AVGParser.js"></script>
+	<script src="https://www.weather.gov/source/wrh/NwsApi/NwsApi-1.1.0.js"></script>
+	<!-- The below files are only referenced while working offline from CMS and can be removed operationally-->
+	<link href="https://www.weather.gov/css/weatherstyle.css" rel="stylesheet">
+	<link href="https://www.weather.gov/css/template.css" rel="stylesheet">
+	<!-- The above files are only referenced while working offline from CMS and can be removed operationally-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+	<link href="https://www.weather.gov/css/jqueryui10_3_1custom/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+	<link href="https://www.weather.gov/css/tabs.css" media="all" rel="stylesheet" type="text/css" />
+	<link href="/source/wrh/avalanche/css/avstyle.css" rel="stylesheet" type="text/css" />
+	<!-- Local Office Customization js/css can be added below-->
+	<script src="/source/wrh/avalanche/js/local.js"></script>
+	<script src="/source/wrh/avalanche/js/icons.js"></script>
+
+	<script>
+	window.onload = function() {	
+		//Populate Nationally Standardized Content.
+		populateStaticContent();
+
+		//Local offices can include office based content including it here
+		//$('#officeContent').html('Here is my local avalanche content')
+	}
+	</script>
+<body>
+<!-- Nationally Standardized Avalanche Weather Content-->
+<!-- TODO the center-content class is only added to allow for better offline development, and can be removed before release-->
+<div id="staticContent" class="center-content"> 
+	
+</div>
+
+<!-- Local Office Customizations Go Only This Div -->
+<div id="officeContent" class="section LOCAL_CONTENT">
+
+</div>
+</body>
+</html>
