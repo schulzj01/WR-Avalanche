@@ -176,7 +176,10 @@ function modal(header,description) {
 
 /* All Above Function Are From Version 1 - When we verify they're still needed, move them below this line. */
 
-let parsedAVG = {};
+/**
+ *  PARSED_AVG - Global variable that stores all parts of a parsed AVG forecast product.
+ */
+let PARSED_AVG = {};
 
 
 //Parse out the AVG product text, assign it to a global, and populate the appropriate divs
@@ -184,28 +187,39 @@ function parseAndPopulateAvg(avgProducts){
 	// If the NWS API times out, throw an error
 	if (!avgProducts) { throw Error('Weather.gov API is Unavailable')}
 	// For testing, if no avg is available in the database, use the dummy test data in avgTestData.js
-	else if (avgProducts.length == 0) { parsedAvg = new AVGParser(avg.pih); }
+	// //TODO Once done testing, we have to set some stuff in here so the page isn't empty come summer.
+	else if (avgProducts.length == 0) { PARSED_AVG = new AVGParser(avg.pih); }
 	//If our avg query from the API is successful, parse it out with the AVG parser.
-	else { parsedAvg = new AVGParser(avgProducts[0]); }
+	else { PARSED_AVG = new AVGParser(avgProducts[0]); }
 
 	//Populate the discussion display, and show the tab if there is a discussion.
-	if (parsedAvg.discussion) { 
-		$('#forecastDiscussionTabContent').html(parsedAvg.discussion);
-		$('#forecastDiscussionTab').removeClass('hidden');				
+	if (PARSED_AVG.discussion) { 
+		$('#forecastDiscussionTabContent').html(PARSED_AVG.discussion);
+		$('#forecastDiscussionTab').removeClass('hidden');
+		$('#forecastDiscussionTabContent').removeClass('hidden');
 	}
 
+	//List of locations in the AVG and also serves as a list of keys to reference the parsed product.  
+	//These keys are what the map/config can use.
+	let locations = PARSED_AVG.locations;
 
 	//Add the locations to the map
 	//Placeholder for Al			
 	
-	//The below is just some debugging stuff to see the the output of a AVGParser Object.
-	let locations = parsedAvg.locations;
+
+	
+	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
+	//This is just to populate the avgForecast for testing until the map and drop down is ready;
+	populateForecast(locations[0]);
+
+	//The below is just some debugging stuff to see the the output of a AVGParser Object and populate it in the forecast table.
 	console.log('List of the AVG Locations: ' +locations);
 	locations.forEach(location => {
-		let fcst = parsedAvg.forecast(location);
+		let fcst = PARSED_AVG.forecast(location);
 		console.log('Below is the forecast for '+location);
 		console.log(fcst);
 	});
+	// TEMPORARY DEVELOPMENT DEBUGGING INFO 	
 }
 
 //TODO 
@@ -222,30 +236,22 @@ function parseAndPopulateAlerts(alerts){
 		//Placeholder for Al
 	} 
 
-	alertDivHtml+='<br><br>Perhaps we use the Forecast Data display as the warning information display like what you do with the fire pages?';
-	alertDivHtml+='<br><br>This way we can just keep this div as a informational banner and keep it less complicated?';
-	alertDivHtml+='<br><br>Thinking similar to a Bootstrap Alert ';
-	$('#alertDisplay').html(alertDivHtml)
+	$('#forecastAlertsTabContent').html(alertDivHtml)
 }
 
+/**
+ * 
+ * @param {*} location 
+ */
+function populateForecast(location){
+	let locationForecast = PARSED_AVG.forecast(location);
+	let tabularRawFcst = locationForecast.raw;
+	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
 
-function parseAndPopulateForecast(alerts){
-	let alertDivHtml = '';
-	// If the NWS API times out, throw an error
-	if (!alerts) { throw Error('Weather.gov API is Unavailable')}
-	else if (alerts.features.length === 0) { alertDivHtml = 'No active watches or warnings'; }
-	//If our query from the API is successful, indicate it to the user.
-	else { 
-		alertDivHtml = 'Active Watches & Warnings In Effect.  Click on map above (below?) for more information';
-		alertDivHtml+= `<pre>${JSON.stringify(alerts,null,2)}</pre>`
-		//Add the alerts to the map
-		//Placeholder for Al
-	} 
+	$('#forecastTabularTabContent').html(tabularHtml)
 
-	alertDivHtml+='<br><br>Perhaps we use the Forecast Data display as the warning information display like what you do with the fire pages?';
-	alertDivHtml+='<br><br>This way we can just keep this div as a informational banner and keep it less complicated?';
-	alertDivHtml+='<br><br>Thinking similar to a Bootstrap Alert ';
-	$('#alertDisplay').html(alertDivHtml)
+	//Change the forecast label to the location name
+	$('#forecastLocationInfo').html(locationForecast.name)
 }
 
 
@@ -254,13 +260,13 @@ function populateStaticContent(cwa){
 	$('#staticContent').html(pageHtml.staticContent);
 
 	//Initialize the forecast tabs
- let t = tabs({
+	let t = tabs({
     el: '#forecastTabs',
     tabNavigationLinks: '.c-tabs-nav__link',
     tabContentContainers: '.c-tab',
   });
 	t.init();
-	t.goToTab(1);	
+	t.goToTab(3);	
 
 
 
@@ -284,7 +290,6 @@ function populateStaticContent(cwa){
 		}).getByCwa(cwa,parseAndPopulateAlerts);						
 //		}).getAll(parseAndPopulateAlerts); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
 
-
 }
 
 
@@ -295,7 +300,7 @@ pageHtml.staticContent= `
 
 <div id="map">Map Placeholder</div>
 
-<h3>Forecast Data</h3>
+<h3><span id="forecastLocationInfo"></span> Forecast</h3>
 <div id="forecastDisplay" class="outline">
 	<div class="c-tabs" id="forecastTabs">
 		<div class="c-tabs-nav">
@@ -304,33 +309,29 @@ pageHtml.staticContent= `
 			<div id="forecastGraphicalTab" class="c-tabs-nav__link"><span>Graphical Forecast</span></div>			
 			<div id="forecastDiscussionTab" class="c-tabs-nav__link hidden"><span>Discussion</span></div>
 		</div>
-		<div class="c-tab" style="background-color:lightcoral">	
+		<div class="c-tab">	
 			<div id="forecastAlertsTabContent" class="c-tab__content">When operational, this will display the active warnings when a user selects a forecast point. By default this tab should have the "hidden" class unless active.</div>
 		</div>		
-		<div class="c-tab" style="background-color:khaki">	
-			<div id="forecastTabularTabContent" class="c-tab__content">Tabular Forecast Content</div>
+		<div class="c-tab">	
+			<div id="forecastTabularTabContent" class="c-tab__content">Select a forecast point from the map or drop down menu above.</div>
 		</div>
-		<div class="c-tab" style="background-color:aquamarine">		
-			<div id="forecastGraphicalTabContent" class="c-tab__content">Graphical Forecast Content</div>
+		<div class="c-tab">
+			<div id="forecastGraphicalTabContent" class="c-tab__content">Select a forecast point from the map or drop down menu above.</div>
 		</div>
-		<div class="c-tab" style="background-color:palegreen">
-			<div id="forecastDiscussionTabContent" class="c-tab__content">Discussion</div>
+		<div class="c-tab">
+			<div id="forecastDiscussionTabContent" class="c-tab__content hidden"></div>
 		</div>		
 	</div>
 	</div>
 </div>
 
-<h3>Active Winter Watches & Warnings (Should this be above the map?)</h3>
-I think this is now not needed with the tab function at the top?
-<div id="alertDisplay"  class="outline">
-</div>
 
 <h3>Local Content </h3>
 <div id="forecastGroupRadioButtons"></div>
 <div id="forecastGroupInfo" class="outline">
 	<h4>Active Watches and Warnings</h4>
 	<div id="forecastGroupWWA" class="section"></div>
-	<h4>Local Area Forecasts </h4>
+	<h4>Local Area Forecasts</h4>
 	<div id="forecastGroupForecasts" class="section"></div>
 </div>
 `;
