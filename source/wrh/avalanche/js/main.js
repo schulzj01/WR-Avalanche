@@ -211,7 +211,7 @@ function parseAndPopulateAvg(avgProducts){
 	let locations = PARSED_AVG.locations;
 
 	//Add the locations to the map
-	makeMap();		
+	//makeMap();
 
 	
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
@@ -264,6 +264,8 @@ function populateForecast(location){
 	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
 
 	$('#forecastTabularTabContent').html(tabularHtml)
+
+	createHighChart(locationForecast);
 
 	//Change the forecast label to the location name
 	$('#forecastLocationInfo').html(locationForecast.name)
