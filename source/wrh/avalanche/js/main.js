@@ -258,7 +258,7 @@ function populateForecast(location){
 //Fill our staticContent with the base html then opulate and manipulate the base html with content
 function populateStaticContent(cwa){
 	$('#staticContent').html(pageHtml.staticContent);
-
+        makeMap();
 	//Initialize the forecast tabs
 	let t = tabs({
     el: '#forecastTabs',
