@@ -7,6 +7,7 @@ class AVGParser {
 		this._productText = productText;
 		this._discussion = this.parseDiscussion();
 		this._forecast = this.parseForecastData();
+		this._productTime = ''; //TODO Need to grab this from the API object.
 	}
 
 	/**
@@ -17,6 +18,11 @@ class AVGParser {
 	 * Getter for a list of all available forecast locations.
 	 */
 	get locations() { return Object.keys(this._forecast); }
+	/**
+	 * Getter for the time the product was last issued.
+	 */
+	get productTime() { return this._productTime; }
+
 	/**
 	 * 
 	 * @param {*} location - a location defined in the AVG
@@ -57,10 +63,13 @@ class AVGParser {
 				let tabularPart = forecastDataParts[2].trim();
 				let forecast = this.parseForecastTable(tabularPart,times);
 
+				let rawForecast = [timePart,tabularPart].join('\n\n');
+
 				forecastData[String(location.name)] ={
 					elevation : location.elevation,
 					name : location.name,
 					forecast : forecast,
+					raw : rawForecast
 				};
 			});
 		}
