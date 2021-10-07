@@ -28,7 +28,12 @@ class AVGParser {
 	 * @param {*} location - a location defined in the AVG
 	 * @returns {Object} - Forecast object for a particular location 
 	 */
-	forecast(location) { return this._forecast[location]; }
+	forecast(location) { 
+		if (this.locations.includes(location)) { return this._forecast[location]; }
+		else { 
+			throw Error(`Location ${location} not available in AVG or is improperly formatted`);
+		}
+	}
 
 	/**
 	 * Parses out the discussion text based between the word '.DISCUSSION...' and the next '...' 
