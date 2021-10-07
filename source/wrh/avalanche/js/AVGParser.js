@@ -232,7 +232,7 @@ class AVGParser {
 		//so just use a substring based on that index.
 
 		forecastLines.forEach( forecastLine => {
-			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim();
+			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim().toLowerCase();
 			parsedForecastData[weatherType] = [];
 			for (let i=0; i < forecastTimes.length; i++){
 				let parsedForecast = {
@@ -242,8 +242,8 @@ class AVGParser {
 				//Cover the weather elements that are 12 hours.  
 				//TODO right now this is hard coded for 3 hourly data.  Are other offices going to change this?  If so, this needs to be dynamic
 				let columnValue = forecastLine.substring(forecastTimes[i].start-1,forecastTimes[i].end).trim();
-				if (weatherType.toLowerCase().includes('12 hour')) { 
-					if (weatherType.toLowerCase().includes('qpf')) { 
+				if (weatherType.includes('12 hour')) { 
+					if (weatherType.includes('qpf')) { 
 						let regex = new RegExp(/\.[0-9]{2}/);
 						//Only look for QPF where the data column starts with .## Then we know we have a 12 hour block.  Look back 12 hours from there.
 						if (regex.test(columnValue)) { 
