@@ -176,11 +176,11 @@ function modal(header,description) {
 
 /* All Above Function Are From Version 1 - When we verify they're still needed, move them below this line. */
 
+let parsedAVG = {};
 
 
-//Parse out the AVG product text, and populate the appropriate divs
+//Parse out the AVG product text, assign it to a global, and populate the appropriate divs
 function parseAndPopulateAvg(avgProducts){
-	let parsedAvg;
 	// If the NWS API times out, throw an error
 	if (!avgProducts) { throw Error('Weather.gov API is Unavailable')}
 	// For testing, if no avg is available in the database, use the dummy test data in avgTestData.js
@@ -188,8 +188,11 @@ function parseAndPopulateAvg(avgProducts){
 	//If our avg query from the API is successful, parse it out with the AVG parser.
 	else { parsedAvg = new AVGParser(avgProducts[0]); }
 
-	//Populate the discussion display
-	$('#discussionDisplay').html(parsedAvg.discussion);
+	//Populate the discussion display, and show the tab if there is a discussion.
+	if (parsedAvg.discussion) { 
+		$('#forecastDiscussionTabContent').html(parsedAvg.discussion);
+		$('#forecastDiscussionTab').removeClass('hidden');				
+	}
 
 
 	//Add the locations to the map
@@ -199,7 +202,6 @@ function parseAndPopulateAvg(avgProducts){
 	let locations = parsedAvg.locations;
 	console.log('List of the AVG Locations: ' +locations);
 	locations.forEach(location => {
-
 		let fcst = parsedAvg.forecast(location);
 		console.log('Below is the forecast for '+location);
 		console.log(fcst);
@@ -218,7 +220,6 @@ function parseAndPopulateAlerts(alerts){
 		alertDivHtml+= `<pre>${JSON.stringify(alerts,null,2)}</pre>`
 		//Add the alerts to the map
 		//Placeholder for Al
-
 	} 
 
 	alertDivHtml+='<br><br>Perhaps we use the Forecast Data display as the warning information display like what you do with the fire pages?';
@@ -227,11 +228,41 @@ function parseAndPopulateAlerts(alerts){
 	$('#alertDisplay').html(alertDivHtml)
 }
 
+
+function parseAndPopulateForecast(alerts){
+	let alertDivHtml = '';
+	// If the NWS API times out, throw an error
+	if (!alerts) { throw Error('Weather.gov API is Unavailable')}
+	else if (alerts.features.length === 0) { alertDivHtml = 'No active watches or warnings'; }
+	//If our query from the API is successful, indicate it to the user.
+	else { 
+		alertDivHtml = 'Active Watches & Warnings In Effect.  Click on map above (below?) for more information';
+		alertDivHtml+= `<pre>${JSON.stringify(alerts,null,2)}</pre>`
+		//Add the alerts to the map
+		//Placeholder for Al
+	} 
+
+	alertDivHtml+='<br><br>Perhaps we use the Forecast Data display as the warning information display like what you do with the fire pages?';
+	alertDivHtml+='<br><br>This way we can just keep this div as a informational banner and keep it less complicated?';
+	alertDivHtml+='<br><br>Thinking similar to a Bootstrap Alert ';
+	$('#alertDisplay').html(alertDivHtml)
+}
+
+
+//Fill our staticContent with the base html then opulate and manipulate the base html with content
 function populateStaticContent(cwa){
-	//Fill our staticContent with the base html
 	$('#staticContent').html(pageHtml.staticContent);
 
-	//Populate and manipulate the base html with content
+	//Initialize the forecast tabs
+ let t = tabs({
+    el: '#forecastTabs',
+    tabNavigationLinks: '.c-tabs-nav__link',
+    tabContentContainers: '.c-tab',
+  });
+	t.init();
+	t.goToTab(1);	
+
+
 
 	// Pull in an AVG Product, and run a parser on it to populate the page.
 	let avgProduct = new NwsApi.Product({ 
@@ -253,34 +284,46 @@ function populateStaticContent(cwa){
 		}).getByCwa(cwa,parseAndPopulateAlerts);						
 //		}).getAll(parseAndPopulateAlerts); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
 
+
 }
 
 
 //National Standard Content Html 
-
 const pageHtml = {};
 pageHtml.staticContent= `
 <h1> Avalanche Weather Information </h1>
 
-<div id="map" class="outline">Map Placeholder</div>
+<div id="map">Map Placeholder</div>
 
 <h3>Forecast Data</h3>
-<div id="selectedAvgDisplay" class="outline">
-	Here is where the AVG tabular product and the meteogram type product can go?
-	<br><br>
-	Perhaps a tabbed approach with both tabular and graph data available?
-	<br><br>
-	We could even include the watch/warning text here, or even the Avalanche.org bottom line for that location?
-	<div id="outputTest" style=" font-family: monospace; white-space: pre;"></div>
+<div id="forecastDisplay" class="outline">
+	<div class="c-tabs" id="forecastTabs">
+		<div class="c-tabs-nav">
+			<div id="forecastAlertsTab" class="c-tabs-nav__link"><span>Active Alerts</span></div>
+			<div id="forecastTabularTab" class="c-tabs-nav__link"><span>Tabular Forecast</span></div>
+			<div id="forecastGraphicalTab" class="c-tabs-nav__link"><span>Graphical Forecast</span></div>			
+			<div id="forecastDiscussionTab" class="c-tabs-nav__link hidden"><span>Discussion</span></div>
+		</div>
+		<div class="c-tab" style="background-color:lightcoral">	
+			<div id="forecastAlertsTabContent" class="c-tab__content">When operational, this will display the active warnings when a user selects a forecast point. By default this tab should have the "hidden" class unless active.</div>
+		</div>		
+		<div class="c-tab" style="background-color:khaki">	
+			<div id="forecastTabularTabContent" class="c-tab__content">Tabular Forecast Content</div>
+		</div>
+		<div class="c-tab" style="background-color:aquamarine">		
+			<div id="forecastGraphicalTabContent" class="c-tab__content">Graphical Forecast Content</div>
+		</div>
+		<div class="c-tab" style="background-color:palegreen">
+			<div id="forecastDiscussionTabContent" class="c-tab__content">Discussion</div>
+		</div>		
+	</div>
+	</div>
 </div>
 
 <h3>Active Winter Watches & Warnings (Should this be above the map?)</h3>
+I think this is now not needed with the tab function at the top?
 <div id="alertDisplay"  class="outline">
-	
 </div>
-
-<h3>Recent Discussion</h3>
-<div id="discussionDisplay"  class="outline"></div>
 
 <h3>Local Content </h3>
 <div id="forecastGroupRadioButtons"></div>

@@ -177,6 +177,13 @@ p {
 }
 
 #map { 
-	width: 90%;
+	width: 850px;
 	height: 400px; 
+	border: thin gray solid;
+	margin:0 auto;
+	margin-bottom:50px;	
+}
+
+.hidden { 
+	display:none;
 }
