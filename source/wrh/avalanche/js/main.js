@@ -181,7 +181,14 @@ function modal(header,description) {
  */
 let PARSED_AVG = {};
 
-
+/**
+ * This is a callback that recieves an AVG product from the API, attempts to parse it out, and then 
+ * populate the following elements in the page - Discussion, Tabular & Graphical Forecasts, Leaflet Map
+ * 
+ * At the moment, this will default back to test data since the API isn't returning anything. 
+ * 
+ * @param {NwsApi.Product} avgProducts - An AVG Product from the NWS API
+ */
 //Parse out the AVG product text, assign it to a global, and populate the appropriate divs
 function parseAndPopulateAvg(avgProducts){
 	// If the NWS API times out, throw an error
@@ -204,12 +211,12 @@ function parseAndPopulateAvg(avgProducts){
 	let locations = PARSED_AVG.locations;
 
 	//Add the locations to the map
-	//Placeholder for Al			
-	
+	makeMap();		
 
 	
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
 	//This is just to populate the avgForecast for testing until the map and drop down is ready;
+	//This will eventually just be called by the map when it's ready
 	populateForecast(locations[0]);
 
 	//The below is just some debugging stuff to see the the output of a AVGParser Object and populate it in the forecast table.
@@ -222,7 +229,13 @@ function parseAndPopulateAvg(avgProducts){
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 	
 }
 
-//TODO 
+//TODO We'll likely want to populate this with the map click?
+/**
+ * 
+ * Parses out active the NWS Alerts, and will populate the the Alert information with the products.
+ * 
+ * @param {NwsApi.Alert} alerts - A set of NWS API alert products. 
+ */
 function parseAndPopulateAlerts(alerts){
 	let alertDivHtml = '';
 	// If the NWS API times out, throw an error
@@ -240,8 +253,9 @@ function parseAndPopulateAlerts(alerts){
 }
 
 /**
+ * Pulls the forecast out of the PARSED_AVG object and then populates the page with forecast info
  * 
- * @param {*} location 
+ * @param {String} location - A text string of an AVG location. Also found by a PARSED_AVG.locations call.
  */
 function populateForecast(location){
         console.log(location);
@@ -257,9 +271,10 @@ function populateForecast(location){
 
 
 //Fill our staticContent with the base html then opulate and manipulate the base html with content
+
 function populateStaticContent(cwa){
 	$('#staticContent').html(pageHtml.staticContent);
-        makeMap();
+
 	//Initialize the forecast tabs
 	let t = tabs({
     el: '#forecastTabs',
@@ -269,8 +284,6 @@ function populateStaticContent(cwa){
 	t.init();
 	t.goToTab(3);	
 
-
-
 	// Pull in an AVG Product, and run a parser on it to populate the page.
 	let avgProduct = new NwsApi.Product({ 
 		//location : 'BTV',  //TODO This setting will eventually want to be the CWA variable.  It's not set at the moment, and should randomize to whichever CWA the API grabs first.  Useful for testing!
@@ -278,7 +291,7 @@ function populateStaticContent(cwa){
 		limit : 1
 	}).getAll(parseAndPopulateAvg)
 
-	//Alerts filtered out by active CWA
+	//Alerts filtered out by active CWA. We probably want to move this to a map call? Or better yet, use it to populate the map with the CWA hazards?
 	let cwaAlerts = new NwsApi.Alert({
 		active: true,
 		event: ['Avalanche Advisory','Avalanche Warning','Avalanche Watch', 
