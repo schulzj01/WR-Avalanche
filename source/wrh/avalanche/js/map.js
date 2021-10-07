@@ -28,7 +28,7 @@ function plotAVGlocations(locationData) {
         iconAnchor:   [12, 25], // point of the icon which will correspond to marker's location
     });
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
-    var marker = L.marker( point, { icon: image });
+    var marker = L.marker( point, { icon: image }).on('click',populateForecast(name));
         marker.bindPopup(name, {
    	  maxWidth : 1060
 	});

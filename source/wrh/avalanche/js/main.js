@@ -244,7 +244,8 @@ function parseAndPopulateAlerts(alerts){
  * @param {*} location 
  */
 function populateForecast(location){
-	let locationForecast = PARSED_AVG.forecast(location);
+        console.log(location);
+	var locationForecast = PARSED_AVG.forecast(location);
 	let tabularRawFcst = locationForecast.raw;
 	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
 
@@ -297,9 +298,7 @@ function populateStaticContent(cwa){
 const pageHtml = {};
 pageHtml.staticContent= `
 <h1> Avalanche Weather Information </h1>
-
 <div id="map">Map Placeholder</div>
-
 <h3><span id="forecastLocationInfo"></span> Forecast</h3>
 <div id="forecastDisplay" class="outline">
 	<div class="c-tabs" id="forecastTabs">
@@ -324,8 +323,6 @@ pageHtml.staticContent= `
 	</div>
 	</div>
 </div>
-
-
 <h3>Local Content </h3>
 <div id="forecastGroupRadioButtons"></div>
 <div id="forecastGroupInfo" class="outline">
