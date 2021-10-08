@@ -27,40 +27,172 @@
       }
     },
     {
-      "location":"TEXAS",
+      "location":"Farmington Flats",
       "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-                        [
-                            -118.739999999999995,
-                            41.989999999999998
-                        ],
-                        [
-                            -118.7099999,
-                            41.989999999999998
-                        ],
-                        [
-                            -118.719999999999999,
-                            41.75
-                        ],
-                        [
-                            -116.879999999999995,
-                            40.68
-                        ],
-                        [
-                            -116.899999999999991,
-                            40.699999999999999
-                        ],
-                        [
-                            -116.749999999999986,
-                            40.82
-                        ],
-                        [
-                            -116.739999999999995,
-                            40.989999999999998
-                        ]
-                    ]
-            }
+        "type": "GridPoint",
+        "coordinates": [ -111.79,40.98  ]
+      }
+    },
+    {
+      "location":"Monte Cristo",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.58,41.41  ]
+      }
+    },
+    {
+      "location":"Sessions Mountains",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.74,40.85  ]
+      }
+    },
+    {
+      "location":"Alta",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.6369,40.5905  ]
+      }
+    },
+    {
+      "location":"LCC - Alta/Snowbird",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.63,40.57  ]
+      }
+    },
+    {
+      "location":"LCC - Mid Canyon/Elberts",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.68,40.58  ]
+      }
+    },
+    {
+      "location":"BCC - Brigton/Solitude",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.57,40.60  ]
+      }
+    },
+    {
+      "location":"BCC - Mid Canyon/Spruces",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.64,40.64  ]
+      }
+    },
+    {
+      "location":"Park City",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.51,40.69  ]
+      }
+    },
+    {
+      "location":"Park City Ridgeline",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.56,40.63  ]
+      }
+    },
+    {
+      "location":"Aspen Grove",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.61,40.41  ]
+      }
+    },
+    {
+      "location":"Soldier Hollow",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.52,40.48  ]
+      }
+    },
+    {
+      "location":"Sundance",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.58,40.38  ]
+      }
+    },
+    {
+      "location":"Bunnels Fork",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.57,40.32  ]
+      }
+    },
+    {
+      "location":"Provo Peak Area",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.55,40.23  ]
+      }
+    },
+    {
+      "location":"Cherry Peak",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.75,41.92  ]
+      }
+    },
+    {
+      "location":"Beaver Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.56,41.96  ]
+      }
+    },
+    {
+      "location":"Tony Grove",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.65,41.90  ]
+      }
+    },
+    {
+      "location":"Wellsville Mountains",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -112.02,41.64  ]
+      }
+    },
+    {
+      "location":"Christmas Meadows",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.83,40.87  ]
+      }
+    },
+    {
+      "location":"Mirror Lake",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.90,40.69  ]
+      }
+    },
+    {
+      "location":"Samak",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.10,40.60  ]
+      }
+    },
+    {
+      "location":"Wolf Creek Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.04,40.48  ]
+      }
+    },
+    {
+      "location":"Thousand Peaks Ranch",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.04,40.83  ]
+      }
     }
   ],
   "social": {
