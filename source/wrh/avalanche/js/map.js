@@ -28,10 +28,12 @@ function plotAVGlocations(locationData) {
         iconAnchor:   [12, 25], // point of the icon which will correspond to marker's location
     });
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
-    var marker = L.marker( point, { icon: image }).on('click',populateForecast(name));
-        marker.bindPopup(name, {
-   	  maxWidth : 1060
-	});
+    var marker = L.marker( point, { icon: image })//.on('click',populateForecast(name));
+    var button = '<p onClick="populateForecast(\''+name+'\')">'+name+'</p>';
+
+        marker.bindPopup( button, {
+          maxWidth : 1260
+        });
     marker.addTo(mainMap);
   } else if (type == 'Polygon') {
     console.log(name, type);
