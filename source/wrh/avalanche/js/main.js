@@ -192,6 +192,7 @@ let PARSED_AVG = {};
 //Parse out the AVG product text, assign it to a global, and populate the appropriate divs
 function parseAndPopulateAvg(avgProducts){
 	// If the NWS API times out, throw an error
+	makeMap();
 	if (!avgProducts) { throw Error('Weather.gov API is Unavailable')}
 	// For testing, if no avg is available in the database, use the dummy test data in avgTestData.js
 	// //TODO Once done testing, we have to set some stuff in here so the page isn't empty come summer.
@@ -211,7 +212,6 @@ function parseAndPopulateAvg(avgProducts){
 	let locations = PARSED_AVG.locations;
 
 	//Add the locations to the map
-	//makeMap();
 
 	
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
