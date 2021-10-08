@@ -152,7 +152,7 @@ class AVGParser {
 			})
 		});
 		allAvailableDates.push({
-			date: this.convertTextDateToObject(dateMatches[dateMatches.length - 1][0]),
+			date: this.convertTextDateToObject(dateMatches[dateMatches.length - 1][0],1),
 			start: dateMatches[dateMatches.length - 1].index + lengthBetweenDateText,
 			end: dateMatches[dateMatches.length - 1].index + (lengthBetweenDateText * 2)
 		})
@@ -243,10 +243,10 @@ class AVGParser {
 			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim().toLowerCase();
 			parsedForecastData[weatherType] = [];
 			for (let i=0; i < forecastTimes.length; i++){
-				let parsedForecast = {
+				/*let parsedForecast = {
 					date : null,
 					val : null,
-				}
+				}*/
 				//Cover the weather elements that are 12 hours.  
 				//TODO right now this is hard coded for 3 hourly data.  Are other offices going to change this?  If so, this needs to be dynamic
 				let columnValue = forecastLine.substring(forecastTimes[i].start-1,forecastTimes[i].end).trim();
@@ -256,6 +256,7 @@ class AVGParser {
 						//Only look for QPF where the data column starts with .## Then we know we have a 12 hour block.  Look back 12 hours from there.
 						if (regex.test(columnValue)) { 
 							columnValue = forecastLine.substring(forecastTimes[i-3].start-1,forecastTimes[i].end).trim();
+							if (columnValue == '') { columnValue = null; }
 							parsedForecastData[weatherType].push({
 								val : columnValue,
 								date : forecastTimes[i].date,
