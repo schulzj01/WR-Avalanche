@@ -1,6 +1,12 @@
 /**
- *  Base class to allow combination of both API and AWIPS endpoints and manage the threat matrix data structure
- *  @constructor
+ * 
+ * 
+ * @description - A class to parse out a standardized AVG Product and allow it to be displayed in all of its parts
+ * separately on a webpage.  Deviating from the AVG product and its format may impact this.
+ * 
+ * @author Jeremy.Schulz@noaa.gov 
+ *  * 
+ *  @param {Object} // A response of products from the NWS API endpoint
  */
 class AVGParser {
 	constructor(productText) {
