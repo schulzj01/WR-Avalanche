@@ -52,23 +52,26 @@ class AVGParser {
 	parseForecastData(){
 		//Parse out the forecast points
 		const forecastData = {};
-		let regex = this.regexBetweenStrings(String.raw`\n\.\.\.`,String.raw`\n\.\.\.`,'gs');
-		let matches = this._productText.match(regex);
+		let matchRegex = this.regexBetweenStrings(String.raw`\n\.\.\.`,String.raw`\n\.\.\.`,'gs');
+		let avgFcsts = this._productText.match(matchRegex);
 		//For each parsed out forecast section, parse it out further into a location and forecast text. 
 		//perhaps we also want to parse out the elevation from the location?
-		if (matches) {
-			matches.forEach( match => {
-				//Forecast parts are split up by double new lines as location,time,and tabular data;
-				let forecastDataParts = match.split('\n\n'); 
-				let locationPart = forecastDataParts[0].trim();
+		let timesRegex = new RegExp(/^(TIME).*/im);		
+		let datesRegex = new RegExp(/^(DATE).*/im);
+		let tabularRegex = new RegExp(/(CLOUD)[\S\s]*/im)		
+		//let tabularRegex = this.regexBetweenStrings(String.raw`${timePart}`,String.raw`$`,'gsi')
+		if (avgFcsts) {
+			avgFcsts.forEach( avgFcst => {
+				avgFcst.trim();
+				let locationPart = avgFcst.split('\n')[0].trim();
 				let location = this.parseLocation(locationPart);
+				let timePart = avgFcst.match(timesRegex)[0];
+				let datePart = avgFcst.match(datesRegex)[0];
+				let times = this.parseForecastTimes(datePart,timePart)
 
-				let timePart = forecastDataParts[1].trim();
-				let times = this.parseForecastTimes(timePart)
-				let tabularPart = forecastDataParts[2].trim();
+				let tabularPart = avgFcst.match(tabularRegex)[0].trim();
 				let forecast = this.parseForecastTable(tabularPart,times);
-
-				let rawForecast = [timePart,tabularPart].join('\n\n');
+				let rawForecast = [datePart,timePart,tabularPart].join('\n');
 
 				forecastData[String(location.name)] ={
 					elevation : location.elevation,
@@ -116,16 +119,15 @@ class AVGParser {
 	 * @param {String} timePart - Unparsed date/time headers from the AVG forecast table
 	 * @returns {ObjectArray} - an array of objects that include the date of the forecast time as well as the start / end character locations
 	 * 
-	 * Example timePart: 
+	 * Example datePart: 
 	 * DATE             THURSDAY 01/14          FRIDAY 01/15
+	 * Example timePart: 	  
 	 * TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
 	 */
-	parseForecastTimes(timePart){
-		let dateString = timePart.split('\n')[0];
-		let timeString = timePart.split('\n')[1];
+	parseForecastTimes(datePart,timePart){
 		//Find all listed dates in the date string and convert to an array.
 		let dPosRegex = new RegExp(/([A-Z]+ [0-9]{1,2}\/[0-9]{1,2})/g);
-		let dateMatches = [...dateString.matchAll(dPosRegex)];
+		let dateMatches = [...datePart.matchAll(dPosRegex)];
 		
 		//This is going to be a bit hokey, but we're going to set previous and future dates in the dateMatches, essentially adding creating where 
 		//they "should" be in the string index if they were in fact there.  We'll find out the length of the date based on character values between
@@ -151,7 +153,7 @@ class AVGParser {
 
 		//Find all listed times in the time string and convert to an array.
 		let tPosRegex = new RegExp(/([0-9]{1,2})/g);
-		let timeMatches = [...timeString.matchAll(tPosRegex)];
+		let timeMatches = [...timePart.matchAll(tPosRegex)];
 		//Create a useable object that has the times and character indices of each hour
 		let allAvailableTimes = [];
 		timeMatches.forEach(tMatch => {
