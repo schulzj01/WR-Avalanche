@@ -257,17 +257,23 @@ class AVGParser {
 						if (regex.test(columnValue)) { 
 							columnValue = forecastLine.substring(forecastTimes[i-3].start-1,forecastTimes[i].end).trim();
 							if (columnValue == '') { columnValue = null; }
+							//12 hourly data is look behind not look forward. So set our start date 12 hours earlier.
+							let date = new Date(+forecastTimes[i].date); 
+							date.setHours(date.getHours() - 12);
 							parsedForecastData[weatherType].push({
 								val : columnValue,
-								date : forecastTimes[i].date,
+								date : date,
 							});
 						}
 					}
 					else { 
 						if (columnValue !== ''){
+							//12 hourly data is look behind not look forward. So set our start date 12 hours earlier.
+							let date = new Date(+forecastTimes[i].date); 
+							date.setHours(date.getHours() - 12);							
 							parsedForecastData[weatherType].push({
 								val : columnValue,
-								date : forecastTimes[i].date,
+								date : date,
 							});
 						}
 					}
