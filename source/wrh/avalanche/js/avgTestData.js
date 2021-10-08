@@ -3,24 +3,16 @@ const avg = {};
 avg.pih = `
 FWUS45 KPIH 141706
 AVGPIH
-
 AVALANCHE WEATHER GUIDANCE
 NATIONAL WEATHER SERVICE POCATELLO ID
 1006 AM MST MON DEC 14 2020
-
 .DISCUSSION...
-
 This is a test discussion from NWS Pocatello regarding avalanche content.
 This discussion will be at the top of all of our AVG products.  You're currently
 viewing the one in the avgTestData.js testing data.
-
-
-
-...BALD MTN (9,145 FT)...
-
+...Nordic Valley (9,145 FT)...
 DATE             MONDAY 12/14            TUESDAY 12/15           
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER            SC SC SC SC FW FW FW SC BK OV OV OV BK BK OV
 CLOUD COVER (%)        40 40 45 50 15 15 25 35 65 75 85 80 70 65 70
 TEMPERATURE            17 18 15 16 14 14 13 14 15 16 16 18 18 19 19
@@ -33,13 +25,9 @@ PRECIP TYPE                                     S  S  S  S  S  S
 12 HOUR QPF                0.00        0.00        0.01        0.03
 12 HOUR SNOW                0.0         0.0         0.2         0.3
 SNOW LEVEL (KFT)        3  3  3  2  2  2  1  1  2  2  2  2  2  2  2
-
-
-...TITUS PEAK (10,079 FT)...
-
+...Snowbasin (10,079 FT)...
 DATE             MONDAY 12/14            TUESDAY 12/15           
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER            BK BK BK SC SC SC SC SC BK OV OV OV OV OV OV
 CLOUD COVER (%)        55 65 55 40 25 30 45 45 60 80 90 85 75 80 85
 TEMPERATURE            15 15 11  9  8  8  8 10 15 17 16 16 17 19 18
@@ -52,13 +40,9 @@ PRECIP TYPE                                     S  S  S  S  S  S  S
 12 HOUR QPF                0.00        0.00        0.02        0.07
 12 HOUR SNOW                0.0         0.0         0.2         0.9
 SNOW LEVEL (KFT)        3  3  3  3  2  2  1  2  2  2  2  2  3  3  3
-
-
-...SOLDIER MTN (9,495 FT)...
-
+...Texas (9,495 FT)...
 DATE             MONDAY 12/14            TUESDAY 12/15           
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER            SC SC SC SC FW FW SC SC BK OV OV OV OV OV OV
 CLOUD COVER (%)        45 50 45 40  5 15 25 40 70 80 90 90 80 80 80
 TEMPERATURE            16 16 15 14 13 11 11 12 16 16 17 16 17 21 21
@@ -71,13 +55,9 @@ PRECIP TYPE                                     S  S  S  S  S  S  S
 12 HOUR QPF                0.00        0.00        0.01        0.05
 12 HOUR SNOW                0.0         0.0         0.1         0.5
 SNOW LEVEL (KFT)        3  3  3  3  2  2  1  1  2  2  2  2  2  2  3
-
-
-...SAWTOOTH (7775 FT)...
-
+...Powder Mountain (7775 FT)...
 DATE             MONDAY 12/14            TUESDAY 12/15           
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER            BK BK BK BK SC SC SC BK OV OV OV OV OV OV OV
 CLOUD COVER (%)        55 55 65 65 35 35 35 55 75 85 90 85 85 85 90
 TEMPERATURE            19 20 17 15 13 11 10 11 17 20 19 20 20 20 19
@@ -90,13 +70,9 @@ PRECIP TYPE                                     S  S  S  S  S  S  S
 12 HOUR QPF                0.00        0.00        0.03        0.07
 12 HOUR SNOW                0.0         0.0         0.3         0.8
 SNOW LEVEL (KFT)        3  3  3  3  2  2  1  1  2  2  3  2  2  3  3
-
-
 ...VIENNA MINE (8960 FT)...
-
 DATE             MONDAY 12/14            TUESDAY 12/15           
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER            SC SC SC SC SC SC SC BK BK OV OV OV OV OV OV
 CLOUD COVER (%)        45 50 50 50 35 30 45 50 65 85 90 85 80 85 90
 TEMPERATURE            17 17 12 10  9  9  9 12 16 17 16 16 18 20 20
@@ -109,13 +85,9 @@ PRECIP TYPE                                     S  S  S  S  S  S  S
 12 HOUR QPF                0.00        0.00        0.02        0.08
 12 HOUR SNOW                0.0         0.0         0.2         1.0
 SNOW LEVEL (KFT)        3  3  3  3  2  2  1  2  2  2  2  2  3  3  3
-
-
 ...COPPER MTN (8600 FT)...
-
 DATE             MONDAY 12/14            TUESDAY 12/15           
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER            BK BK OV BK BK BK OV OV OV OV OV OV OV OV OV
 CLOUD COVER (%)        55 60 70 65 55 65 80 80 80 90 90 90 85 85 90
 TEMPERATURE            20 22 17 14 10  8  7  9 18 19 18 18 17 17 17
@@ -128,13 +100,9 @@ PRECIP TYPE                                     S  S  S  S  S  S  S
 12 HOUR QPF                0.00        0.00        0.05        0.11
 12 HOUR SNOW                0.0         0.0         0.6         1.3
 SNOW LEVEL (KFT)        3  3  3  3  2  1  1  1  2  2  2  2  2  3  3
-
-
 ...PINE CREEK PASS (7330 FT)...
-
 DATE             MONDAY 12/14            TUESDAY 12/15           
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER            OV OV OV OV OV OV BK OV OV OV OV OV OV OV OV
 CLOUD COVER (%)        95 95100 95 85 80 65 75 80 90 95 95 90 95 95
 TEMPERATURE            23 22 17 17 16 15 14 15 20 20 19 19 20 21 21
@@ -147,13 +115,9 @@ PRECIP TYPE             S  S  S  S              S  S  S  S  S  S  S
 12 HOUR QPF                0.05        0.01        0.04        0.16
 12 HOUR SNOW                0.7         0.2         0.6         2.3
 SNOW LEVEL (KFT)        2  3  2  2  2  1  1  1  1  2  2  1  1  1  1
-
-
 ...TARGHEE PASS (7070 FT)...
-
 DATE             MONDAY 12/14            TUESDAY 12/15           
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER            BK OV BK BK BK OV OV OV OV OV OV OV OV OV OV
 CLOUD COVER (%)        65 75 65 55 65 70 80 75 80 90 95 95 90 85 85
 TEMPERATURE            19 21 16 12 10  9  7  7 11 12 12 14 14 14 13
@@ -166,13 +130,9 @@ PRECIP TYPE             S  S                    S  S  S  S  S  S  S
 12 HOUR QPF                0.04        0.00        0.04        0.10
 12 HOUR SNOW                0.6         0.0         0.5         1.5
 SNOW LEVEL (KFT)        2  3  3  2  2  1  1  0  1  1  1  1  1  1  1
-
-
 ...BLOOMINGTON LAKE (7610 FT)...
-
 DATE             MONDAY 12/14            TUESDAY 12/15           
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER            OV OV OV BK SC SC BK SC BK OV OV OV OV OV OV
 CLOUD COVER (%)        95 90 80 60 50 40 55 50 65 75 80 80 75 80 90
 TEMPERATURE            20 18 14 13 12 12 11 14 18 17 13 13 14 17 17
@@ -185,35 +145,26 @@ PRECIP TYPE             S  S  S  S              S  S  S  S  S  S  S
 12 HOUR QPF                0.08        0.01        0.01        0.07
 12 HOUR SNOW                1.2         0.2         0.2         0.9
 SNOW LEVEL (KFT)        3  3  3  2  2  2  1  1  1  2  2  1  1  2  2
-
 $$
-
 --- PRECIP TYPE CODES ---
-
 CODE   TYPE
  T     THUNDERSTORMS
  R     RAIN
  S     SNOW
  I     SLEET
  Z     FREEZING RAIN
-
 `;
 
 avg.boi = `
 FWUS45 KBOI 141029
 AVGBOI
-
 AVALANCHE WEATHER GUIDANCE
 NATIONAL WEATHER SERVICE BOISE ID
 328 AM MST THU JAN 14 2021
-
 *********************PAYETTE NF / MCCALL AREA**********************
-
 ...GRANITE MOUNTAIN (7804 FT)...
-
 DATE             THURSDAY 01/14          FRIDAY 01/15
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER      SC SC FW FW FW FW SC SC SC SC OV OV OV OV SC SC SC
 CLOUD COVER (%)  25 25 25 25 10 10 35 35 35 35 70 70 80 80 50 50 45
 TEMPERATURE      15 15 22 25 21 22 24 24 23 23 27 27 24 24 24 23 21
@@ -226,13 +177,9 @@ PRECIP TYPE                                     S  S  S  S
 12 HOUR QPF                0.00        0.00        0.03        0.05
 12 HOUR SNOW                0.0         0.0         0.3         0.5
 SNOW LEVEL (KFT)  1  1  3  3  3  3  3  3  3  3  4  4  4  4  4  4  3
-
-
 ...SECESH SUMMIT SNOTEL (6520 FT)...
-
 DATE             THURSDAY 01/14          FRIDAY 01/15
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER      FW FW FW FW FW FW SC SC SC SC OV OV OV OV BK BK SC
 CLOUD COVER (%)  25 25 25 25 15 15 40 40 40 40 70 70 85 85 55 55 50
 TEMPERATURE      15 17 28 31 20 18 18 23 23 24 32 31 27 23 24 24 21
@@ -245,13 +192,9 @@ PRECIP TYPE                                     S  S  S  S  S  S
 12 HOUR QPF                0.00        0.00        0.04        0.06
 12 HOUR SNOW                0.0         0.0         0.4         0.7
 SNOW LEVEL (KFT)  2  2  3  3  4  4  3  3  3  3  4  4  4  4  4  4  3
-
-
 ...BRUNDAGE RESERVOIR SNOTEL (6250 FT)...
-
 DATE             THURSDAY 01/14          FRIDAY 01/15
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER      SC SC FW FW FW FW SC SC SC SC OV OV OV OV SC SC SC
 CLOUD COVER (%)  25 25 25 25 10 10 35 35 35 35 70 70 85 85 50 50 40
 TEMPERATURE      14 15 27 30 22 21 22 22 21 22 31 31 26 25 24 22 20
@@ -264,13 +207,9 @@ PRECIP TYPE                                     S  S  S  S
 12 HOUR QPF                0.00        0.00        0.03        0.04
 12 HOUR SNOW                0.0         0.0         0.2         0.4
 SNOW LEVEL (KFT)  1  1  3  3  3  3  3  3  3  3  4  4  4  4  4  4  3
-
-
 ...SQUAW FLAT SNOTEL (6240 FT)...
-
 DATE             THURSDAY 01/14          FRIDAY 01/15
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER      SC SC SC SC FW FW SC SC SC SC BK BK OV OV SC SC SC
 CLOUD COVER (%)  30 30 25 25 15 15 35 35 40 40 70 70 80 80 40 40 35
 TEMPERATURE      15 17 30 32 26 24 25 23 23 24 33 32 28 27 26 24 22
@@ -283,13 +222,9 @@ PRECIP TYPE                                     S  S  S  S
 12 HOUR QPF                0.00        0.00        0.01        0.02
 12 HOUR SNOW                0.0         0.0         0.1         0.2
 SNOW LEVEL (KFT)  2  2  3  3  3  3  3  3  3  3  4  4  4  4  4  4  3
-
-
 ...BIG CREEK SUMMIT SNOTEL (6580 FT)...
-
 DATE             THURSDAY 01/14          FRIDAY 01/15
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER      FW FW FW FW FW FW SC SC SC SC BK BK OV OV SC SC SC
 CLOUD COVER (%)  25 25 20 20 10 10 35 35 35 35 60 60 85 85 45 45 35
 TEMPERATURE      15 16 27 29 24 20 21 24 25 26 33 32 28 26 25 24 22
@@ -302,15 +237,10 @@ PRECIP TYPE                                     S  S  S  S
 12 HOUR QPF                0.00        0.00        0.01        0.02
 12 HOUR SNOW                0.0         0.0         0.1         0.2
 SNOW LEVEL (KFT)  1  1  3  3  3  3  3  3  3  3  4  4  4  4  4  4  3
-
-
 ***********************SOLDIER MOUNTAIN AREA***********************
-
 ...SOLDIER MOUNTAIN SUMMIT (10096 FT)...
-
 DATE             THURSDAY 01/14          FRIDAY 01/15
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER      FW FW FW FW FW FW SC SC SC SC SC SC OV OV FW FW FW
 CLOUD COVER (%)  15 15 15 15 15 15 35 35 35 35 40 40 75 75 25 25 10
 TEMPERATURE      11 13 19 23 22 23 23 24 26 25 29 28 25 23 22 21 19
@@ -323,13 +253,9 @@ PRECIP TYPE
 12 HOUR QPF                0.00        0.00        0.00        0.00
 12 HOUR SNOW                0.0         0.0         0.0         0.0
 SNOW LEVEL (KFT)  1  1  3  3  4  4  4  4  4  4  5  5  5  5  4  4  3
-
-
 ...SOLDIER RANGER STATION SNOTEL (5740 FT)...
-
 DATE             THURSDAY 01/14          FRIDAY 01/15
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER      FW FW FW FW FW FW SC SC SC SC SC SC OV OV FW FW FW
 CLOUD COVER (%)  15 15 15 15 20 20 35 35 35 35 40 40 75 75 25 25 10
 TEMPERATURE      16 19 33 34 24 23 23 25 24 27 37 35 29 27 26 24 20
@@ -342,13 +268,9 @@ PRECIP TYPE
 12 HOUR QPF                0.00        0.00        0.00        0.00
 12 HOUR SNOW                0.0         0.0         0.0         0.0
 SNOW LEVEL (KFT)  1  1  3  3  4  4  4  4  4  4  5  5  5  5  4  4  3
-
-
 ...FLECK SUMMIT SNOTEL (6482 FT)...
-
 DATE             THURSDAY 01/14          FRIDAY 01/15
 TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
-
 CLOUD COVER      FW FW FW FW FW FW SC SC SC SC SC SC OV OV SC SC FW
 CLOUD COVER (%)  15 15 10 10 15 15 30 30 30 30 40 40 75 75 25 25 10
 TEMPERATURE      11 12 26 32 23 20 17 17 16 18 31 33 29 25 22 18 14
@@ -361,16 +283,12 @@ PRECIP TYPE
 12 HOUR QPF                0.00        0.00        0.00        0.00
 12 HOUR SNOW                0.0         0.0         0.0         0.0
 SNOW LEVEL (KFT)  1  1  3  3  4  4  4  4  4  4  5  5  5  5  4  4  3
-
 $$
-
 --- PRECIP TYPE CODES ---
-
 CODE   TYPE
 T     THUNDERSTORMS
 R     RAIN
 S     SNOW
 I     SLEET
 Z     FREEZING RAIN
-
 `;
