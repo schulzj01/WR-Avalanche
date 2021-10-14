@@ -241,51 +241,48 @@ class AVGParser {
 
 		forecastLines.forEach( forecastLine => {
 			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim().toLowerCase();
-			parsedForecastData[weatherType] = [];
+			parsedForecastData[weatherType] = null; 
+			let parsedForecastDataArray = [];
 			for (let i=0; i < forecastTimes.length; i++){
 				/*let parsedForecast = {
 					date : null,
 					val : null,
 				}*/
 				//Cover the weather elements that are 12 hours.  
+
+				let parsedForecast = {
+					val : null,
+					date : forecastTimes[i].date
+				};
+
 				//TODO right now this is hard coded for 3 hourly data.  Are other offices going to change this?  If so, this needs to be dynamic
 				let columnValue = forecastLine.substring(forecastTimes[i].start-1,forecastTimes[i].end).trim();
-				if (weatherType.includes('12 hour')) { 
-					if (weatherType.includes('qpf')) { 
-						let regex = new RegExp(/\.[0-9]{2}/);
-						//Only look for QPF where the data column starts with .## Then we know we have a 12 hour block.  Look back 12 hours from there.
-						if (regex.test(columnValue)) { 
-							columnValue = forecastLine.substring(forecastTimes[i-3].start-1,forecastTimes[i].end).trim();
-							if (columnValue == '') { columnValue = null; }
-							//12 hourly data is look behind not look forward. So set our start date 12 hours earlier.
-							let date = new Date(+forecastTimes[i].date); 
-							date.setHours(date.getHours() - 12);
-							parsedForecastData[weatherType].push({
-								val : columnValue,
-								date : date,
-							});
+				if (!weatherType.includes('12 hour')){ parsedForecast.val = columnValue; }
+				else  { 
+					let regex; 
+					//Only look for QPF where the data column starts with .## Then we know we have a start to 12 hour block. 
+					if (weatherType.includes('qpf')) {  regex = new RegExp(/\.[0-9]{2}/); }
+					//Only look for snow  where the data column starts with #.# 
+					else if (weatherType.includes('snow')) { regex = new RegExp(/[0-9]{1}\.[0-9]{1}/); }	
+					if (regex.test(columnValue)) { 
+						//If our value is QPF look back an extra couple columns to get the full string.
+						columnValue = forecastLine.substring(forecastTimes[i-2].start-1,forecastTimes[i].end).trim();
+						if (columnValue == '') { columnValue = null; }
+						parsedForecast.val = columnValue;
+						//12 hourly data is look behind not look forward, so search back through previous times and add when needed.
+						let j = 0;
+						do { 
+							if (parsedForecast.date.getTime() - parsedForecastDataArray[j].date.getTime()  < 432e5 ) { 
+								parsedForecastDataArray[j].val = columnValue;
+							}
+							j++;
 						}
-					}
-					else { 
-						if (columnValue !== ''){
-							//12 hourly data is look behind not look forward. So set our start date 12 hours earlier.
-							let date = new Date(+forecastTimes[i].date); 
-							date.setHours(date.getHours() - 12);							
-							parsedForecastData[weatherType].push({
-								val : columnValue,
-								date : date,
-							});
-						}
+						while (i > j);
 					}
 				}
-				else { 
-					parsedForecastData[weatherType].push({
-						val : columnValue,
-						date : forecastTimes[i].date
-					});
-				}
-
+				parsedForecastDataArray.push(parsedForecast);
 			};
+			parsedForecastData[weatherType] = parsedForecastDataArray;
 		});
 		return parsedForecastData;
 	}
