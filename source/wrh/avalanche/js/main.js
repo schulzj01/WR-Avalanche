@@ -179,7 +179,12 @@ function modal(header,description) {
 /**
  *  PARSED_AVG - Global variable that stores all parts of a parsed AVG forecast product.
  */
-let PARSED_AVG = {};
+let PARSED_AVG;
+/**
+ *  CHART_MANAGER - Global variable that stores the Chart JS objects and updates the data.
+ */
+let CHART_MANAGER;
+
 
 /**
  * This is a callback that recieves an AVG product from the API, attempts to parse it out, and then 
@@ -192,7 +197,6 @@ let PARSED_AVG = {};
 //Parse out the AVG product text, assign it to a global, and populate the appropriate divs
 function parseAndPopulateAvg(avgProducts){
 	// If the NWS API times out, throw an error
-	makeMap();
 	if (!avgProducts) { throw Error('Weather.gov API is Unavailable')}
 	// For testing, if no avg is available in the database, use the dummy test data in avgTestData.js
 	// //TODO Once done testing, we have to set some stuff in here so the page isn't empty come summer.
@@ -212,7 +216,10 @@ function parseAndPopulateAvg(avgProducts){
 	let locations = PARSED_AVG.locations;
 
 	//Add the locations to the map
+	makeMap();
 
+	//Initialize the graphical forecast charts
+	CHART_MANAGER = new ChartManager();
 	
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
 	//This is just to populate the avgForecast for testing until the map and drop down is ready;
@@ -258,14 +265,14 @@ function parseAndPopulateAlerts(alerts){
  * @param {String} location - A text string of an AVG location. Also found by a PARSED_AVG.locations call.
  */
 function populateForecast(location){
-        console.log(location);
+	console.log('Switching Forecast to '+location)
 	var locationForecast = PARSED_AVG.forecast(location);
 	let tabularRawFcst = locationForecast.raw;
 	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
 
 	$('#forecastTabularTabContent').html(tabularHtml)
 
-	createHighChart(locationForecast);
+	CHART_MANAGER.updateChartData(locationForecast);
 
 	//Change the forecast label to the location name
 	$('#forecastLocationInfo').html(locationForecast.name)
@@ -330,7 +337,9 @@ pageHtml.staticContent= `
 			<div id="forecastTabularTabContent" class="c-tab__content">Select a forecast point from the map or drop down menu above.</div>
 		</div>
 		<div class="c-tab">
-			<div id="forecastGraphicalTabContent" class="c-tab__content">Select a forecast point from the map or drop down menu above.</div>
+			<div id="forecastGraphicalTabContent" class="c-tab__content">Select a forecast point from the map or drop down menu above.
+			<canvas class="chart" id="chart1"></canvas>
+			</div>
 		</div>
 		<div class="c-tab">
 			<div id="forecastDiscussionTabContent" class="c-tab__content hidden"></div>

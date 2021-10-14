@@ -181,4 +181,9 @@ p {
 	background-color:#f2f5ff;
 }
 
+.chart { 
+	width: 100%;
+	height:300px;
+}
+
 /* Dynamic height content while switching back and forth can toggle the scrollbar, just turn it on at all times*/
