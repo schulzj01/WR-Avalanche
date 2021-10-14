@@ -14,6 +14,7 @@ class AVGParser {
 		this._discussion = this.parseDiscussion();
 		this._forecast = this.parseForecastData();
 		this._productTime = ''; //TODO Need to grab this from the API object.
+		this._timeZone = ''; //TODO Grab this from API or at least parse from product.
 	}
 
 	/**
@@ -244,18 +245,12 @@ class AVGParser {
 			parsedForecastData[weatherType] = null; 
 			let parsedForecastDataArray = [];
 			for (let i=0; i < forecastTimes.length; i++){
-				/*let parsedForecast = {
-					date : null,
-					val : null,
-				}*/
-				//Cover the weather elements that are 12 hours.  
 
 				let parsedForecast = {
 					val : null,
 					date : forecastTimes[i].date
 				};
 
-				//TODO right now this is hard coded for 3 hourly data.  Are other offices going to change this?  If so, this needs to be dynamic
 				let columnValue = forecastLine.substring(forecastTimes[i].start-1,forecastTimes[i].end).trim();
 				if (!weatherType.includes('12 hour')){ parsedForecast.val = columnValue; }
 				else  { 
