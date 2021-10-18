@@ -33,9 +33,15 @@ function plotAVGlocations(locationData) {
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
     var marker = L.marker( point, { icon: image });
     var button = '<div onClick="populateForecast(\''+name+'\')">'+name+'</div>';
-        marker.bindPopup( button, {
-          maxWidth : 1260
-        });
+    marker.on('mouseover', function(e) {
+    var popup = L.popup()
+       .setLatLng(e.latlng) 
+       .setContent(button)
+       .openOn(mainMap);
+    });
+//    marker.bindPopup( button, {
+//        maxWidth : 1260
+//    });
     marker.addTo(mainMap);
   } else if (type == 'Polygon') {
     console.log(name, type);
@@ -53,6 +59,7 @@ function plotAVGlocations(locationData) {
 function getWWA(WFO) {
   $.getJSON('/source/slc/common_data/support.json', function (support) {
     $.getJSON('https://api.weather.gov/alerts/active', function(WWA) {
+      var Legend = '<table bgcolor="white" border="1px">';
       var NUM = WWA.features.length;
       if (NUM != "0") {
         for (i=0; i<NUM; i++) {
@@ -66,6 +73,11 @@ function getWWA(WFO) {
                 if (Phenom == support.fill[m].product) {
                   FC = support.fill[m].hex;
                   var ZONES = WWA.features[i].properties.affectedZones.length;
+                  if (Legend.includes(Phenom)) {
+                    Legend += '' 
+                  } else {
+                    Legend += '<tr><td bgcolor="'+FC+'" width="10px">&nbsp;</td><td>'+Phenom+'</td></tr>';
+                  }
                   for (j=0; j< ZONES; j++) {
                     var Affected = (WWA.features[i].properties.affectedZones[j])
                     console.log(Affected); 
@@ -76,6 +88,9 @@ function getWWA(WFO) {
             }
           }
         }
+        Legend += '</table>';
+        legend(Legend);
+        console.log(Legend);
       } else {
         console.log('Zero warnings to plot');
       }
@@ -108,4 +123,14 @@ function showCountyZone (LOCATION,COLOR) {
      foreFront.addTo(standardLayer);
   })
 };
+
+function legend(Legend) {
+  var logo = L.control({position: 'bottomleft'});
+      logo.onAdd = function(mainMap){
+      var div = L.DomUtil.create('div', 'myclass');
+          div.innerHTML= Legend;
+        return div;
+      }
+      logo.addTo(mainMap);
+}
 
