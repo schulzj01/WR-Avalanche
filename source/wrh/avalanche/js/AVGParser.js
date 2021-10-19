@@ -49,10 +49,8 @@ class AVGParser {
 	parseDiscussion() { 
 		let regex = this.regexBetweenStrings(String.raw`\n\.DISCUSSION\.\.\.`,String.raw`\n\.\.\.`,'gsi');
 		let match = this._productText.match(regex);
-		console.warn(match)
 		if (match) { match = match[0].trim(); }
 		match = match.replaceAll('\n\n','<br><br>') //Get our new lines into a html friendly format.
-		console.log(match)
 		return match;
 	}
 	/**
