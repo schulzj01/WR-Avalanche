@@ -113,7 +113,6 @@ class ChartManager  {
 			legend: {
 				labels: {
 					filter: function (legendItem, chartData) {
-						console.log(legendItem)
 						if (legendItem.text === 'Wind Gusts (mph)') { return false; }
 						else return true;
 					},
@@ -216,11 +215,9 @@ class ChartManager  {
 		this.xAxisMax = tempSeries.at(-1).x;
 		this.xAxisMin = tempSeries[0].x;	
     
-		console.log(windSeries);
 		this._chart1.data.datasets[0].data = windSeries;
 		
 		
-		console.log(this._chart1.data.datasets[0].data);
     this._chart1.data.datasets[1].data = windGustSeries;
 		this._chart1.data.datasets[2].data = snow12Series;
 		this._chart1.data.datasets[3].data = qpf12Series;
