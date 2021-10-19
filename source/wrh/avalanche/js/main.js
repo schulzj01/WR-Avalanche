@@ -200,7 +200,7 @@ function parseAndPopulateAvg(avgProducts){
 	if (!avgProducts) { throw Error('Weather.gov API is Unavailable')}
 	// For testing, if no avg is available in the database, use the dummy test data in avgTestData.js
 	// //TODO Once done testing, we have to set some stuff in here so the page isn't empty come summer.
-	else if (avgProducts.length == 0) { PARSED_AVG = new AVGParser(avg.pih); }
+	else if (avgProducts.length == 0) { PARSED_AVG = new AVGParser(avg.slc); }
 	//If our avg query from the API is successful, parse it out with the AVG parser.
 	else { PARSED_AVG = new AVGParser(avgProducts[0]); }
 
