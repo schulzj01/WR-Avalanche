@@ -15,6 +15,12 @@ function makeMap() {
     for (i=0; i<cwaINFO.AVG_Sites.length; i++) {
       plotAVGlocations(cwaINFO.AVG_Sites[i])
     }
+    //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=cwa%3D%27SLC%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=html
+    var queryString = 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1';
+    //var queryString = 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=cwa%3D%27SLC%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=json'
+    var mapData = L.esri.featureLayer({ url: queryString, style: { fillOpacity: 0, color: "BLUE", weight: 2 }, transparent: true });
+//    console.log('mapData:',mapData._layers);
+    mapData.addTo(mainMap);
   })
   getWWA(WFO);
 }
@@ -33,9 +39,15 @@ function plotAVGlocations(locationData) {
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
     var marker = L.marker( point, { icon: image });
     var button = '<div onClick="populateForecast(\''+name+'\')">'+name+'</div>';
-        marker.bindPopup( button, {
-          maxWidth : 1260
-        });
+    marker.on('mouseover', function(e) {
+    var popup = L.popup()
+       .setLatLng(e.latlng) 
+       .setContent(button)
+       .openOn(mainMap);
+    });
+//    marker.bindPopup( button, {
+//        maxWidth : 1260
+//    });
     marker.addTo(mainMap);
   } else if (type == 'Polygon') {
     console.log(name, type);
@@ -53,6 +65,7 @@ function plotAVGlocations(locationData) {
 function getWWA(WFO) {
   $.getJSON('/source/slc/common_data/support.json', function (support) {
     $.getJSON('https://api.weather.gov/alerts/active', function(WWA) {
+      var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Watches, Warnings and Advisories<br>are for the '+WFO+' County Warning Area only';
       var NUM = WWA.features.length;
       if (NUM != "0") {
         for (i=0; i<NUM; i++) {
@@ -66,6 +79,11 @@ function getWWA(WFO) {
                 if (Phenom == support.fill[m].product) {
                   FC = support.fill[m].hex;
                   var ZONES = WWA.features[i].properties.affectedZones.length;
+                  if (Legend.includes(Phenom)) {
+                    Legend += '' 
+                  } else {
+                    Legend += '<tr><td bgcolor="'+FC+'" width="10px">&nbsp;</td><td>'+Phenom+'</td></tr>';
+                  }
                   for (j=0; j< ZONES; j++) {
                     var Affected = (WWA.features[i].properties.affectedZones[j])
                     console.log(Affected); 
@@ -76,8 +94,12 @@ function getWWA(WFO) {
             }
           }
         }
+        Legend += '</table>';
+        legend(Legend);
+        console.log(Legend);
       } else {
-        console.log('Zero warnings to plot');
+        Legend += '<tr><td colspan="2">There are no watches, warnings <br>or advisories in effect.</tr></table>';
+        legend(Legend);
       }
     });
   });
@@ -91,7 +113,7 @@ function showPolygon (STATE,ID,COLOR,OPAC) {
   }
   $.getJSON('https://api.weather.gov/alerts/active/area/'+STATE, function(WWA) {
     plot = WWA.features[ID].geometry
-    var color_style={"color": "black", "weight":2,"fillColor":COLOR,"fillOpacity": OPAC};
+    var color_style={"color": COLOR, "weight":2,"fillColor":COLOR,"fillOpacity": OPAC};
     var foreFront = L.geoJson(plot, {style: color_style});
     foreFront.addTo(standardLayer);
   });
@@ -103,9 +125,19 @@ function showCountyZone (LOCATION,COLOR) {
     var standardLayer = L.layerGroup().addTo(mainMap);
   }
   $.getJSON(LOCATION, function(plot) {
-     var color_style={"color": "black", "weight":2,"fillColor":COLOR,"fillOpacity": 0.5};
+     var color_style={"color": COLOR, "weight":0,"fillColor":COLOR,"fillOpacity": 0.5};
      var foreFront = L.geoJson(plot, {style: color_style});
      foreFront.addTo(standardLayer);
   })
 };
+
+function legend(Legend) {
+  var logo = L.control({position: 'bottomleft'});
+      logo.onAdd = function(mainMap){
+      var div = L.DomUtil.create('div', 'myclass');
+          div.innerHTML= Legend;
+        return div;
+      }
+      logo.addTo(mainMap);
+}
 
