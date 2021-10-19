@@ -15,11 +15,8 @@ function makeMap() {
     for (i=0; i<cwaINFO.AVG_Sites.length; i++) {
       plotAVGlocations(cwaINFO.AVG_Sites[i])
     }
-    //https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=cwa%3D%27SLC%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=html
     var queryString = 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1';
-    //var queryString = 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=cwa%3D%27SLC%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=json'
     var mapData = L.esri.featureLayer({ url: queryString, style: { fillOpacity: 0, color: "BLUE", weight: 2 }, transparent: true });
-//    console.log('mapData:',mapData._layers);
     mapData.addTo(mainMap);
   })
   getWWA(WFO);
@@ -39,6 +36,9 @@ function plotAVGlocations(locationData) {
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
     var marker = L.marker( point, { icon: image });
     var button = '<div onClick="populateForecast(\''+name+'\')">'+name+'</div>';
+    marker.on('click', function(e) {
+      populateForecast(name);
+    })
     marker.on('mouseover', function(e) {
     var popup = L.popup()
        .setLatLng(e.latlng) 
@@ -98,7 +98,7 @@ function getWWA(WFO) {
         legend(Legend);
         console.log(Legend);
       } else {
-        Legend += '<tr><td colspan="2">There are no watches, warnings <br>or advisories in effect.</tr></table>';
+        Legend += '<tr><td colspan="2">There are no watches, warnings <br>or advisories in effect.</td></tr></table>';
         legend(Legend);
       }
     });
@@ -107,16 +107,17 @@ function getWWA(WFO) {
 
 
 // Polygon based warnings
-function showPolygon (STATE,ID,COLOR,OPAC) {
+function showPolygon (DATA,COLOR,OPAC) {
   if (!standardLayer) {
     var standardLayer = L.layerGroup().addTo(mainMap);
   }
-  $.getJSON('https://api.weather.gov/alerts/active/area/'+STATE, function(WWA) {
-    plot = WWA.features[ID].geometry
-    var color_style={"color": COLOR, "weight":2,"fillColor":COLOR,"fillOpacity": OPAC};
-    var foreFront = L.geoJson(plot, {style: color_style});
-    foreFront.addTo(standardLayer);
-  });
+  plot = DATA.features[0].geometry;
+  var originalMsg = JSON.stringify(plot);
+  originalMsg = originalMsg.replace('rings','Polygon');
+  var newObj = JSON.parse(originalMsg); 
+  var color_style={"color": COLOR, "weight":2,"fillColor":COLOR,"fillOpacity": OPAC};
+  var foreFront = L.geoJson(newObj, {style: color_style});
+  foreFront.addTo(standardLayer);
 };
 
 // COunty/Zone based warnings
