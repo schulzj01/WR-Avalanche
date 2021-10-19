@@ -34,7 +34,7 @@ class ChartManager  {
 						return _this.createSvgArrow(ctx.dataset.data[ctx.dataIndex]?.dir,'#b06bff')
 					},
 				},{
-					label: 'Wind Gusts (mph)',
+					label: 'Wind Gusts (mph)', // We want this label hidden
 					data: [],
 					xAxisID : 'xAxis1',
 					yAxisID : 'yAxisWind',
@@ -86,26 +86,46 @@ class ChartManager  {
 					type: 'line',
 					pointStyle : 'circle',
 					radius: 4,
+				},{
+					label: 'Snow Level (kft)',
+					data: [],
+					xAxisID : 'xAxis1',
+					yAxisID : 'yAxisSnowLevel',
+					borderColor: '#ff606e',
+					backgroundColor: '#ff606e',
+					type: 'line',
+					pointStyle : 'circle',
+					radius: 4,
 				}
 			]
 		};
+		const plugins = {
+			tooltip: {
+				mode: 'index',
+				position:'cursor',
+				intersect: false,
+				filter: function (tooltipItem) {
+//							console.log(tooltipItem)
+					return true
+					return tooltipItem.datasetIndex !== 0; 
+				}
+			},
+			legend: {
+				labels: {
+					filter: function (legendItem, chartData) {
+						console.log(legendItem)
+						if (legendItem.text === 'Wind Gusts (mph)') { return false; }
+						else return true;
+					},
+				}
+			}
+		}
 
 		const config = {
 			type: 'line',
 			data: data,
 			options: {	
-				plugins: {
-					tooltip: {
-						mode: 'index',
-						position:'cursor',
-						intersect: false,
-						filter: function (tooltipItem) {
-//							console.log(tooltipItem)
-							return true
-							return tooltipItem.datasetIndex !== 0; 
-						}
-					},
-				},
+				plugins: plugins,			
 				scales: {
 					xAxis1: {
 						axis: 'x',
@@ -155,7 +175,7 @@ class ChartManager  {
 					},
 					yAxisTemp: {
 						axis: 'y',
-						text: 'Wind (mph)',
+						text: 'Temperature',
 						suggestedMin: 0,
 						suggestedMax: 30,
 						color: '#b06bff',
@@ -163,7 +183,18 @@ class ChartManager  {
 						//max: xAxisMax,
 						//min: xAxisMin,					
 						type: 'linear',
-					},								
+					},
+					yAxisSnowLevel: {
+						axis: 'y',
+						text: 'Snow Level (kft)',
+						suggestedMin: -5,
+						suggestedMax: 4,
+						color: '#ff606e',
+						display:false,
+						//max: xAxisMax,
+						//min: xAxisMin,					
+						type: 'linear',
+					},						
 				},
 			},
 		};
@@ -179,7 +210,9 @@ class ChartManager  {
 		let snow12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour snow'],'float');	
 		let qpf12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour qpf'],'float');	
 		let tempSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'int');
+		let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'int');		
 		let dateSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'date');	
+
 		this.xAxisMax = tempSeries.at(-1).x;
 		this.xAxisMin = tempSeries[0].x;	
     
@@ -192,6 +225,7 @@ class ChartManager  {
 		this._chart1.data.datasets[2].data = snow12Series;
 		this._chart1.data.datasets[3].data = qpf12Series;
 		this._chart1.data.datasets[4].data = tempSeries;
+		this._chart1.data.datasets[5].data = snowLevelSeries;		
 		this._chart1.update();
 	}
 
