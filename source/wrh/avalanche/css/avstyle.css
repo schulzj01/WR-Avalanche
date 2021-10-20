@@ -1,4 +1,6 @@
 
+/*
+
 #areaSelect, #locationSelect {
   list-style-type: none;
   margin: 0;
@@ -82,7 +84,7 @@ p {
    font-weight:bold;
 }
 
-/* Weather Camera Tab */
+/* Weather Camera Tab 
 .WC_TOP {
     padding-left:10px;
     padding-right:10px;
@@ -104,7 +106,7 @@ p {
     padding-bottom:15px;
 }
 
-/* AVG PRoduct */
+/* AVG PRoduct 
 #avgForecastSelector {
     font-family:arial;
     width:600px;
@@ -140,7 +142,7 @@ p {
 }
 
 
-
+*/
 
 
 
@@ -172,13 +174,14 @@ p {
 	background-color:	#f2f5ff;
 }
 
-#forecastTabularTabContent {
+.preFormatted {
 	margin:0 auto;
 	font-family:monospace;
 	white-space: pre-wrap;
 	font-size:16px;
 	line-height: 1.5em;
 	background-color:#f2f5ff;
+	padding-left: 25px;
 }
 
 .chart { 

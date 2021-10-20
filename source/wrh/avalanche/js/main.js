@@ -198,12 +198,22 @@ let CHART_MANAGER;
 function parseAndPopulateAvg(avgProducts){
 	// If the NWS API times out, throw an error
 	if (!avgProducts) { throw Error('Weather.gov API is Unavailable')}
-	// For testing, if no avg is available in the database, use the dummy test data in avgTestData.js
-	// //TODO Once done testing, we have to set some stuff in here so the page isn't empty come summer.
-	else if (avgProducts.length == 0) { PARSED_AVG = new AVGParser(avg.slc); }
-	//If our avg query from the API is successful, parse it out with the AVG parser.
-	else { PARSED_AVG = new AVGParser(avgProducts[0]); }
 
+	let avgToParse;
+	try {
+		// For testing, if no avg is available in the database, use the dummy test data in avgTestData.js
+		// //TODO Once done testing, we have to set some stuff in here so the page isn't empty come summer.
+		if (avgProducts.length == 0) { avgToParse = avg.slc; }
+		//If our avg query from the API is successful, parse it out with the AVG parser.
+		else { avgToParse = avgProducts[0]; }
+		PARSED_AVG = new AVGParser(avgToParse);
+	} catch (error) {
+		$('#forecastDisplayParserFailure').html(avgToParse);
+		$('#forecastDisplayParserFailure').removeClass('hidden');
+		$('#forecastDisplay').addClass('hidden');
+		throw Error('Parsing of the AVG Product Failed.  This is likely the result of non-standardized AVG Product. Please reach out to wr.web.support@noaa.gov for help resolving this');
+	}
+	
 	//Populate the discussion display, and show the tab if there is a discussion.
 	if (PARSED_AVG.discussion) { 
 		$('#forecastDiscussionTabContent').html(PARSED_AVG.discussion);
@@ -320,39 +330,36 @@ function populateStaticContent(cwa){
 const pageHtml = {};
 pageHtml.staticContent= `
 <h1> Avalanche Weather Information </h1>
-<div id="map">Map Placeholder</div>
-<h3><span id="forecastLocationInfo"></span> Forecast</h3>
-<div id="forecastDisplay" class="outline">
-	<div class="c-tabs" id="forecastTabs">
-		<div class="c-tabs-nav">
-			<div id="forecastAlertsTab" class="c-tabs-nav__link"><span>Active Alerts</span></div>
-			<div id="forecastTabularTab" class="c-tabs-nav__link"><span>Tabular Forecast</span></div>
-			<div id="forecastGraphicalTab" class="c-tabs-nav__link"><span>Graphical Forecast</span></div>			
-			<div id="forecastDiscussionTab" class="c-tabs-nav__link hidden"><span>Discussion</span></div>
-		</div>
-		<div class="c-tab">	
-			<div id="forecastAlertsTabContent" class="c-tab__content">When operational, this will display the active warnings when a user selects a forecast point. By default this tab should have the "hidden" class unless active.</div>
-		</div>		
-		<div class="c-tab">	
-			<div id="forecastTabularTabContent" class="c-tab__content">Select a forecast point from the map or drop down menu above.</div>
-		</div>
-		<div class="c-tab">
-			<div id="forecastGraphicalTabContent" class="c-tab__content">Select a forecast point from the map or drop down menu above.
-			<canvas class="chart" id="chart1"></canvas>
+<div id="forecastDisplay" class="center-content">
+	<div id="map">Map Placeholder</div>
+	<h3><span id="forecastLocationInfo"></span> Forecast</h3>
+	<div class="outline">
+		<div class="c-tabs" id="forecastTabs">
+			<div class="c-tabs-nav">
+				<div id="forecastAlertsTab" class="c-tabs-nav__link"><span>Active Alerts</span></div>
+				<div id="forecastTabularTab" class="c-tabs-nav__link"><span>Tabular Forecast</span></div>
+				<div id="forecastGraphicalTab" class="c-tabs-nav__link"><span>Graphical Forecast</span></div>			
+				<div id="forecastDiscussionTab" class="c-tabs-nav__link hidden"><span>Discussion</span></div>
 			</div>
+			<div class="c-tab">	
+				<div id="forecastAlertsTabContent" class="c-tab__content">When operational, this will display the active warnings when a user selects a forecast point. By default this tab should have the "hidden" class unless active.</div>
+			</div>		
+			<div class="c-tab">	
+				<div id="forecastTabularTabContent" class="c-tab__content preFormatted">Select a forecast point from the map or drop down menu above.</div>
+			</div>
+			<div class="c-tab">
+				<div id="forecastGraphicalTabContent" class="c-tab__content">Select a forecast point from the map or drop down menu above.
+				<canvas class="chart" id="chart1"></canvas>
+				</div>
+			</div>
+			<div class="c-tab">
+				<div id="forecastDiscussionTabContent" class="c-tab__content hidden"></div>
+			</div>		
 		</div>
-		<div class="c-tab">
-			<div id="forecastDiscussionTabContent" class="c-tab__content hidden"></div>
-		</div>		
-	</div>
 	</div>
 </div>
-<h3>Local Content </h3>
-<div id="forecastGroupRadioButtons"></div>
-<div id="forecastGroupInfo" class="outline">
-	<h4>Active Watches and Warnings</h4>
-	<div id="forecastGroupWWA" class="section"></div>
-	<h4>Local Area Forecasts</h4>
-	<div id="forecastGroupForecasts" class="section"></div>
+<div id="forecastDisplayParserFailure" class="hidden outline preFormatted"></div>
+
+<h3>Local Content (This space will be reserved for local office customization) </h3>
 </div>
 `;
