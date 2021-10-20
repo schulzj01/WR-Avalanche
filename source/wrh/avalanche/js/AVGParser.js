@@ -248,10 +248,9 @@ class AVGParser {
 			for (let i=0; i < forecastTimes.length; i++){
 
 				let parsedForecast = {
-					val : null,
+					val : '',
 					date : forecastTimes[i].date
 				};
-
 				let columnValue = forecastLine.substring(forecastTimes[i].start-1,forecastTimes[i].end).trim();
 				if (!weatherType.includes('12 hour')){ parsedForecast.val = columnValue; }
 				else  { 
@@ -263,7 +262,7 @@ class AVGParser {
 					if (regex.test(columnValue)) { 
 						//If our value is QPF look back an extra couple columns to get the full string.
 						columnValue = forecastLine.substring(forecastTimes[i-2].start-1,forecastTimes[i].end).trim();
-						if (columnValue == '') { columnValue = null; }
+						//if (columnValue == '') { columnValue = null; }
 						parsedForecast.val = columnValue;
 						//12 hourly data is look behind not look forward, so search back through previous times and add when needed.
 						let j = 0;
