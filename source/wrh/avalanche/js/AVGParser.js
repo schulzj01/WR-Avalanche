@@ -60,16 +60,22 @@ class AVGParser {
 	parseForecastData(){
 		//Parse out the forecast points
 		const forecastData = {};
-		let avgFcsts = this.textBetweenStrings(this._productText,String.raw`\n\.\.\.`,String.raw`\n\.\.\.`,'gs');
+		let avgFcsts = this.textBetweenStrings(this._productText,String.raw`\.\.`,String.raw`\n\.|\$\$`,'gs');
 		//For each parsed out forecast section, parse it out further into a location and forecast text. 
 		//perhaps we also want to parse out the elevation from the location?
 		let timesRegex = new RegExp(/^(TIME).*/im);		
 		let datesRegex = new RegExp(/^(DATE).*/im);
 		let tabularRegex = new RegExp(/(CLOUD)[\S\s]*/im)		
 		if (avgFcsts) {
+			//Because of the bass ackwards way we need to do this since safari doesnt support lookbacks,
+			//Remove it if the discussion gets in there.
+			if (avgFcsts[0].toLowerCase().includes('discussion')){ avgFcsts.shift(); }
 			avgFcsts.forEach( avgFcst => {
+
 				avgFcst.trim();
+				console.log(avgFcst.split('\n'));
 				let locationPart = avgFcst.split('\n')[0].trim();
+				console.log(locationPart)
 				let location = this.parseLocation(locationPart);
 				let timePart = avgFcst.match(timesRegex)[0];
 				let datePart = avgFcst.match(datesRegex)[0];
@@ -111,6 +117,7 @@ class AVGParser {
 	 */
 	textBetweenStrings(text,begin,end,flags){
 		let betweenRegex = new RegExp(`(${begin})(?<between>.*?)(${end})`,flags);
+		console.log(betweenRegex);
 		let matches = [...text.matchAll(betweenRegex)];
 		let matchesText = matches.map(m => m.groups.between);
 		if (matchesText.length > 0) { return matchesText; }
@@ -129,6 +136,7 @@ class AVGParser {
 	 */
 	parseLocation(locationPart){
 		let name = this.textBetweenStrings(locationPart,'',String.raw`\(`,'gs')
+		console.log(name)
 		if (name) { name = name[0].trim(); }
 		let elevation = this.textBetweenStrings(locationPart,String.raw`\(`,String.raw`\)`,'gs');
 		if (elevation) { elevation = elevation[0].trim(); }
