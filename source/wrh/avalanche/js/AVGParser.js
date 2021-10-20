@@ -47,11 +47,11 @@ class AVGParser {
 	 * @returns {String} - Trimmed up discussion text.
 	 */	
 	parseDiscussion() { 
-		let regex = this.regexBetweenStrings(String.raw`\n\.DISCUSSION\.\.\.`,String.raw`\n\.\.\.`,'gsi');
-		let match = this._productText.match(regex);
-		if (match) { match = match[0].trim(); }
-		match = match.replaceAll('\n\n','<br><br>') //Get our new lines into a html friendly format.
-		return match;
+		let discussion = this.textBetweenStrings(this._productText,String.raw`\n\.DISCUSSION\.\.\.`,String.raw`\n\.\.\.`,'gsi');
+		if (discussion) { 
+			return discussion[0].trim().replaceAll('\n\n','<br><br>') //Get our new lines into a html friendly format.
+		}
+		else { return '' }; 
 	}
 	/**
 	 * Parses out the forecast points into an object that holds the location and forecast data.
@@ -60,14 +60,12 @@ class AVGParser {
 	parseForecastData(){
 		//Parse out the forecast points
 		const forecastData = {};
-		let matchRegex = this.regexBetweenStrings(String.raw`\n\.\.\.`,String.raw`\n\.\.\.`,'gs');
-		let avgFcsts = this._productText.match(matchRegex);
+		let avgFcsts = this.textBetweenStrings(this._productText,String.raw`\n\.\.\.`,String.raw`\n\.\.\.`,'gs');
 		//For each parsed out forecast section, parse it out further into a location and forecast text. 
 		//perhaps we also want to parse out the elevation from the location?
 		let timesRegex = new RegExp(/^(TIME).*/im);		
 		let datesRegex = new RegExp(/^(DATE).*/im);
 		let tabularRegex = new RegExp(/(CLOUD)[\S\s]*/im)		
-		//let tabularRegex = this.regexBetweenStrings(String.raw`${timePart}`,String.raw`$`,'gsi')
 		if (avgFcsts) {
 			avgFcsts.forEach( avgFcst => {
 				avgFcst.trim();
@@ -104,6 +102,25 @@ class AVGParser {
 		return new RegExp(`(?<=${begin}\s*).*?(?=\s*${end})`,flags);
 	}
 	/**
+	 * Utility function to return a text between two given strings
+	 * @param {String} text - Text to search through
+	 * @param {String} begin - Text of the first string to look for
+	 * @param {String} end - Text of the last string to look for
+	 * @param {String} flags - Unseparated list of which query flags to run in the regex(g,s,i,etc) 
+	 * @returns {String} - A Regex that can be matched off of.
+	 */
+	textBetweenStrings(text,begin,end,flags){
+		let betweenRegex = new RegExp(`(${begin})(?<between>.*?)(${end})`,flags);
+		let matches = [...text.matchAll(betweenRegex)];
+		let matchesText = matches.map(m => m.groups.between);
+		if (matchesText.length > 0) { return matchesText; }
+		else { return false; }
+
+		//return new RegExp(`(?<=${begin}\s*).*?(?=\s*${end})`,flags); //Unfortunately Safari doesn't support Lookbehind yet.
+
+	}
+
+	/**
 	 * Location data parsed out into a name and elevation
 	 * @returns {Object} - a parsed out location that includes the name and the elevation
 	 * 
@@ -111,11 +128,9 @@ class AVGParser {
 	 * ...SQUAW FLAT SNOTEL (6240 FT)...
 	 */
 	parseLocation(locationPart){
-		let nRegex = this.regexBetweenStrings('',String.raw`\(`,'s');
-		let name = locationPart.match(nRegex);
+		let name = this.textBetweenStrings(locationPart,'',String.raw`\(`,'gs')
 		if (name) { name = name[0].trim(); }
-		let eRegex = this.regexBetweenStrings(String.raw`\(`,String.raw`\)`,'s');
-		let elevation = locationPart.match(eRegex);
+		let elevation = this.textBetweenStrings(locationPart,String.raw`\(`,String.raw`\)`,'gs');
 		if (elevation) { elevation = elevation[0].trim(); }
 		return { 
 			name : name,

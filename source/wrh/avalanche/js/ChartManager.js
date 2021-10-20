@@ -263,7 +263,7 @@ class ChartManager  {
 		let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'int');		
 		let dateSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'date');	
 
-		this.xAxisMax = tempSeries.at(-1).x;
+		this.xAxisMax = tempSeries[tempSeries.length-1].x;
 		this.xAxisMin = tempSeries[0].x;	
     
 		this._chart1.data.datasets[0].data = windSeries;
@@ -273,9 +273,9 @@ class ChartManager  {
 		this._chart1.data.datasets[4].data = tempSeries;
 		this._chart1.data.datasets[5].data = snowLevelSeries;
 		this._chart1.options.scales.xAxisDayLabels.min = dateSeries[0];
-		this._chart1.options.scales.xAxisDayLabels.max = dateSeries.at(-1)
+		this._chart1.options.scales.xAxisDayLabels.max = dateSeries[dateSeries.length-1]
 		this._chart1.options.scales.xAxis1.min = dateSeries[0];
-		this._chart1.options.scales.xAxis1.max = dateSeries.at(-1)	
+		this._chart1.options.scales.xAxis1.max = dateSeries[dateSeries.length-1]	
 		this._chart1.update();
 	}
 
