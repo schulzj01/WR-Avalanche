@@ -27,11 +27,12 @@ function plotAVGlocations(locationData) {
   var name = locationData.location;
   if (type == 'GridPoint') {
     console.log(name, type);
-    var icon  = 'https://unpkg.com/leaflet@1.2.0/dist/images/marker-icon.png';
+		let icon = ImageRepo.asUrl('snowflakeBlue')
+    //var icon  = 'https://unpkg.com/leaflet@1.2.0/dist/images/marker-icon.png';
     var image = L.icon({
         iconUrl: icon,
-        iconSize:     [15, 20], // size of the icon
-        iconAnchor:   [10, 20], // point of the icon which will correspond to marker's location
+      //  iconSize:     [15, 20], // size of the icon
+      //  iconAnchor:   [10, 20], // point of the icon which will correspond to marker's location
     });
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
     var marker = L.marker( point, { icon: image });
@@ -39,16 +40,18 @@ function plotAVGlocations(locationData) {
     marker.on('click', function(e) {
       populateForecast(name);
     })
-    /*marker.on('mouseover', function(e) {
-    var tooltip = L.popup()
+		
+		marker.bindTooltip(name,{
+			direction: 'top',
+			offset: [10,0],
+			//offset: [-2,-18]
+		});
+/*    marker.on('mouseover', function(e) {
+    var popup = L.popup()
        .setLatLng(e.latlng) 
        .setContent(button)
        .openOn(mainMap);
     });*/
-		marker.bindTooltip(name,{
-			direction: 'top',
-			offset: [-2,-18]
-		});
 //    marker.bindPopup( button, {
 //        maxWidth : 1260
 //    });
@@ -86,7 +89,8 @@ function queryWWA(WFO){
 // Get Winter Wx Specific WWA for the CWA, plot on map
 function getWWA(WWA,WFO) {
   $.getJSON('/source/slc/common_data/support.json', function (support) {
-		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Watches, Warnings and Advisories<br>are for the '+WFO+' County Warning Area only';
+		//TODO  Do we need to specify that these are only winter/avalanche relatd hazards?
+		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Watches, Warnings and Advisories<br>are for the '+WFO+' County Warning Area only'; 
 		var NUM = WWA.features.length;
 		if (NUM != "0") {
 			for (i=0; i<NUM; i++) {
