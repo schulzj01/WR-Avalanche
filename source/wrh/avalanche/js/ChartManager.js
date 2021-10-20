@@ -20,8 +20,7 @@ class ChartManager  {
 		const data = {
 			//labels: dateSeries,
 			//labels: ['A','B','C'],
-			datasets: [
-				{
+			datasets: [{
 					label: 'Wind (mph)',
 					data: [],
 					xAxisID : 'xAxis1',
@@ -41,8 +40,12 @@ class ChartManager  {
 					borderColor: '#b06bff',
 					backgroundColor: '#b06bff',
 					type: 'scatter',
-					pointStyle : 'crossRot',
-					radius: 6,
+					parsing: {
+						yAxisKey: 'gust'
+					},
+					pointStyle : function(ctx) {
+						return _this.createSvgArrow(ctx.dataset.data[ctx.dataIndex]?.dir,'#b06bff')
+					},
 				},{
 					label: '12 Hour Snow Amt (in)',
 					data : [],
@@ -97,106 +100,155 @@ class ChartManager  {
 					pointStyle : 'circle',
 					radius: 4,
 				}
-			]
-		};
-		const plugins = {
-			tooltip: {
-				mode: 'index',
-				position:'cursor',
-				intersect: false,
-				filter: function (tooltipItem) {
-//							console.log(tooltipItem)
-					return true
-					return tooltipItem.datasetIndex !== 0; 
-				}
+			]};
+
+		const scales = {
+			xAxis1: {
+				axis: 'x',
+				grid : { offset: false },
+				offset : false,
+				//max: xAxisMax,
+				//min: xAxisMin,					
+				type: 'timeseries',
+				time: {
+					unit: 'hour',
+					stepSize: 3,
+					tooltipFormat: 'ddd, MMM D hA',
+				},
 			},
-			legend: {
-				labels: {
-					filter: function (legendItem, chartData) {
-						if (legendItem.text === 'Wind Gusts (mph)') { return false; }
-						else return true;
-					},
-				}
+			xAxisDayLabels: {
+				axis: 'x',
+				grid : { 
+					offset: false,
+					lineWidth : 5,
+					borderWidth: 0,
+				},
+				offset : false,				
+				type: 'timeseries',
+				time: {
+					unit: 'day',
+					stepSize: 1,
+					displayFormats: {
+						day: 'dddd, MMM D'
+					}
+				},
+			},		
+			yAxisWind: {
+				axis: 'y',
+				text: 'Wind (mph)',
+				suggestedMin: -5,
+				suggestedMax: 25,
+				color: '#b06bff',
+				display:false,
+				//max: xAxisMax,
+				//min: xAxisMin,					
+				type: 'linear',
+			},
+			yAxisSnow: {
+				axis: 'y',
+				text: 'Snow (in)',
+				min: 0,
+				suggestedMax: 4,
+				display:false,
+				color: '#b06bff',
+				//max: xAxisMax,
+				//min: xAxisMin,					
+				type: 'linear',
+			},
+			yAxisQPF: {
+				axis: 'y',
+				text: '12 Hour Liquid Precip (in)',
+				min: 0,
+				suggestedMax: 1,
+				display:false,
+				color: '#b06bff',
+				//max: xAxisMax,
+				//min: xAxisMin,					
+				type: 'linear',
+			},
+			yAxisTemp: {
+				axis: 'y',
+				text: 'Temperature',
+				suggestedMin: 0,
+				suggestedMax: 30,
+				color: '#b06bff',
+				display:false,
+				//max: xAxisMax,
+				//min: xAxisMin,					
+				type: 'linear',
+			},
+			yAxisSnowLevel: {
+				axis: 'y',
+				text: 'Snow Level (kft)',
+				suggestedMin: -5,
+				suggestedMax: 4,
+				color: '#ff606e',
+				display:false,
+				//max: xAxisMax,
+				//min: xAxisMin,					
+				type: 'linear',
+			},						
+		}
+
+		const tooltip = {
+			mode: 'index',
+			position:'cursor',
+			intersect: false,
+			filter: function (tooltipItem) {
+				return (tooltipItem.parsed.y !== null); 
+			},
+			callbacks : {
+				label : function(context) {
+					let label = context.dataset.label || '';
+					let retLabel = label;
+					retLabel += `: ${context.parsed.y}`
+					if (label == 'Wind (mph)'){
+						if (context.raw.gust) { 
+							retLabel += ` Gust ${context.raw.gust}`;
+						}
+					}
+					else if (label == 'Wind Gusts (mph)') { return false; }
+					return retLabel; 
+				}	
 			}
+		};
+
+		const legend = {
+			labels: {
+				//Remove wind gusts from the chart label
+				filter: function (legendItem, chartData) {
+					if (legendItem.text === 'Wind Gusts (mph)') { return false; }
+					else return true;
+				},
+			},
+			//Change wind label behavior to also toggle wind gusts
+			onClick: function (e, legendItem, legend) {
+				const index = legendItem.datasetIndex;
+				const ci = legend.chart;
+				if (ci.isDatasetVisible(index)) {
+					ci.hide(index);
+					legendItem.hidden = true;
+					if (legendItem.text === 'Wind (mph)') {	ci.hide(index+1); }
+				} else {
+					ci.show(index);
+					if (legendItem.text === 'Wind (mph)') {	ci.show(index+1); }
+					legendItem.hidden = false;
+				}
+			}			
 		}
 
 		const config = {
 			type: 'line',
 			data: data,
 			options: {	
-				plugins: plugins,			
-				scales: {
-					xAxis1: {
-						axis: 'x',
-						grid : { offset: false },
-						offset : true,
-						//max: xAxisMax,
-						//min: xAxisMin,					
-						type: 'time',
-						time: {
-							unit: 'hour',
-							stepSize: 3,
-						},
-						source: 'data',			
-					},
-					yAxisWind: {
-						axis: 'y',
-						text: 'Wind (mph)',
-						suggestedMin: -5,
-						suggestedMax: 25,
-						color: '#b06bff',
-						display:false,
-						//max: xAxisMax,
-						//min: xAxisMin,					
-						type: 'linear',
-					},
-					yAxisSnow: {
-						axis: 'y',
-						text: 'Snow (in)',
-						min: 0,
-						suggestedMax: 4,
-						display:false,
-						color: '#b06bff',
-						//max: xAxisMax,
-						//min: xAxisMin,					
-						type: 'linear',
-					},
-					yAxisQPF: {
-						axis: 'y',
-						text: '12 Hour Liquid Precip (in)',
-						min: 0,
-						suggestedMax: 1,
-						display:false,
-						color: '#b06bff',
-						//max: xAxisMax,
-						//min: xAxisMin,					
-						type: 'linear',
-					},
-					yAxisTemp: {
-						axis: 'y',
-						text: 'Temperature',
-						suggestedMin: 0,
-						suggestedMax: 30,
-						color: '#b06bff',
-						display:false,
-						//max: xAxisMax,
-						//min: xAxisMin,					
-						type: 'linear',
-					},
-					yAxisSnowLevel: {
-						axis: 'y',
-						text: 'Snow Level (kft)',
-						suggestedMin: -5,
-						suggestedMax: 4,
-						color: '#ff606e',
-						display:false,
-						//max: xAxisMax,
-						//min: xAxisMin,					
-						type: 'linear',
-					},						
+				plugins: {
+					tooltip : tooltip,
+					legend : legend,
 				},
+				scales : scales,
 			},
 		};
+		
 
 		let ctx = document.getElementById('chart1').getContext('2d');
 		this._chart1 = new Chart(ctx, config);
@@ -204,8 +256,7 @@ class ChartManager  {
 
 	updateChartData(locationForecast){
 		//Get list of all times for Temperatures
-		let windSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind (mph)'],locationForecast.forecast['wind dir']);	
-		let windGustSeries = this.createSeriesFromAvg(locationForecast.forecast['wind gust (mph)'],'int');
+		let windSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind (mph)'],locationForecast.forecast['wind gust (mph)'],locationForecast.forecast['wind dir']);	
 		let snow12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour snow'],'float');	
 		let qpf12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour qpf'],'float');	
 		let tempSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'int');
@@ -216,13 +267,15 @@ class ChartManager  {
 		this.xAxisMin = tempSeries[0].x;	
     
 		this._chart1.data.datasets[0].data = windSeries;
-		
-		
-    this._chart1.data.datasets[1].data = windGustSeries;
+    this._chart1.data.datasets[1].data = windSeries;
 		this._chart1.data.datasets[2].data = snow12Series;
 		this._chart1.data.datasets[3].data = qpf12Series;
 		this._chart1.data.datasets[4].data = tempSeries;
-		this._chart1.data.datasets[5].data = snowLevelSeries;		
+		this._chart1.data.datasets[5].data = snowLevelSeries;
+		this._chart1.options.scales.xAxisDayLabels.min = dateSeries[0];
+		this._chart1.options.scales.xAxisDayLabels.max = dateSeries.at(-1)
+		this._chart1.options.scales.xAxis1.min = dateSeries[0];
+		this._chart1.options.scales.xAxis1.max = dateSeries.at(-1)	
 		this._chart1.update();
 	}
 
@@ -247,18 +300,19 @@ class ChartManager  {
 		return retVal;
 	}
 
-	createWindSeriesFromAvg(windSpeedData,windDirData){
+	createWindSeriesFromAvg(windSpeedData,windGustData,windDirData){
 		function stringDirectionToDegrees(winddir){
 			let possibleVals = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"]
 			let index = possibleVals.findIndex(l => l === winddir);
 			let degrees = null;
 			if (index !== -1) { degrees = index * 22.5; }
 			return degrees;
-		}		
+		}	
 		let retVal = windSpeedData.map((l,i) => {
 			return ({
 				x: l.date, 
 				y: parseInt(l.val),
+				gust: parseInt(windGustData[i].val),
 				dir: stringDirectionToDegrees(windDirData[i].val)
 			})
 		});
