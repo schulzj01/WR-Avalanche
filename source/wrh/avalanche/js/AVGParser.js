@@ -73,9 +73,7 @@ class AVGParser {
 			avgFcsts.forEach( avgFcst => {
 
 				avgFcst.trim();
-				console.log(avgFcst.split('\n'));
 				let locationPart = avgFcst.split('\n')[0].trim();
-				console.log(locationPart)
 				let location = this.parseLocation(locationPart);
 				let timePart = avgFcst.match(timesRegex)[0];
 				let datePart = avgFcst.match(datesRegex)[0];
@@ -117,7 +115,6 @@ class AVGParser {
 	 */
 	textBetweenStrings(text,begin,end,flags){
 		let betweenRegex = new RegExp(`(${begin})(?<between>.*?)(${end})`,flags);
-		console.log(betweenRegex);
 		let matches = [...text.matchAll(betweenRegex)];
 		let matchesText = matches.map(m => m.groups.between);
 		if (matchesText.length > 0) { return matchesText; }
@@ -136,7 +133,6 @@ class AVGParser {
 	 */
 	parseLocation(locationPart){
 		let name = this.textBetweenStrings(locationPart,'',String.raw`\(`,'gs')
-		console.log(name)
 		if (name) { name = name[0].trim(); }
 		let elevation = this.textBetweenStrings(locationPart,String.raw`\(`,String.raw`\)`,'gs');
 		if (elevation) { elevation = elevation[0].trim(); }
