@@ -39,12 +39,16 @@ function plotAVGlocations(locationData) {
     marker.on('click', function(e) {
       populateForecast(name);
     })
-    marker.on('mouseover', function(e) {
-    var popup = L.popup()
+    /*marker.on('mouseover', function(e) {
+    var tooltip = L.popup()
        .setLatLng(e.latlng) 
        .setContent(button)
        .openOn(mainMap);
-    });
+    });*/
+		marker.bindTooltip(name,{
+			direction: 'top',
+			offset: [-2,-18]
+		});
 //    marker.bindPopup( button, {
 //        maxWidth : 1260
 //    });
@@ -75,7 +79,7 @@ function queryWWA(WFO){
 						'High Wind Warning','High Wind Watch','Extreme Wind Warning',
 						'Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch',
 						'Blizzard Warning','Blizzard Watch','Snow Squall Warning','Freezing Rain Advisory']
-	//}).getByCwa(WFO,getWWA,WFO);	
+	//}).getByCwa(WFO,getWWA,WFO);	 //TODO Make sure to switch back to CWA filtered WWAs before going live.
 	}).getAll(getWWA,WFO); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
 }
 
