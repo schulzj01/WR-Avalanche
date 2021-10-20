@@ -19,7 +19,7 @@ function makeMap() {
     var mapData = L.esri.featureLayer({ url: queryString, style: { fillOpacity: 0, color: "BLUE", weight: 2 }, transparent: true });
     mapData.addTo(mainMap);
   })
-  getWWA(WFO);
+  queryWWA(WFO);
 }
 
 function plotAVGlocations(locationData) {
@@ -60,48 +60,57 @@ function plotAVGlocations(locationData) {
 
   }
 }
+/**
+ * Queries the NWS API to pull out active alerts for a single CWA
+ * @param {String} WFO - 3 character NWS site identifier
+ */
+function queryWWA(WFO){
+	//Alerts filtered out by active CWA. We probably want to move this to a map call? Or better yet, use it to populate the map with the CWA hazards?
+	let cwaAlerts = new NwsApi.Alert({
+		active: true,
+		event: ['Avalanche Advisory','Avalanche Warning','Avalanche Watch', 
+						'Winter Storm Advisory','Winter Storm Warning','Winter Storm Watch',
+						'Wind Advisory','Wind Chill Advisory','Wind Chill Warning','Wind Chill Watch',
+						'Winter Storm Advisory','Winter Storm Warning','Winter Storm Watch',
+						'High Wind Warning','High Wind Watch','Extreme Wind Warning',
+						'Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch',
+						'Blizzard Warning','Blizzard Watch','Snow Squall Warning','Freezing Rain Advisory']
+	//}).getByCwa(WFO,getWWA,WFO);	
+	}).getAll(getWWA,WFO); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
+}
 
 // Get Winter Wx Specific WWA for the CWA, plot on map
-function getWWA(WFO) {
+function getWWA(WWA,WFO) {
   $.getJSON('/source/slc/common_data/support.json', function (support) {
-    $.getJSON('https://api.weather.gov/alerts/active', function(WWA) {
-      var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Watches, Warnings and Advisories<br>are for the '+WFO+' County Warning Area only';
-      var NUM = WWA.features.length;
-      if (NUM != "0") {
-        for (i=0; i<NUM; i++) {
-          var Phenom = (WWA.features[i].properties.event);
-          var issuingOffice = (WWA.features[i].properties.parameters.PIL[0]);
-              issuingOffice = (issuingOffice.substring(issuingOffice.length - 3));
-          if (issuingOffice == WFO) {
-            console.log(issuingOffice);
-            if (Phenom == 'Avalanche Advisory' || Phenom == 'Avalanche Warning' || Phenom == 'Avalanche Watch' || Phenom == 'Winter Weather Advisory' || Phenom == 'Winter Storm Advisory' || Phenom == 'Winter Storm Warning' || Phenom == 'Winter Storm Watch' || Phenom == 'Wind Advisory' || Phenom == 'Wind Chill Advisory' || Phenom == 'Wind Chill Warning' || Phenom == 'Wind Chill Watch' || Phenom == 'Winter Storm Advisory' || Phenom == 'Winter Storm Warning' || Phenom == 'Winter Storm Watch' || Phenom == 'High Wind Warning' || Phenom == 'High Wind Watch' || Phenom == 'Extreme Wind Warning' || Phenom == 'Ice Storm Warning' || Phenom == 'Extreme Cold Warning' || Phenom == 'Extreme Cold Watch' || Phenom == 'Blizzard Warning' || Phenom == 'Blizzard Watch' || Phenom == 'Snow Squall Warning' || Phenom == 'Freezing Rain Advisory)') {
-              for (m=0; m < support.fill.length; m++) {
-                if (Phenom == support.fill[m].product) {
-                  FC = support.fill[m].hex;
-                  var ZONES = WWA.features[i].properties.affectedZones.length;
-                  if (Legend.includes(Phenom)) {
-                    Legend += '' 
-                  } else {
-                    Legend += '<tr><td bgcolor="'+FC+'" width="10px">&nbsp;</td><td>'+Phenom+'</td></tr>';
-                  }
-                  for (j=0; j< ZONES; j++) {
-                    var Affected = (WWA.features[i].properties.affectedZones[j])
-                    console.log(Affected); 
-                    showCountyZone(Affected,FC)
-                  }
-                } 
-              }
-            }
-          }
-        }
-        Legend += '</table>';
-        legend(Legend);
-        console.log(Legend);
-      } else {
-        Legend += '<tr><td colspan="2">There are no watches, warnings <br>or advisories in effect.</td></tr></table>';
-        legend(Legend);
-      }
-    });
+		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Watches, Warnings and Advisories<br>are for the '+WFO+' County Warning Area only';
+		var NUM = WWA.features.length;
+		if (NUM != "0") {
+			for (i=0; i<NUM; i++) {
+				var Phenom = (WWA.features[i].properties.event);					
+				for (m=0; m < support.fill.length; m++) {
+					if (Phenom == support.fill[m].product) {
+						FC = support.fill[m].hex;
+						var ZONES = WWA.features[i].properties.affectedZones.length;
+						if (Legend.includes(Phenom)) {
+							Legend += '' 
+						} else {
+							Legend += '<tr><td bgcolor="'+FC+'" width="10px">&nbsp;</td><td>'+Phenom+'</td></tr>';
+						}
+						for (j=0; j< ZONES; j++) {
+							var Affected = (WWA.features[i].properties.affectedZones[j])
+							console.log(Affected); 
+							showCountyZone(Affected,FC)
+						}
+					} 
+				}
+			}
+			Legend += '</table>';
+			legend(Legend);
+			console.log(Legend);
+		} else {
+			Legend += '<tr><td colspan="2">There are no watches, warnings <br>or advisories in effect.</td></tr></table>';
+			legend(Legend);
+		}
   });
 }
 

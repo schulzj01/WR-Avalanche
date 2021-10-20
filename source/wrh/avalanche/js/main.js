@@ -237,7 +237,6 @@ function parseAndPopulateAvg(avgProducts){
 	populateForecast(locations[0]);
 
 	//The below is just some debugging stuff to see the the output of a AVGParser Object and populate it in the forecast table.
-	console.log('List of the AVG Locations: ' +locations);
 	locations.forEach(location => {
 		let fcst = PARSED_AVG.forecast(location);
 		console.log('Below is the forecast for '+location);
@@ -309,20 +308,6 @@ function populateStaticContent(cwa){
 		type: 'AVG',
 		limit : 1
 	}).getAll(parseAndPopulateAvg)
-
-	//Alerts filtered out by active CWA. We probably want to move this to a map call? Or better yet, use it to populate the map with the CWA hazards?
-	let cwaAlerts = new NwsApi.Alert({
-		active: true,
-		event: ['Avalanche Advisory','Avalanche Warning','Avalanche Watch', 
-		        'Winter Storm Advisory','Winter Storm Warning','Winter Storm Watch',
-		        'Wind Advisory','Wind Chill Advisory','Wind Chill Warning','Wind Chill Watch',
-		        'Winter Storm Advisory','Winter Storm Warning','Winter Storm Watch',
-		        'High Wind Warning','High Wind Watch','Extreme Wind Warning',
-		        'Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch',
-		        'Blizzard Warning','Blizzard Watch','Snow Squall Warning','Freezing Rain Advisory']
-		}).getByCwa(cwa,parseAndPopulateAlerts);						
-//		}).getAll(parseAndPopulateAlerts); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
-
 }
 
 
