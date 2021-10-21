@@ -334,7 +334,10 @@ pageHtml.staticContent= `
 			</div>
 			<div class="c-tab">
 				<div id="forecastGraphicalTabContent" class="c-tab__content">Select a forecast point from the map or drop down menu above.
-				<canvas class="chart" id="chart1"></canvas>
+					<canvas class="chart" id="chartPrecip"></canvas>
+					<div class="chartContainer">
+						<canvas id="chartWind"></canvas>
+					</div>
 				</div>
 			</div>
 			<div class="c-tab">

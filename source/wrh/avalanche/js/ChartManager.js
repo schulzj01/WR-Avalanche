@@ -1,25 +1,137 @@
 class ChartManager  {
 
 	constructor() {
-		this._chart1;
+		this._chartPrecip;
+		this._chartWind;
+		this._chartTemp;
+		this.configureChartJs();
 		this.initializeCharts();
-
 	}
 
-
-	initializeCharts() {
-		const _this = this;
-		/**
-		 * Add cursor functionality to Chart.js
-		 * @returns 
-		 */
+	configureChartJs(){
+		// Add mouse overcursor functionality to Chart.js
 		Chart.Tooltip.positioners.cursor = function(chartElements, coordinates) {
 			return coordinates;
 		}
+	}
+	initializeCharts() {
+		const _this = this;
+		
+
+		const windData = { 
+			datasets: [{
+				label: 'Wind (mph)',
+				data: [],
+				xAxisID : 'xAxis1',
+				yAxisID : 'yAxisWind',
+				borderColor: '#b06bff',
+				backgroundColor: '#b06bff',
+				type: 'line',
+				fill: false,
+				borderWidth : 2,
+				pointStyle : function(ctx) {
+					return _this.createSvgArrow(ctx.dataset.data[ctx.dataIndex]?.dir,'#b06bff')
+				},
+			},{
+				label: 'Wind Gusts (mph)', // We want this label hidden
+				data: [],
+				xAxisID : 'xAxis1',
+				yAxisID : 'yAxisWind',
+				borderColor: '#b06bff',
+				backgroundColor: '#b06bff',
+				type: 'scatter',
+				parsing: {
+					yAxisKey: 'gust'
+				},
+				pointStyle : function(ctx) {
+					return _this.createSvgArrow(ctx.dataset.data[ctx.dataIndex]?.dir,'#b06bff')
+				},
+			}],
+		};
+		const windScales = {
+			xAxis1: {
+				axis: 'x',
+				grid : { offset: false },
+				offset : false,
+				ticks: {display:false },
+
+				type: 'timeseries',
+				time: {
+					unit: 'hour',
+					stepSize: 3,
+					tooltipFormat: 'ddd, MMM D hA',
+				},
+			},
+			xAxisDayLabels: {
+				axis: 'x',
+				grid : { 
+					offset: false,
+					lineWidth : 5,
+					borderWidth: 0,
+				},
+				offset : false,				
+				ticks: {display:false },
+				type: 'timeseries',
+				time: {
+					unit: 'day',
+					stepSize: 1,
+					displayFormats: {
+						day: 'dddd, MMM D'
+					}
+				},
+			},
+			yAxisWind: {
+				axis: 'y',
+				text: 'Wind (mph)',
+				suggestedMin: 5,
+				suggestedMax: 30,
+				color: '#b06bff',
+				display:true,	
+				type: 'linear',
+			},								
+		};
+
+		const windConfig = {
+				type: 'line',
+				data: windData,
+				options: {	
+					plugins: {
+						//tooltip : tooltip,
+						legend : {
+							display : false,
+							position: 'top',
+						//	legend,
+						}
+					},
+					maintainAspectRatio: false,
+					responsive:true,
+					scales : windScales
+				},
+			}
+	
+		/*
+			scales : {
+				yAxisWind: {
+					axis: 'y',
+					text: 'Wind (mph)',
+					suggestedMin: 0,
+					suggestedMax: 25,
+					color: '#b06bff',
+					display:false,			
+					type: 'linear',
+				},
+			},
+			options: {
+				maintainAspectRatio: false,
+				responsive:true,
+				plugins: {
+					//tooltip : tooltip,
+//					legend : legend,
+				},				
+			}
+		}*/
 
 		const data = {
-			//labels: dateSeries,
-			//labels: ['A','B','C'],
 			datasets: [{
 					label: 'Wind (mph)',
 					data: [],
@@ -106,9 +218,7 @@ class ChartManager  {
 			xAxis1: {
 				axis: 'x',
 				grid : { offset: false },
-				offset : false,
-				//max: xAxisMax,
-				//min: xAxisMin,					
+				offset : false,				
 				type: 'timeseries',
 				time: {
 					unit: 'hour',
@@ -139,9 +249,7 @@ class ChartManager  {
 				suggestedMin: -5,
 				suggestedMax: 25,
 				color: '#b06bff',
-				display:false,
-				//max: xAxisMax,
-				//min: xAxisMin,					
+				display:false,				
 				type: 'linear',
 			},
 			yAxisSnow: {
@@ -150,9 +258,7 @@ class ChartManager  {
 				min: 0,
 				suggestedMax: 4,
 				display:false,
-				color: '#b06bff',
-				//max: xAxisMax,
-				//min: xAxisMin,					
+				color: '#b06bff',	
 				type: 'linear',
 			},
 			yAxisQPF: {
@@ -161,9 +267,7 @@ class ChartManager  {
 				min: 0,
 				suggestedMax: 1,
 				display:false,
-				color: '#b06bff',
-				//max: xAxisMax,
-				//min: xAxisMin,					
+				color: '#b06bff',	
 				type: 'linear',
 			},
 			yAxisTemp: {
@@ -172,9 +276,7 @@ class ChartManager  {
 				suggestedMin: 0,
 				suggestedMax: 30,
 				color: '#b06bff',
-				display:false,
-				//max: xAxisMax,
-				//min: xAxisMin,					
+				display:false,		
 				type: 'linear',
 			},
 			yAxisSnowLevel: {
@@ -184,8 +286,6 @@ class ChartManager  {
 				suggestedMax: 4,
 				color: '#ff606e',
 				display:false,
-				//max: xAxisMax,
-				//min: xAxisMin,					
 				type: 'linear',
 			},						
 		}
@@ -200,41 +300,23 @@ class ChartManager  {
 			callbacks : {
 				label : function(context) {
 					let label = context.dataset.label || '';
-					let retLabel = label;
-					retLabel += `: ${context.parsed.y}`
+					let retLabel = label + `: `;
 					if (label == 'Wind (mph)'){
-						if (context.raw.gust) { 
-							retLabel += ` Gust ${context.raw.gust}`;
-						}
+						if (context.raw.dirS) { retLabel += `${context.raw.dirS}` }
+						retLabel+= ` ${context.parsed.y}`
+						if (context.raw.gust) { retLabel += ` Gust ${context.raw.gust}`; }
 					}
 					else if (label == 'Wind Gusts (mph)') { return false; }
+					else {
+						retLabel += `${context.parsed.y}`;
+					}					
 					return retLabel; 
 				}	
 			}
 		};
 
 		const legend = {
-			labels: {
-				//Remove wind gusts from the chart label
-				filter: function (legendItem, chartData) {
-					if (legendItem.text === 'Wind Gusts (mph)') { return false; }
-					else return true;
-				},
-			},
-			//Change wind label behavior to also toggle wind gusts
-			onClick: function (e, legendItem, legend) {
-				const index = legendItem.datasetIndex;
-				const ci = legend.chart;
-				if (ci.isDatasetVisible(index)) {
-					ci.hide(index);
-					legendItem.hidden = true;
-					if (legendItem.text === 'Wind (mph)') {	ci.hide(index+1); }
-				} else {
-					ci.show(index);
-					if (legendItem.text === 'Wind (mph)') {	ci.show(index+1); }
-					legendItem.hidden = false;
-				}
-			}			
+		
 		}
 
 		const config = {
@@ -247,11 +329,71 @@ class ChartManager  {
 				},
 				scales : scales,
 			},
-		};
+		};	
 		
+	/*	//const config2 = Object.assign({},config);	
+		config2.data.datasets =  [{
+				label: 'Wind (mph)',
+				data: [],
+				xAxisID : 'xAxis1',
+				yAxisID : 'yAxisWind',
+				borderColor: '#b06bff',
+				backgroundColor: '#b06bff',
+				type: 'line',
+				fill: false,
+				borderWidth : 2,
+				pointStyle : function(ctx) {
+					return _this.createSvgArrow(ctx.dataset.data[ctx.dataIndex]?.dir,'#b06bff')
+				},
+			},{
+				label: 'Wind Gusts (mph)', // We want this label hidden
+				data: [],
+				xAxisID : 'xAxis1',
+				yAxisID : 'yAxisWind',
+				borderColor: '#b06bff',
+				backgroundColor: '#b06bff',
+				type: 'scatter',
+				parsing: {
+					yAxisKey: 'gust'
+				},
+				pointStyle : function(ctx) {
+					return _this.createSvgArrow(ctx.dataset.data[ctx.dataIndex]?.dir,'#b06bff')
+				},
+			}]*/
 
-		let ctx = document.getElementById('chart1').getContext('2d');
-		this._chart1 = new Chart(ctx, config);
+		/*config2.data.datasets = [{
+			label: 'Wind (mph)',
+			data: [],
+			xAxisID : 'xAxis1',
+			xAxisID : 'yAxisWind',
+			borderColor: '#b06bff',
+			backgroundColor: '#b06bff',
+			type: 'line',
+			fill: false,
+			borderWidth : 2,
+			pointStyle : function(ctx) {
+				return _this.createSvgArrow(ctx.dataset.data[ctx.dataIndex]?.dir,'#b06bff')
+			},
+		},{
+			label: 'Wind Gusts (mph)', // We want this label hidden
+			data: [],
+			xAxisID : 'xAxis1',
+			yAxisID : 'yAxisWind',
+			borderColor: '#b06bff',
+			backgroundColor: '#b06bff',
+			type: 'scatter',
+			parsing: { yAxisKey: 'gust'	},
+			pointStyle : function(ctx) {
+				return _this.createSvgArrow(ctx.dataset.data[ctx.dataIndex]?.dir,'#b06bff')
+			},
+		}]*/
+		//config2.data = windData;
+
+		let ctxPrecip = document.getElementById('chartPrecip').getContext('2d');
+		this._chartPrecip = new Chart(ctxPrecip, config);
+
+		let ctxWind = document.getElementById('chartWind').getContext('2d');
+		this._chartWind = new Chart(ctxWind, windConfig);
 	}
 
 	updateChartData(locationForecast){
@@ -263,20 +405,42 @@ class ChartManager  {
 		let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'int');		
 		let dateSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'date');	
 
-		this.xAxisMax = tempSeries[tempSeries.length-1].x;
-		this.xAxisMin = tempSeries[0].x;	
-    
-		this._chart1.data.datasets[0].data = windSeries;
-    this._chart1.data.datasets[1].data = windSeries;
-		this._chart1.data.datasets[2].data = snow12Series;
-		this._chart1.data.datasets[3].data = qpf12Series;
-		this._chart1.data.datasets[4].data = tempSeries;
-		this._chart1.data.datasets[5].data = snowLevelSeries;
-		this._chart1.options.scales.xAxisDayLabels.min = dateSeries[0];
-		this._chart1.options.scales.xAxisDayLabels.max = dateSeries[dateSeries.length-1]
-		this._chart1.options.scales.xAxis1.min = dateSeries[0];
-		this._chart1.options.scales.xAxis1.max = dateSeries[dateSeries.length-1]	
-		this._chart1.update();
+		let xAxisMin = dateSeries[0];
+		let xAxisMax = dateSeries[dateSeries.length-1];
+
+		let windScales = this._chartWind.options.scales; 
+		let windDatasets = this._chartWind.data.datasets;
+		windDatasets[0].data = windSeries 
+		windDatasets[1].data = windSeries		
+		windScales.xAxisDayLabels.min = xAxisMin;
+		windScales.xAxisDayLabels.max = xAxisMax;
+		windScales.xAxis1.min = xAxisMin;
+		windScales.xAxis1.max = xAxisMax;
+		this._chartWind.update();
+
+		let tempScales = this._chartTemp.options.scales; 
+		let tempDatasets = this._chartWind.data.datasets;
+		tempDatasets[0].data = tempSeries 
+		tempDatasets[1].data = snowLevelSeries
+		tempScales.xAxisDayLabels.min = xAxisMin;
+		tempScales.xAxisDayLabels.max = xAxisMax;
+		tempScales.xAxis1.min = xAxisMin;
+		tempScales.xAxis1.max = xAxisMax;		
+		this._chartTemp.update();
+  
+		this._chartPrecip.data.datasets[0].data = windSeries;
+    this._chartPrecip.data.datasets[1].data = windSeries;
+		this._chartPrecip.data.datasets[2].data = snow12Series;
+		this._chartPrecip.data.datasets[3].data = qpf12Series;
+		this._chartPrecip.data.datasets[4].data = tempSeries;
+		this._chartPrecip.data.datasets[5].data = snowLevelSeries;
+		this._chartPrecip.options.scales.xAxisDayLabels.min = dateSeries[0];
+		this._chartPrecip.options.scales.xAxisDayLabels.max = dateSeries[dateSeries.length-1]
+		this._chartPrecip.options.scales.xAxis1.min = dateSeries[0];
+		this._chartPrecip.options.scales.xAxis1.max = dateSeries[dateSeries.length-1]	
+		this._chartPrecip.update();
+
+		
 	}
 
 
@@ -285,7 +449,7 @@ class ChartManager  {
 		//let svg = `<svg xmlns="http://www.w3.org/2000/svg"  transform="rotate(${direction})" height="30" width="30"><text x="50%" y="50%" text-anchor="middle"  fill="${color}">&#10137;</text></svg>`;
 		let svg = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 22 22" width="20" height="20" transform="rotate(${direction})" fill="${color}">
 		            <circle width="100%" height="100%" fill="#F2F5FF"/>		
-		            <path d="M 11.003631,1 C 14.334303,4.3189564 17.669328,7.6361528 21,10.955989 c -2.127567,0.0018 -4.256584,-9.09e-4 -6.38415,9.09e-4 -0.0044,3.347113 -0.0015,6.694226 -0.0015,10.041338 -2.409113,0.0026 -4.816776,0.0018 -7.225889,9.09e-4 -0.0029,-3.347112 0,-6.695105 -0.0015,-10.042218 -2.128926,-9.09e-4 -4.257943,9.09e-4 -6.38696101,-9.09e-4 C 4.335025,7.6379128 7.664246,4.3163164 11.003625,1 Z" style="stroke-width:3;stroke:#F2F5FF;stroke-opacity:1;stroke-miterlimit:4;stroke-linejoin:round" />
+		            <path d="M 10.996369,21 C 7.665697,17.681044 4.330672,14.363847 1,11.044011 c 2.127567,-0.0018 4.256584,9.09e-4 6.38415,-9.09e-4 0.0044,-3.347113 0.0015,-6.694226 0.0015,-10.041338 2.409113,-0.0026 4.816776,-0.0018 7.225889,-9.09e-4 0.0029,3.347112 0,6.695105 0.0015,10.042218 2.128926,9.09e-4 4.257943,-9.09e-4 6.386961,9.09e-4 C 17.664975,14.362087 14.335754,17.683684 10.996375,21 Z" style="stroke-width:3;stroke:#F2F5FF;stroke-opacity:1;stroke-miterlimit:4;stroke-linejoin:round" />
 		          </svg>`
 		img.src = "data:image/svg+xml;base64,"+btoa(svg);
 		return img
@@ -313,6 +477,7 @@ class ChartManager  {
 				x: l.date, 
 				y: parseInt(l.val),
 				gust: parseInt(windGustData[i].val),
+				dirS: windDirData[i].val, 
 				dir: stringDirectionToDegrees(windDirData[i].val)
 			})
 		});
