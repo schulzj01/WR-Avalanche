@@ -15,9 +15,13 @@ function makeMap() {
     for (i=0; i<cwaINFO.AVG_Sites.length; i++) {
       plotAVGlocations(cwaINFO.AVG_Sites[i])
     }
-    var queryString = 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1';
-    var mapData = L.esri.featureLayer({ url: queryString, style: { fillOpacity: 0, color: "BLUE", weight: 2 }, transparent: true });
-    mapData.addTo(mainMap);
+    $.getJSON('https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=CWA+LIKE+%27'+WFO+'%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=4&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson', function (BOUNDARY) {
+      console.log(BOUNDARY);
+      var outline = BOUNDARY.features[0].geometry;
+      var color_style={"color": "blue", "fillOpacity":0,"width":"2px"};
+      var border = L.geoJson(outline, {style: color_style});
+          border.addTo(mainMap);
+    });
   })
   queryWWA(WFO);
 }
@@ -28,11 +32,8 @@ function plotAVGlocations(locationData) {
   if (type == 'GridPoint') {
     console.log(name, type);
 		let icon = ImageRepo.asUrl('snowflakeBlue')
-    //var icon  = 'https://unpkg.com/leaflet@1.2.0/dist/images/marker-icon.png';
     var image = L.icon({
         iconUrl: icon,
-      //  iconSize:     [15, 20], // size of the icon
-      //  iconAnchor:   [10, 20], // point of the icon which will correspond to marker's location
     });
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
     var marker = L.marker( point, { icon: image });
@@ -40,31 +41,18 @@ function plotAVGlocations(locationData) {
     marker.on('click', function(e) {
       populateForecast(name);
     })
-		
-		marker.bindTooltip(name,{
-			direction: 'top',
-			offset: [10,0],
-			//offset: [-2,-18]
-		});
-/*    marker.on('mouseover', function(e) {
-    var popup = L.popup()
-       .setLatLng(e.latlng) 
-       .setContent(button)
-       .openOn(mainMap);
-    });*/
-//    marker.bindPopup( button, {
-//        maxWidth : 1260
-//    });
+    marker.bindTooltip(name,{
+      direction: 'top',
+      offset: [10,0],
+    });
     marker.addTo(mainMap);
+  // Need to test with a shapefile from an officee using shapefiles
   } else if (type == 'Polygon') {
     console.log(name, type);
     var outline = locationData.geometry.coordinates;
     var color_style={"color": "blue", "fillColor":"blue","fillOpacity":0.5,"width":"1px"};
     var border = L.geoJson(outline, {style: color_style});
         border.addTo(mainMap);
-  } else if (type == 'Zone/County') {
-    console.log(name, type);
-
   }
 }
 /**
@@ -99,6 +87,7 @@ function getWWA(WWA,WFO) {
 					if (Phenom == support.fill[m].product) {
 						FC = support.fill[m].hex;
 						var ZONES = WWA.features[i].properties.affectedZones.length;
+                                                var  description =  WWA.features[i].properties.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;");
 						if (Legend.includes(Phenom)) {
 							Legend += '' 
 						} else {
@@ -107,7 +96,7 @@ function getWWA(WWA,WFO) {
 						for (j=0; j< ZONES; j++) {
 							var Affected = (WWA.features[i].properties.affectedZones[j])
 							console.log(Affected); 
-							showCountyZone(Affected,FC)
+							showCountyZone(Affected,FC,description)
 						}
 					} 
 				}
@@ -138,14 +127,17 @@ function showPolygon (DATA,COLOR,OPAC) {
 };
 
 // COunty/Zone based warnings
-function showCountyZone (LOCATION,COLOR) {
+function showCountyZone (LOCATION,COLOR,DESCRIPTION) {
   if (!standardLayer) {
     var standardLayer = L.layerGroup().addTo(mainMap);
   }
   $.getJSON(LOCATION, function(plot) {
-     var color_style={"color": COLOR, "weight":0,"fillColor":COLOR,"fillOpacity": 0.5};
-     var foreFront = L.geoJson(plot, {style: color_style});
-     foreFront.addTo(standardLayer);
+    var color_style={"color": COLOR, "weight":0,"fillColor":COLOR,"fillOpacity": 0.5};
+    var foreFront = L.geoJson(plot, {style: color_style});
+    foreFront.addTo(standardLayer);
+    foreFront.on('click', function(e) {
+      parseAndPopulateAlerts(DESCRIPTION);
+    })
   })
 };
 
@@ -158,4 +150,3 @@ function legend(Legend) {
       }
       logo.addTo(mainMap);
 }
-

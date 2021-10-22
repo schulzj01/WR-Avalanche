@@ -94,7 +94,7 @@ function getAVYrating(SRC) {
   });
 }
 
-function getWWA(ZONE) {
+function getWWAX(ZONE) {
   document.getElementById("WWA").innerHTML = '<p align="center"><img src="/images/slc/common_images/spinner.gif" height="100px"></p>';
   console.log(ZONE)
 //  $( ".ACTIVE_WARNINGS" ).css('background-color', '#104070');
@@ -253,19 +253,19 @@ function parseAndPopulateAvg(avgProducts){
  * @param {NwsApi.Alert} alerts - A set of NWS API alert products. 
  */
 function parseAndPopulateAlerts(alerts){
-	let alertDivHtml = '';
-	// If the NWS API times out, throw an error
-	if (!alerts) { throw Error('Weather.gov API is Unavailable')}
-	else if (alerts.features.length === 0) { alertDivHtml = 'No active watches or warnings'; }
-	//If our query from the API is successful, indicate it to the user.
-	else { 
-		alertDivHtml = 'Active Watches & Warnings In Effect.  Click on map above (below?) for more information';
-		alertDivHtml+= `<pre>${JSON.stringify(alerts,null,2)}</pre>`
-		//Add the alerts to the map
-		//Placeholder for Al
-	} 
+//	let alertDivHtml = '';
+//	// If the NWS API times out, throw an error
+//	if (!alerts) { throw Error('Weather.gov API is Unavailable')}
+//	else if (alerts.features.length === 0) { alertDivHtml = 'No active watches or warnings'; }
+//	//If our query from the API is successful, indicate it to the user.
+//	else { 
+//		alertDivHtml = 'Active Watches & Warnings In Effect.  Click on map above (below?) for more information';
+//		alertDivHtml+= `<pre>${JSON.stringify(alerts,null,2)}</pre>`
+//		//Add the alerts to the map
+//		//Placeholder for Al
+//	} 
 
-	$('#forecastAlertsTabContent').html(alertDivHtml)
+	$('#forecastAlertsTabContent').html(alerts)
 }
 
 /**
@@ -347,7 +347,6 @@ pageHtml.staticContent= `
 	</div>
 </div>
 <div id="forecastDisplayParserFailure" class="hidden outline preFormatted"></div>
-
 <h3>Local Content (This space will be reserved for local office customization) </h3>
 </div>
 `;
