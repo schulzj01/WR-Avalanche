@@ -184,14 +184,10 @@ p {
 	padding-left: 25px;
 }
 
-.forecastChart { 
+#forecastChart { 
 	width: 100%;
-	height:200px;
+	height:700px;
 }
 
-/*Add in some extra space on our first chart for the header */
-.forecastChart:first-of-type { 
-	height: 300px;
-}
 
 /* Dynamic height content while switching back and forth can toggle the scrollbar, just turn it on at all times*/

@@ -134,8 +134,17 @@ class AVGParser {
 	parseLocation(locationPart){
 		let name = this.textBetweenStrings(locationPart,'',String.raw`\(`,'gs')
 		if (name) { name = name[0].trim(); }
-		let elevation = this.textBetweenStrings(locationPart,String.raw`\(`,String.raw`\)`,'gs');
-		if (elevation) { elevation = elevation[0].trim(); }
+		let elevation = this.textBetweenStrings(locationPart,String.raw`\(`,String.raw`\)`,'gs')[0];
+		
+		if (elevation) { 
+			elevation = elevation.trim(); 
+			if (elevation.includes('-')){ //TODO HANDLE elevation ranges
+				elevation = elevation.replace(/[^0-9]/g, "");	
+			}
+			else { elevation = elevation.replace(/[^0-9]/g, "");	}
+			//Convert to kft
+			elevation = Number(parseInt(elevation) / 1000).toFixed(1)
+		}
 		return { 
 			name : name,
 			elevation : elevation
