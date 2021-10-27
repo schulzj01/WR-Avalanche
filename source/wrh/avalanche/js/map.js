@@ -1,7 +1,7 @@
 function makeMap() {
 //  var wfo = (window.location.pathname.replace('/','').replace('/avalanche','')).toLowerCase();
   var wfo = (window.location.pathname.replace('/source/','').replace('/avalanche/','')).toLowerCase(); //test
-  var wfo = 'slc'; //test
+  var wfo = 'afg'; //test
   var WFO = wfo.toUpperCase();
   $.getJSON('/source/'+wfo+'/avalanche/siteConfig.json', function (cwaINFO) {
     var lat  = cwaINFO.MAPPING.centerLat;  
@@ -16,7 +16,6 @@ function makeMap() {
       plotAVGlocations(cwaINFO.AVG_Sites[i])
     }
     $.getJSON('https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=CWA+LIKE+%27'+WFO+'%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=4&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson', function (BOUNDARY) {
-      console.log(BOUNDARY);
       var outline = BOUNDARY.features[0].geometry;
       var color_style={"color": "blue", "fillOpacity":0,"width":"2px"};
       var border = L.geoJson(outline, {style: color_style});
@@ -27,11 +26,13 @@ function makeMap() {
 }
 
 function plotAVGlocations(locationData) {
+  if (!clickLayer) {
+    var clickLayer = L.layerGroup().addTo(mainMap);
+  }
   var type = locationData.geometry.type;
   var name = locationData.location;
   if (type == 'GridPoint') {
-    console.log(name, type);
-		let icon = ImageRepo.asUrl('snowflakeBlue')
+    let icon = ImageRepo.asUrl('snowflakeBlue')
     var image = L.icon({
         iconUrl: icon,
     });
@@ -45,14 +46,23 @@ function plotAVGlocations(locationData) {
       direction: 'top',
       offset: [10,0],
     });
-    marker.addTo(mainMap);
+    marker.addTo(clickLayer);
   // Need to test with a shapefile from an officee using shapefiles
-  } else if (type == 'Polygon') {
-    console.log(name, type);
-    var outline = locationData.geometry.coordinates;
-    var color_style={"color": "blue", "fillColor":"blue","fillOpacity":0.5,"width":"1px"};
-    var border = L.geoJson(outline, {style: color_style});
-        border.addTo(mainMap);
+  } else if (type == 'ShapeFile') {
+    $.getJSON('/source/slc/avalanche/'+locationData.geometry.coordinates, function(shape) {
+      var outline = shape.features[0].geometry;
+      var color_style={"color": "blue", "fillColor":"blue","fillOpacity":0.5,"width":"1px"};
+      var border = L.geoJson(outline, {style: color_style});
+      border.on('click', function(e) {
+        populateForecast(name);
+      })
+      border.bindTooltip(name,{
+        direction: 'top',
+        offset: [10,0],
+      });
+      border.addTo(clickLayer);
+   })
+   clickLayer.bringToFront();
   }
 }
 /**
@@ -95,7 +105,6 @@ function getWWA(WWA,WFO) {
 						}
 						for (j=0; j< ZONES; j++) {
 							var Affected = (WWA.features[i].properties.affectedZones[j])
-							console.log(Affected); 
 							showCountyZone(Affected,FC,description)
 						}
 					} 
@@ -103,7 +112,6 @@ function getWWA(WWA,WFO) {
 			}
 			Legend += '</table>';
 			legend(Legend);
-			console.log(Legend);
 		} else {
 			Legend += '<tr><td colspan="2">There are no watches, warnings <br>or advisories in effect.</td></tr></table>';
 			legend(Legend);
