@@ -143,7 +143,7 @@ class AVGParser {
 			}
 			else { elevation = elevation.replace(/[^0-9]/g, "");	}
 			//Convert to kft
-			elevation = Number(parseInt(elevation) / 1000).toFixed(1)
+			//elevation = Number(parseInt(elevation) / 1000).toFixed(1)
 		}
 		return { 
 			name : name,
