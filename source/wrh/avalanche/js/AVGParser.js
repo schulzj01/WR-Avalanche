@@ -60,7 +60,7 @@ class AVGParser {
 	parseForecastData(){
 		//Parse out the forecast points
 		const forecastData = {};
-		let avgFcsts = this.textBetweenStrings(this._productText,String.raw`\.\.`,String.raw`\n\.|\$\$`,'gs');
+		let avgFcsts = this.textBetweenStrings(this._productText,String.raw`\.\.\.`,String.raw`\n\n\n|\$\$`,'gs');
 		//For each parsed out forecast section, parse it out further into a location and forecast text. 
 		//perhaps we also want to parse out the elevation from the location?
 		let timesRegex = new RegExp(/^(TIME).*/im);		
@@ -72,13 +72,13 @@ class AVGParser {
 			if (avgFcsts[0].toLowerCase().includes('discussion')){ avgFcsts.shift(); }
 			avgFcsts.forEach( avgFcst => {
 
-				avgFcst.trim();
+				avgFcst = avgFcst.trim();
 				let locationPart = avgFcst.split('\n')[0].trim();
 				let location = this.parseLocation(locationPart);
 				let timePart = avgFcst.match(timesRegex)[0];
 				let datePart = avgFcst.match(datesRegex)[0];
 				let times = this.parseForecastTimes(datePart,timePart)
-
+				
 				let tabularPart = avgFcst.match(tabularRegex)[0].trim();
 				let forecast = this.parseForecastTable(tabularPart,times);
 				let rawForecast = [datePart,timePart,tabularPart].join('\n');
@@ -162,13 +162,15 @@ class AVGParser {
 	 */
 	parseForecastTimes(datePart,timePart){
 		//Find all listed dates in the date string and convert to an array.
-		let dPosRegex = new RegExp(/([A-Z]+ [0-9]{1,2}\/[0-9]{1,2})/g);
+		let dPosRegex = new RegExp(/([A-Z]+ [0-9]{1,2}\/[0-9]{1,2})/ig);
+
 		let dateMatches = [...datePart.matchAll(dPosRegex)];
 		
 		//This is going to be a bit hokey, but we're going to set previous and future dates in the dateMatches, essentially adding creating where 
 		//they "should" be in the string index if they were in fact there.  We'll find out the length of the date based on character values between
 		//the first and second date.
 		let lengthBetweenDateText = dateMatches[1].index - dateMatches[0].index;
+
 		let allAvailableDates = [{
 			date: this.convertTextDateToObject(dateMatches[0][0],-1),
 			start: dateMatches[0].index - lengthBetweenDateText,
@@ -199,7 +201,6 @@ class AVGParser {
 				end : tMatch.index + tMatch[0].length
 			})
 		});
-
 
 		//Loop through the available timestamps, and determine the correct date and character placement
 		let forecastTimes = [];		
@@ -274,7 +275,6 @@ class AVGParser {
 			parsedForecastData[weatherType] = null; 
 			let parsedForecastDataArray = [];
 			for (let i=0; i < forecastTimes.length; i++){
-
 				let parsedForecast = {
 					val : '',
 					date : forecastTimes[i].date
@@ -283,8 +283,8 @@ class AVGParser {
 				if (!weatherType.includes('12 hour')){ parsedForecast.val = columnValue; }
 				else  { 
 					let regex; 
-					//Only look for QPF where the data column starts with .## Then we know we have a start to 12 hour block. 
-					if (weatherType.includes('qpf')) {  regex = new RegExp(/\.[0-9]{2}/); }
+					//Only look for ice and QPF where the data column starts with .## Then we know we have a start to 12 hour block. 
+					if (weatherType.includes('qpf') || weatherType.includes('ice')) {  regex = new RegExp(/\.[0-9]{2}/); }
 					//Only look for snow  where the data column starts with #.# 
 					else if (weatherType.includes('snow')) { regex = new RegExp(/[0-9]{1}\.[0-9]{1}/); }	
 					if (regex.test(columnValue)) { 
