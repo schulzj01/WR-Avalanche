@@ -1,7 +1,9 @@
+let mainMap,clickLayer,standardLayer; 
+
 function makeMap() {
 //  var wfo = (window.location.pathname.replace('/','').replace('/avalanche','')).toLowerCase();
   var wfo = (window.location.pathname.replace('/source/','').replace('/avalanche/','')).toLowerCase(); //test
-  var wfo = 'afg'; //test
+  var wfo = 'slc'; //test
   var WFO = wfo.toUpperCase();
   $.getJSON('/source/'+wfo+'/avalanche/siteConfig.json', function (cwaINFO) {
     var lat  = cwaINFO.MAPPING.centerLat;  
@@ -27,7 +29,7 @@ function makeMap() {
 
 function plotAVGlocations(locationData) {
   if (!clickLayer) {
-    var clickLayer = L.layerGroup().addTo(mainMap);
+    clickLayer = L.layerGroup().addTo(mainMap);
   }
   var type = locationData.geometry.type;
   var name = locationData.location;
@@ -38,10 +40,9 @@ function plotAVGlocations(locationData) {
     });
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
     var marker = L.marker( point, { icon: image });
-    var button = '<div onClick="populateForecast(\''+name+'\')">'+name+'</div>';
-    marker.on('click', function(e) {
-      populateForecast(name);
-    })
+    marker.location = locationData.location;
+		marker.layerType = 'marker';
+    marker.on('click', populateForecastFromMap)
     marker.bindTooltip(name,{
       direction: 'top',
       offset: [10,0],
@@ -53,16 +54,15 @@ function plotAVGlocations(locationData) {
       var outline = shape.features[0].geometry;
       var color_style={"color": "blue", "fillColor":"blue","fillOpacity":0.5,"width":"1px"};
       var border = L.geoJson(outline, {style: color_style});
-      border.on('click', function(e) {
-        populateForecast(name);
-      })
+			border.location = locationData.location;
+			border.layerType = 'polygon';			
+      border.on('click', populateForecastFromMap)
       border.bindTooltip(name,{
         direction: 'top',
         offset: [10,0],
       });
       border.addTo(clickLayer);
-   })
-   clickLayer.bringToFront();
+		})
   }
 }
 /**
@@ -97,7 +97,7 @@ function getWWA(WWA,WFO) {
 					if (Phenom == support.fill[m].product) {
 						FC = support.fill[m].hex;
 						var ZONES = WWA.features[i].properties.affectedZones.length;
-                                                var  description =  WWA.features[i].properties.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;");
+						var description =  WWA.features[i].properties.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;");
 						if (Legend.includes(Phenom)) {
 							Legend += '' 
 						} else {
@@ -105,7 +105,7 @@ function getWWA(WWA,WFO) {
 						}
 						for (j=0; j< ZONES; j++) {
 							var Affected = (WWA.features[i].properties.affectedZones[j])
-							showCountyZone(Affected,FC,description)
+							showCountyZone(Affected,FC,WWA.features[i].properties)
 						}
 					} 
 				}
@@ -123,7 +123,7 @@ function getWWA(WWA,WFO) {
 // Polygon based warnings
 function showPolygon (DATA,COLOR,OPAC) {
   if (!standardLayer) {
-    var standardLayer = L.layerGroup().addTo(mainMap);
+    standardLayer = L.layerGroup().addTo(mainMap);
   }
   plot = DATA.features[0].geometry;
   var originalMsg = JSON.stringify(plot);
@@ -135,17 +135,18 @@ function showPolygon (DATA,COLOR,OPAC) {
 };
 
 // COunty/Zone based warnings
-function showCountyZone (LOCATION,COLOR,DESCRIPTION) {
+function showCountyZone (LOCATION,COLOR,alertProduct) {
   if (!standardLayer) {
-    var standardLayer = L.layerGroup().addTo(mainMap);
+    standardLayer = L.layerGroup().addTo(mainMap);
   }
   $.getJSON(LOCATION, function(plot) {
     var color_style={"color": COLOR, "weight":0,"fillColor":COLOR,"fillOpacity": 0.5};
-    var foreFront = L.geoJson(plot, {style: color_style});
+    var foreFront = L.geoJson(plot, {
+			style: color_style,
+			interactive:false,
+		});
+		foreFront.getLayers()[0].alertProduct = alertProduct;
     foreFront.addTo(standardLayer);
-    foreFront.on('click', function(e) {
-      parseAndPopulateAlerts(DESCRIPTION);
-    })
   })
 };
 
@@ -157,4 +158,64 @@ function legend(Legend) {
         return div;
       }
       logo.addTo(mainMap);
+}
+
+/**
+ * Find a leaflet layer based on the associated location id from the parsed AVG and matching config file.
+ * @param {String} location - The location identifier for the avalanche product
+ */
+function getLayerByLocationId(location){
+	let layer;
+	layer = clickLayer.getLayers().find(l => l.location == location);
+	return layer;
+}
+
+
+function populateForecastFromSelectMenu(location){
+	layer = getLayerByLocationId(location);
+	let center;
+	//Depending on if it's a marker or polygon layer, find the location differently
+	if (layer.layerType == 'marker') { center = layer.getLatLng(); }
+	else { center = layer.getBounds().getCenter(); }
+	
+	//Change the map view to center on the location
+	mainMap.setView(center,10);
+
+	//Clear any previous tooltips out of the layergroup
+	clickLayer.getLayers().forEach(l => l.closeTooltip());
+
+	//Change our layer, trigger the new tooltip, and switch the forecast by triggering the click.
+	//This is essentially just calling populateForecastFromMap;
+	layer.fire('click');
+}
+
+function populateForecastFromMap(e){
+	let location = e.target.location;
+
+	//Update select menu.  Note that select menu protects against inifinite loops by only triggering a forecast change on an actual user interaction
+	$('#forecastPointSelectMenu').val(location);
+
+	populateForecast(location);
+
+	console.log(e)
+	//Determine if this is a map based click or select menu
+	let latlng;
+	if (e.latlng) { latlng = e.latlng; }
+	else { 
+		if (e.target.layerType == 'marker') { latlng = layer.getLatLng(); }
+		else { latlng = layer.getBounds().getCenter(); } //TODO Need to switch this from Center to entire polygon.
+	}	
+	//Query Alert polygons below marker to determine whether or not to display alerts
+	let alerts = findAlertsByLatLng(latlng);
+
+}
+
+function findAlertsByLatLng(latlng){
+	let alerts = [];
+	var results = leafletPip.pointInLayer(latlng, standardLayer);
+	standardLayer.getLayers().forEach(l =>{
+		var results = leafletPip.pointInLayer(latlng, l);
+		if (results.length) { alerts.push(results[0].alertProduct); }
+	})
+	return alerts;
 }

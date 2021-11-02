@@ -1,4 +1,4 @@
-function loadButtonBar () {
+/*function loadButtonBar () {
   $.getJSON('/source/slc/avalanche/config.json', function (INFO) {
     var ButtonRow = '<ul id="areaSelect">';
     var numAreas = INFO.Centers.length;
@@ -67,26 +67,26 @@ function getAVYrating(SRC) {
     if (comment === undefined) {
       comment = 'No comments at this time';
     }
-/*    if (avyInfo.advisories[0].advisory.overall_danger_rating == 'Low') {
-      $( ".BOTTOM_LINE" ).css('background-color', 'green');
-      $( ".BOTTOM_LINE" ).css('color', 'white');
-    } else if (avyInfo.advisories[0].advisory.overall_danger_rating == 'Moderate') {
-      $( ".BOTTOM_LINE" ).css('background-color', 'yellow');
-      $( ".BOTTOM_LINE" ).css('color', 'black');
-    } else if (avyInfo.advisories[0].advisory.overall_danger_rating == 'Considerable') {
-      $( ".BOTTOM_LINE" ).css('background-color', 'orange');
-      $( ".BOTTOM_LINE" ).css('color', 'black');
-    } else if (avyInfo.advisories[0].advisory.overall_danger_rating == 'Extreme') {
-      $( ".BOTTOM_LINE" ).css('background-color', 'red');
-      $( ".BOTTOM_LINE" ).css('color', 'white');
-    } else if (avyInfo.advisories[0].advisory.overall_danger_rating == 'High') {
-      $( ".BOTTOM_LINE" ).css('background-color', 'red');
-      $( ".BOTTOM_LINE" ).css('color', 'white');
-    }  else {
-      $( ".BOTTOM_LINE" ).css('background-color', '#104070');
-      $( ".BOTTOM_LINE" ).css('color', 'white');
-    }
-*/
+    // if (avyInfo.advisories[0].advisory.overall_danger_rating == 'Low') {
+    //   $( ".BOTTOM_LINE" ).css('background-color', 'green');
+    //   $( ".BOTTOM_LINE" ).css('color', 'white');
+    // } else if (avyInfo.advisories[0].advisory.overall_danger_rating == 'Moderate') {
+    //   $( ".BOTTOM_LINE" ).css('background-color', 'yellow');
+    //   $( ".BOTTOM_LINE" ).css('color', 'black');
+    // } else if (avyInfo.advisories[0].advisory.overall_danger_rating == 'Considerable') {
+    //   $( ".BOTTOM_LINE" ).css('background-color', 'orange');
+    //   $( ".BOTTOM_LINE" ).css('color', 'black');
+    // } else if (avyInfo.advisories[0].advisory.overall_danger_rating == 'Extreme') {
+    //   $( ".BOTTOM_LINE" ).css('background-color', 'red');
+    //   $( ".BOTTOM_LINE" ).css('color', 'white');
+    // } else if (avyInfo.advisories[0].advisory.overall_danger_rating == 'High') {
+    //   $( ".BOTTOM_LINE" ).css('background-color', 'red');
+    //   $( ".BOTTOM_LINE" ).css('color', 'white');
+    // }  else {
+    //   $( ".BOTTOM_LINE" ).css('background-color', '#104070');
+    //   $( ".BOTTOM_LINE" ).css('color', 'white');
+    // }
+
     var infoLine = '<table> <tr><th width="200px">Narrative created: </th><th align="left">'+issued+'</th></tr>';
         infoLine = infoLine + '<tr><td>'+image+'</td><td> '+comment+'</td></tr>';
         infoLine = infoLine + '<tr><td>'+note+'</td><td> More avalanche information can be found at <a href="https://www.weather.gov/nwsexit.php?url=https://www.utahavalanchecenter.org" target="_blank">https://www.utahavalanchecenter.org</a></td></tr></table>';
@@ -159,7 +159,7 @@ function modal(header,description) {
   });
 };
 
-
+*/
 
 
 
@@ -230,6 +230,9 @@ function parseAndPopulateAvg(avgProducts){
 
 	//Initialize the graphical forecast charts
 	CHART_MANAGER = new ChartManager();
+
+	//Add the locations to the select menu
+	initializeSelectMenu();
 	
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
 	//This is just to populate the avgForecast for testing until the map and drop down is ready;
@@ -239,7 +242,6 @@ function parseAndPopulateAvg(avgProducts){
 	//The below is just some debugging stuff to see the the output of a AVGParser Object and populate it in the forecast table.
 	locations.forEach(location => {
 		let fcst = PARSED_AVG.forecast(location);
-		console.log('Below is the forecast for '+location);
 		console.log(fcst);
 	});
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 	
@@ -278,18 +280,31 @@ function populateForecast(location){
 	var locationForecast = PARSED_AVG.forecast(location);
 	let tabularRawFcst = locationForecast.raw;
 	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
-
 	$('#forecastTabularTabContent').html(tabularHtml)
-
 	CHART_MANAGER.updateChartData(locationForecast);
+}
+function changeForecastSelectMenu(e){
+	//Only fire this change event if a uesr selects
+	if (e.originalEvent) { populateForecastFromSelectMenu(e.target.value) }
+}
 
-	//Change the forecast label to the location name
-	$('#forecastLocationInfo').html(locationForecast.name)
+//Initialize Select Menu with AVG locations 
+function initializeSelectMenu(){
+	let locations = PARSED_AVG.locations; 
+	$selectMenu = $('#forecastPointSelectMenu');
+	locations.forEach( loc => {
+		let fcst = PARSED_AVG.forecast(loc);
+		let $option = $('<option>', {
+			value: fcst.name,
+			text: `${fcst.name} (${fcst.elevation} ft)`
+		})
+		$selectMenu.append($option);
+	});
+	$selectMenu.change(changeForecastSelectMenu);
 }
 
 
 //Fill our staticContent with the base html then opulate and manipulate the base html with content
-
 function populateStaticContent(cwa){
 	$('#staticContent').html(pageHtml.staticContent);
 
@@ -314,10 +329,13 @@ function populateStaticContent(cwa){
 //National Standard Content Html 
 const pageHtml = {};
 pageHtml.staticContent= `
-<h1> Avalanche Weather Information </h1>
+<h1> </h1>
 <div id="forecastDisplay" class="center-content">
 	<div id="map">Map Placeholder</div>
-	<h3><span id="forecastLocationInfo"></span> Forecast</h3>
+	<h3><span id="forecastLocationInfo"></span> 
+	Avalanche Weather Forecast For: 
+	<select class="select-css" id="forecastPointSelectMenu" placeholder="Select a Location" control-id="ControlID-2"></select>
+</h3>
 	<div class="outline">
 		<div class="c-tabs" id="forecastTabs">
 			<div class="c-tabs-nav">
