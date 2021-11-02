@@ -294,588 +294,588 @@ Z     FREEZING RAIN
 `;
 
 avg.slc = `
-WUS45 KSLC 011903
+FWUS45 KSLC 021405
 AVGSLC
 
 Avalanche Weather Guidance
 National Weather Service Salt Lake City UT
-103 PM MDT Mon Nov 1 2021
+805 AM MDT Tue Nov 2 2021
 
 **********************Northern Wasatch Front***********************
 
 ...Nordic Valley (6991 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  BK  BK  BK  SC  SC  SC  SC  BK  SC  SC  SC
-Cloud Cover (%)  95  95 100 100  90  75  60  55  50  50  45  35  45  55  40  40  35
-Temperature      53  50  47  41  40  38  45  50  48  43  40  36  35  33  45  53  49
-Min/Max Temp                     38              51              32              53
-Wind Dir          W   W   S   S   S   W   W   W   W  NE   E  NE   E   E  SW   W   W
-Wind (mph)        4   5   4   4   2   6   8   9   5   3   3   3   4   4   3   5   5
+Cloud Cover          OV  BK  BK  SC  SC  FW  SC  SC  SC  SC  FW  SC  SC  FW  FW  FW
+Cloud Cover (%)      75  65  65  45  25  20  35  50  45  30  25  35  35  20  15  20
+Temperature          40  45  51  49  42  39  36  33  33  45  54  50  42  39  35  33
+Max/Min Temp                     51              32              54              32
+Wind Dir              W   W   W  NW   W  NW   E   E   E   S   W  NW   E   E   E   E
+Wind (mph)            4   6   8   5   4   3   2   2   3   3   5   4   3   4   4   4
 Wind Gust (mph)                                                                    
-Precip Prob (%)  10  20  50  80  90  80  60  40  30  10  10   5   5   5   5   5   5
-Precip Type       R   R   R   S   S   S   R   R                                    
-12 Hour QPF                    0.17            0.11            0.03            0.00
+Precip Prob (%)      70  30  30  30  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           R   R   R   R                                                
+12 Hour QPF                    0.12            0.01            0.00            0.00
 12 Hour Snow                    0.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.3 9.2 7.9 7.6 7.8 7.8 8.6 8.6 8.6 8.4 8.3 8.1 7.9 7.6 7.8 8.1 8.2
+Snow Level (kft)    8.6 8.4 8.4 8.4 8.2 8.1 7.9 7.8 7.2 7.5 8.2 8.3 8.2 8.2 8.1 8.1
 
 
 ...Powder Mountain (8488 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  BK  BK  SC  SC  SC  BK  BK  SC  SC
-Cloud Cover (%)  95  95  95 100  90  90  85  75  60  55  45  45  50  60  50  45  35
-Temperature      39  41  33  33  35  35  36  35  34  34  34  33  33  31  36  38  33
-Min/Max Temp                     32              37              31              38
-Wind Dir         SW  SW  SW  SW   W   W   W   W  NW  NW  NW   N  NE   E   W   W   W
-Wind (mph)        8   8   9   8   9  12  10  10   9   5   6   6   8   8   8   9   9
+Cloud Cover          OV  OV  OV  BK  SC  FW  SC  SC  SC  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      85  80  75  55  40  25  40  50  50  35  30  30  35  25  20  15
+Temperature          35  34  35  33  34  33  32  32  32  37  39  34  34  34  35  34
+Max/Min Temp                     36              31              39              32
+Wind Dir              W  NW  NW  NW   N   S   E   E   S   W  NW   W  SE  SE  SE  SE
+Wind (mph)           11  11  11  10   8   9   6   6   5   5   5   6   6   9   9  10
 Wind Gust (mph)                                                                    
-Precip Prob (%)  10  20  50  80  90  80  60  40  40  10  10  10  10   5   5   5   5
-Precip Type       R   S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.19            0.08            0.03            0.00
-12 Hour Snow                    1.2             0.2             0.1             0.0
+Precip Prob (%)      90  30  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.17            0.01            0.00            0.00
+12 Hour Snow                    0.5             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.3 9.2 7.9 7.9 8.1 8.2 8.7 8.7 8.6 8.5 8.3 8.1 7.8 7.5 7.8 8.2 8.3
+Snow Level (kft)    8.6 8.5 8.5 8.4 8.2 8.1 7.9 7.8 7.4 7.8 8.4 8.4 8.4 8.2 8.0 8.0
 
 
 ...Snowbasin (8599 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  BK  BK  BK  SC  SC  SC  BK  BK  SC  SC  SC
-Cloud Cover (%)  95  95 100 100  90  80  60  55  60  45  50  45  50  65  50  40  40
-Temperature      37  38  34  33  33  32  31  33  31  31  32  31  30  28  32  34  30
-Min/Max Temp                     32              34              28              35
-Wind Dir         SW  SW   W   W   W   W   W   W   W  NW  NE  NE  NE   E   W   W   W
-Wind (mph)        9   9   9   9  10  13  11  11  10   8   8   9  11  11   9  10  10
+Cloud Cover          OV  BK  BK  SC  FW  FW  SC  BK  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      80  70  70  45  25  25  45  55  55  35  35  35  35  25  20  20
+Temperature          31  31  33  30  30  29  28  27  27  31  35  30  30  31  30  30
+Max/Min Temp                     34              26              35              28
+Wind Dir              W   W   W  NW   S   E  NE   E  SE  SW  NW   W   E  SE  SE  SE
+Wind (mph)           12  11  11  10   9   9   8   9   9   8   6   6   9  10  11  12
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  20  50  80  90  70  50  40  30  10  10   5   5   5   5   5   5
-Precip Type       R   S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.19            0.10            0.01            0.00
-12 Hour Snow                    1.3             0.5             0.1             0.0
+Precip Prob (%)      80  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.23            0.00            0.00            0.00
+12 Hour Snow                    1.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.3 8.1 8.0 8.3 8.2 8.7 8.7 8.6 8.4 8.2 8.1 8.0 7.7 7.9 8.1 8.2
+Snow Level (kft)    8.7 8.4 8.4 8.3 8.2 8.2 8.0 7.8 7.4 7.7 8.2 8.2 8.2 8.2 8.1 8.1
 
 
 ...Farmington Flats (7398 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  BK  BK  BK  BK  SC  SC  BK  BK  SC  SC  SC
-Cloud Cover (%)  95  95  95 100  90  75  65  55  55  50  40  45  55  65  50  40  40
-Temperature      43  43  40  37  37  37  42  41  36  37  37  35  34  34  42  43  35
-Min/Max Temp                     36              42              33              44
-Wind Dir         SW  SW  SW  SW   W   W   W   W   W   W  SE   E   E   E   W   W  NW
-Wind (mph)        8   6   6  10   4  12  11  11  10   5   6   8   8   9   8   9   9
+Cloud Cover          OV  OV  BK  SC  SC  SC  SC  BK  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      80  75  70  45  30  30  45  55  55  30  30  35  35  20  15  15
+Temperature          37  42  42  37  37  36  33  33  33  42  45  37  36  36  33  33
+Max/Min Temp                     42              32              45              33
+Wind Dir              W   W   W  NW   N   W   E   E  SE   E  NW   N  SE  SE  SE  SE
+Wind (mph)           10  11  11   9   6   6   3   3   4   6   6   5   6   6  10  10
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  20  40  80  90  70  50  40  30  10  10  10  10   5   5   5   5
-Precip Type       R   R   R   S   S   S   R   R                                    
-12 Hour QPF                    0.24            0.07            0.01            0.00
+Precip Prob (%)      80  40  30  30  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           R   R   R   S                                                
+12 Hour QPF                    0.13            0.01            0.00            0.00
 12 Hour Snow                    0.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.5 9.4 7.6 7.7 8.1 8.0 8.8 8.6 8.5 8.4 8.2 8.1 8.0 7.7 7.9 8.2 8.3
+Snow Level (kft)    8.8 8.5 8.4 8.2 8.2 8.2 8.0 7.8 7.5 7.9 8.5 8.4 8.3 8.2 8.2 8.1
 
 
 ...Monte Cristo (7398 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  OV  BK  SC  SC  BK  BK  BK  BK  SC
-Cloud Cover (%)  90  95  95 100  95  95  85  80  80  65  50  40  55  65  50  50  40
-Temperature      43  42  37  37  37  36  40  41  36  36  36  33  33  32  39  44  39
-Min/Max Temp                     36              41              32              44
-Wind Dir         SW  SE  SE   S   W   W   W   W  NW   W  NW  NW  NE  SE   W   W   W
-Wind (mph)        5   6   6   6   5  11  11  11   9   5   5   6   6   6   6   6   8
+Cloud Cover          OV  OV  OV  OV  SC  SC  SC  SC  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      85  85  80  70  50  35  40  45  55  35  40  30  40  25  20  15
+Temperature          37  39  42  38  36  36  34  34  33  41  45  40  36  37  35  35
+Max/Min Temp                     42              32              45              34
+Wind Dir              W   W  NW  NW   N  NE  NE   E   S   W   W  NW  SE  SE   S   S
+Wind (mph)            9  11  10   8   6   5   5   4   4   5   4   5   5   6   6   6
 Wind Gust (mph)                                                                    
-Precip Prob (%)  20  20  50  80  90  80  60  40  30  10  10   5   5   5   5   5   5
-Precip Type       R   R   S   S   S   S   R   R                                    
-12 Hour QPF                    0.19            0.07            0.02            0.00
+Precip Prob (%)      90  30  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           R   R   R   R                                                
+12 Hour QPF                    0.18            0.01            0.00            0.00
 12 Hour Snow                    0.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.3 9.2 7.5 7.5 7.8 7.8 8.8 8.7 8.6 8.5 8.3 8.0 7.6 7.3 7.8 8.3 8.4
+Snow Level (kft)    8.5 8.5 8.5 8.4 8.2 8.1 7.8 7.5 7.4 7.9 8.5 8.5 8.3 8.1 8.0 7.7
 
 
 ...Sessions Mountains (8397 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  BK  BK  BK  SC  SC  BK  BK  SC  SC  SC
-Cloud Cover (%)  95  95  95 100  90  75  80  70  60  50  40  40  55  70  50  40  40
-Temperature      45  41  37  36  36  35  40  40  37  36  36  36  36  32  40  43  38
-Min/Max Temp                     35              42              32              43
-Wind Dir         SW  SW  SW  SW   W   W   W   W   W   W  SW   E   E   E   W   W  NW
-Wind (mph)       10   6   8   9   6  11  12  13  10   5   5   8   6   9  10  10   9
+Cloud Cover          OV  OV  OV  BK  SC  FW  SC  BK  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      85  80  70  55  30  25  40  50  55  30  30  30  35  20  15  20
+Temperature          36  40  42  38  33  33  34  34  31  41  43  40  35  36  35  36
+Max/Min Temp                     42              31              44              33
+Wind Dir              W   W  NW  NW   N  SW  NE  NE   E   S  NW  NW  SE  SE  SE  SE
+Wind (mph)           10  12  12   9   6   6   4   4   4   6   6   5   5   5   9   9
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  40  80  90  70  50  40  20  10  10  10  10   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.20            0.11            0.01            0.00
-12 Hour Snow                    0.8             0.3             0.0             0.0
+Precip Prob (%)      80  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.09            0.01            0.00            0.00
+12 Hour Snow                    0.3             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.5 9.4 8.0 7.9 8.1 8.1 8.8 8.7 8.5 8.4 8.2 8.1 8.0 7.7 8.0 8.3 8.3
+Snow Level (kft)    8.9 8.6 8.4 8.3 8.2 8.2 8.0 7.8 7.6 8.0 8.7 8.5 8.3 8.1 8.2 8.1
 
 
 ***********************Central Wasatch Front***********************
 
-...Alta ...
+...Alta (8900 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  BK  SC  SC  SC  BK  OV  SC  SC  SC
-Cloud Cover (%)  95  95  95 100  85  75  80  75  65  50  35  45  65  75  50  45  45
-Temperature      36  36  35  35  34  32  33  34  32  30  30  30  29  28  34  36  32
-Min/Max Temp                     32              34              28              36
-Wind Dir         SW  SW  SW   W   W   W   W   W  NW  NW  NW  NW  NW  NW   W  NW  NW
-Wind (mph)       11  11  12  13   9  14  11  12  12  10  11  11  11  11   9   8   8
+Cloud Cover          OV  OV  OV  BK  SC  SC  SC  SC  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      80  75  80  55  40  25  45  50  55  25  35  35  30  20  15  15
+Temperature          32  32  33  31  29  28  27  27  27  34  37  34  30  31  30  31
+Max/Min Temp                     34              27              37              29
+Wind Dir              W   W  NW  NW  NW  NW  NW   W   W  NW  NW  SW  SW   S  SE  SE
+Wind (mph)           12  12  12  12  10  11   5   5   5   6   5   5   8  10  11  11
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  30  80  90  70  50  30  20  10  10   5   5   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.21            0.14            0.01            0.00
-12 Hour Snow                    1.9             1.3             0.1             0.0
+Precip Prob (%)      70  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.06            0.01            0.00            0.00
+12 Hour Snow                    0.5             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.3 9.2 9.2 9.0 9.0 9.0 9.0 8.8 8.4 8.1 8.0 7.9 7.5 8.0 8.5 8.6
+Snow Level (kft)    9.0 8.9 8.7 8.3 8.1 8.2 8.0 7.8 7.5 8.1 9.0 8.8 8.1 8.1 8.1 8.0
 
 
-...LCC - Alta/Snowbird...
+...LCC - Alta/Snowbird (9436 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  BK  SC  SC  SC  BK  OV  BK  SC  SC
-Cloud Cover (%)  95  95  95 100  85  75  75  80  60  50  40  45  65  75  50  45  45
-Temperature      35  36  35  34  34  32  32  33  31  30  29  29  29  28  33  35  31
-Min/Max Temp                     32              33              27              35
-Wind Dir         SW  SW  SW  SW   W   W   W  NW  NW  NW  NW  NW  NW  NW   W  NW  NW
-Wind (mph)       11  11  12  13   8  14  11  12  12  10  11  12  12  11   9   8   8
+Cloud Cover          OV  OV  OV  BK  SC  SC  SC  SC  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      80  75  75  55  40  30  50  50  55  25  35  35  30  20  20  15
+Temperature          31  32  33  31  28  27  27  27  27  34  36  33  30  30  29  30
+Max/Min Temp                     33              26              36              28
+Wind Dir              W   W  NW  NW  NW  NW  NW   N   N  NW  NW  NW  SW   S  SE  SE
+Wind (mph)           12  12  12  12  12  11   5   5   5   6   5   5   8  10  11  11
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  30  80  90  70  50  30  20  10  10   5   5   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.21            0.14            0.01            0.00
-12 Hour Snow                    1.9             1.3             0.1             0.0
+Precip Prob (%)      70  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.06            0.01            0.00            0.00
+12 Hour Snow                    0.6             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.3 9.2 9.1 9.0 8.9 9.0 9.0 8.8 8.4 8.1 8.0 7.9 7.5 8.1 8.5 8.6
+Snow Level (kft)    9.0 8.9 8.7 8.3 8.1 8.2 8.0 7.8 7.5 8.2 9.1 8.8 8.1 8.1 8.1 8.0
 
 
 ...LCC - Mid Canyon/Elberts (9298 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  BK  SC  SC  SC  BK  OV  SC  SC  SC
-Cloud Cover (%)  95  95  95 100  85  75  80  75  65  45  35  45  65  75  50  45  45
-Temperature      43  39  37  37  36  34  37  38  36  32  32  31  31  30  37  41  37
-Min/Max Temp                     33              39              29              41
-Wind Dir         SW  SW  SW   W   W   W   W  NW  NW  NW  NW   N   N   N   W  NW  NW
-Wind (mph)        9  10  11  12   6  12  11  11  10   9   9  10  10   9   8   6   6
+Cloud Cover          OV  OV  OV  BK  SC  SC  SC  SC  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      80  80  75  55  40  25  45  50  55  25  30  35  30  20  20  15
+Temperature          34  37  39  37  31  31  30  29  29  39  43  38  32  32  32  32
+Max/Min Temp                     40              28              43              31
+Wind Dir              W   W  NW  NW   N   N   W  NE  SW  NW  NW  NE   S  SE  SE  SE
+Wind (mph)           11  11  11  10   9   9   5   4   4   5   4   5   8   9  10  10
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  30  80  90  70  50  30  20  10  10   5   5   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.22            0.15            0.01            0.00
-12 Hour Snow                    1.2             0.8             0.1             0.0
+Precip Prob (%)      70  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.05            0.01            0.00            0.00
+12 Hour Snow                    0.3             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.3 9.0 8.9 8.8 8.7 9.0 9.0 8.8 8.4 8.1 8.0 7.9 7.6 8.0 8.5 8.6
+Snow Level (kft)    9.0 8.9 8.7 8.3 8.1 8.2 8.0 7.8 7.5 8.2 9.0 8.7 8.1 8.1 8.1 8.1
 
 
-...BCC - Brigton/Solitude ...
+...BCC - Brigton/Solitude (8757 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  BK  BK  BK  BK  SC  SC  BK  OV  SC  SC  SC
-Cloud Cover (%)  95  95  95 100  85  75  70  70  60  55  40  45  60  70  45  40  40
-Temperature      37  37  35  34  33  32  33  34  31  31  31  31  31  29  33  36  31
-Min/Max Temp                     32              34              29              36
-Wind Dir         SW  SW  SW  SW   W   W   W   W  NW  NW  NW  NW  NW  NW  NW  NW  NW
-Wind (mph)       10  10  11  12   6  12  11  12  11   9  10  10  10  10   8   8   8
+Cloud Cover          OV  BK  OV  BK  SC  SC  SC  SC  BK  FW  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      75  65  75  55  40  30  50  50  55  25  35  35  30  20  15  15
+Temperature          32  33  34  30  29  29  29  28  28  35  39  34  31  32  32  32
+Max/Min Temp                     35              27              39              30
+Wind Dir              W  NW  NW  NW  NW  NW  NW  NW  NW   N   N   W  SW   S  SE  SE
+Wind (mph)           11  12  12  12  11  10   5   4   4   5   5   4   6  10  11  10
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  30  70  90  70  50  40  20  10  10   5   5   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.14            0.10            0.00            0.00
-12 Hour Snow                    1.0             0.7             0.0             0.0
+Precip Prob (%)      70  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.05            0.01            0.00            0.00
+12 Hour Snow                    0.4             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.3 9.1 9.0 9.0 8.9 9.1 8.9 8.8 8.4 8.1 8.0 7.9 7.5 8.0 8.5 8.6
+Snow Level (kft)    9.0 8.9 8.6 8.3 8.1 8.2 8.0 7.8 7.5 8.1 8.9 8.8 8.3 8.0 8.1 7.9
 
 
-...BCC - Mid Canyon/Spruces ...
+...BCC - Mid Canyon/Spruces (7398 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  BK  SC  SC  SC  BK  OV  BK  SC  SC
-Cloud Cover (%)  95  95  95 100  85  75  80  75  65  50  35  45  60  70  50  40  40
-Temperature      44  41  37  38  37  36  39  38  37  33  33  34  32  31  40  43  36
-Min/Max Temp                     35              41              30              43
-Wind Dir         SW  SW  SW   W  SW   W   W   W   W   W   W   W  NW   N   W  NW  NW
-Wind (mph)        9   9   9   9   4  11  10  10   8   5   6   9   8   8   6   6   6
+Cloud Cover          OV  OV  OV  SC  SC  FW  SC  BK  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      85  80  75  50  35  25  45  50  55  30  30  30  30  20  15  15
+Temperature          35  39  41  35  31  29  30  30  29  41  45  38  33  33  35  35
+Max/Min Temp                     41              28              45              31
+Wind Dir              W   W  NW   W   W   W   N  SE  SW  NW  NW   E   S   S  SE  SE
+Wind (mph)            9  10  10   8   5   5   3   3   3   4   4   4   5   6   9   9
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  30  80  90  70  50  40  20  10  10   5   5   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.18            0.12            0.01            0.00
-12 Hour Snow                    0.9             0.5             0.0             0.0
+Precip Prob (%)      70  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.04            0.01            0.00            0.00
+12 Hour Snow                    0.2             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.3 8.7 8.6 8.6 8.6 9.0 9.0 8.8 8.4 8.1 8.0 7.9 7.5 8.0 8.5 8.6
+Snow Level (kft)    9.0 8.9 8.7 8.3 8.1 8.2 8.0 7.8 7.5 8.1 8.8 8.7 8.2 8.0 8.1 8.0
 
 
-...Park City ...
+...Park City (6568 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  BK  BK  BK  BK  SC  SC  BK  OV  SC  SC  SC
-Cloud Cover (%)  95  95  95 100  90  75  60  55  55  60  45  45  60  70  50  40  35
-Temperature      52  45  43  40  38  37  46  49  46  39  35  33  31  32  45  51  46
-Min/Max Temp                     37              49              30              51
-Wind Dir          W  SW   W  SE   W  NW  NW  NW  NW   W   W  SW   E   E  NW  NW  NW
-Wind (mph)        3   4   5   4   2   6   9  11   8   3   4   4   4   4   5   6   5
+Cloud Cover          OV  BK  OV  BK  SC  SC  SC  BK  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      75  65  70  50  35  25  45  55  60  30  30  30  35  20  15  15
+Temperature          38  45  49  46  37  34  31  28  30  45  52  48  38  34  31  29
+Max/Min Temp                     49              28              52              29
+Wind Dir              W  NW  NW  NW   W   W  SW   S   E   S  NW  NW  SE  SE  SE  SE
+Wind (mph)            5   9  11   6   4   3   2   2   2   4   4   3   2   3   5   5
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  20  70  90  70  50  40  30  10  10   5   5   5   5   5   5
-Precip Type           R   R   R   R   R   R   R                                    
-12 Hour QPF                    0.07            0.06            0.00            0.00
+Precip Prob (%)      70  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           R   R   R   R                                                
+12 Hour QPF                    0.02            0.01            0.00            0.00
 12 Hour Snow                    0.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.2 8.2 7.9 7.8 8.1 8.9 8.8 8.6 8.4 8.2 8.0 7.8 7.4 8.0 8.4 8.6
+Snow Level (kft)    8.9 8.8 8.6 8.3 8.1 8.2 8.0 7.7 7.4 7.8 8.4 8.6 8.3 8.0 7.9 7.7
 
 
-...Park City Ridgeline ...
+...Park City Ridgeline (9570 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  BK  BK  BK  BK  SC  SC  BK  OV  SC  SC  SC
-Cloud Cover (%)  95  95  95 100  85  70  60  60  60  55  40  45  60  70  45  40  35
-Temperature      41  40  38  36  33  33  35  35  34  32  33  33  33  30  35  39  35
-Min/Max Temp                     33              37              30              39
-Wind Dir         SW  SW  SW  SW   W   W   W   W   W  NW   W   W  NW  NW  NW  NW  NW
-Wind (mph)       10  10  10  10   6  11  11  12  11   9   8   9   9   8   6   8   8
+Cloud Cover          OV  BK  OV  BK  SC  SC  SC  SC  BK  FW  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      75  65  75  50  40  30  45  50  55  25  30  30  30  20  15  15
+Temperature          33  35  36  32  31  31  31  31  29  37  40  35  33  34  34  35
+Max/Min Temp                     37              29              40              32
+Wind Dir              W   W  NW  NW  NW  NW  NW  NW  SW   N   N   W   S   S  SE  SE
+Wind (mph)           11  11  12  12   9   8   5   4   4   5   5   4   6   8  10  10
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  30  80  90  70  50  40  20  10  10   5   5   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.12            0.09            0.00            0.00
-12 Hour Snow                    0.6             0.6             0.0             0.0
+Precip Prob (%)      70  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.04            0.01            0.00            0.00
+12 Hour Snow                    0.3             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.2 8.8 8.8 8.8 8.8 9.0 8.9 8.7 8.4 8.2 8.0 7.9 7.5 8.0 8.5 8.6
+Snow Level (kft)    8.9 8.8 8.6 8.3 8.1 8.2 8.0 7.8 7.5 8.0 8.7 8.8 8.3 7.9 8.0 7.9
 
 
 **********************Southern Wasatch Front***********************
 
-...Aspen Grove ...
+...Aspen Grove (7300 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  BK  BK  BK  BK  SC  SC  SC  BK  BK  BK  SC  SC
-Cloud Cover (%)  95  95  90  95  80  65  60  65  65  50  30  35  55  65  50  35  35
-Temperature      42  40  40  40  36  36  41  41  35  32  31  31  30  32  43  45  34
-Min/Max Temp                     35              44              30              46
-Wind Dir         SW  SW   W  SW  SW   W   W   W   W  NW  NW   N  NE  NE   W   W  NW
-Wind (mph)       10  10  10  10   8  11  10  11  10   8   8   9  11   9   6   8   8
+Cloud Cover          BK  BK  BK  SC  FW  FW  SC  SC  BK  SC  FW  SC  SC  FW  FW  FW
+Cloud Cover (%)      65  55  60  40  25  25  35  45  50  25  25  30  25  15  10  10
+Temperature          37  45  45  36  32  29  31  30  30  43  47  36  31  30  31  31
+Max/Min Temp                     45              28              47              30
+Wind Dir              W   W  NW   W   W  SW  NW  NE   E   E  NW  NW  NE   E  SE  SE
+Wind (mph)           10  10  12   9   6   8   5   5   4   5   4   4   5   6   9  11
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  30  70  80  60  40  30  20  10  10   5   5   5   5   5   5
-Precip Type           R   R   S   S   S   S   S                                    
-12 Hour QPF                    0.11            0.09            0.01            0.00
-12 Hour Snow                    0.0             0.3             0.0             0.0
-12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.3 8.4 8.3 8.2 8.3 9.0 8.9 8.7 8.4 8.2 7.9 7.9 7.6 8.0 8.5 8.6
-
-
-...Soldier Hollow ...
-
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
-
-Cloud Cover      OV  OV  OV  OV  OV  BK  OV  OV  OV  SC  SC  SC  BK  BK  SC  SC  SC
-Cloud Cover (%)  90  95  95  95  80  65  70  70  70  50  35  40  55  65  45  35  35
-Temperature      53  49  45  42  40  38  42  49  47  42  38  34  33  32  41  51  48
-Min/Max Temp                     38              49              32              51
-Wind Dir         SW  SW   W   N  SW   S   S  NW  NW   N   N   N  NE  NE  NW  NW  NW
-Wind (mph)        6   4   5   4   2   5   5   9   6   3   3   3   4   4   3   6   5
-Wind Gust (mph)                                                                    
-Precip Prob (%)   5   5  20  70  80  60  40  30  20  10  10   5   5   5   5   5   5
-Precip Type           R   R   R   R   R   R   R                                    
-12 Hour QPF                    0.05            0.03            0.00            0.00
+Precip Prob (%)      50  30  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.03            0.00            0.00            0.00
 12 Hour Snow                    0.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.3 8.7 8.4 8.4 8.3 9.1 8.9 8.7 8.4 8.2 7.9 7.8 7.5 8.0 8.5 8.7
+Snow Level (kft)    8.9 8.9 8.7 8.3 7.9 8.1 8.0 7.7 7.3 7.9 8.7 8.7 8.4 8.1 8.1 7.9
 
 
-...Sundance ...
+...Soldier Hollow (5804 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  BK  BK  BK  SC  SC  SC  BK  BK  SC  SC  SC
-Cloud Cover (%)  90  95  90  95  85  70  65  65  65  50  30  35  55  65  50  35  30
-Temperature      59  54  52  48  45  41  49  53  52  46  43  40  38  37  48  54  53
-Min/Max Temp                     41              53              36              55
-Wind Dir         SW   S  SW  SE  SW   W   W   W   W  NW  NE  NE  NE  NE  NW   W  NW
-Wind (mph)        9   6   8  10   4   8  10  11   9   4   4   6   8   6   5   6   6
+Cloud Cover          BK  BK  OV  SC  SC  FW  SC  SC  BK  FW  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      65  60  70  45  30  25  40  45  50  25  25  25  30  20  10  10
+Temperature          38  43  51  48  41  36  32  31  30  41  52  49  42  38  34  32
+Max/Min Temp                     51              29              53              31
+Wind Dir              S   W  NW   N  NW  NW  NW  NE  SE  SE  NE   W   E  SE  SE  SE
+Wind (mph)            4   6  10   5   3   3   2   2   2   3   4   3   2   2   4   4
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5   5  20  60  80  60  40  30  20  10  10   5   5   5   5   5   5
-Precip Type           R   R   R   R   R   R   R                                    
-12 Hour QPF                    0.09            0.08            0.01            0.00
+Precip Prob (%)      60  30  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           R   R   R   R                                                
+12 Hour QPF                    0.02            0.01            0.00            0.00
 12 Hour Snow                    0.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.4 8.5 8.3 8.2 8.2 9.0 9.0 8.7 8.4 8.2 8.0 7.9 7.6 8.0 8.4 8.6
+Snow Level (kft)    8.9 8.9 8.6 8.2 8.0 8.1 7.9 7.6 7.1 7.7 8.3 8.7 8.4 8.0 8.0 7.8
 
 
-...Bunnels Fork ...
+...Sundance (6690 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  BK  BK  BK  SC  SC  SC  BK  BK  SC  SC  SC
-Cloud Cover (%)  90  95  90  95  80  70  65  65  65  50  30  35  55  65  50  35  30
-Temperature      45  46  42  39  38  37  41  41  39  38  38  37  35  34  40  43  38
-Min/Max Temp                     36              43              34              43
-Wind Dir         SW  SW   S  SW  SW   W   W   W   W  NW   E  NE  NE  NE   W   W   W
-Wind (mph)       11   9   9  10   8  10  11  12  11   6   6   8   9   6   6   8   8
+Cloud Cover          BK  BK  BK  SC  FW  FW  SC  SC  BK  SC  FW  SC  FW  FW  FW  FW
+Cloud Cover (%)      65  55  65  40  20  20  35  45  50  25  25  25  25  15  10  10
+Temperature          41  50  55  52  46  42  38  37  35  49  56  53  46  43  39  38
+Max/Min Temp                     55              34              56              37
+Wind Dir              S  SW   W  SW  SE   E  NE  NE  NE  NE  NW   W  NE   E   E   E
+Wind (mph)            8   9  10   8   4   5   3   3   3   5   6   5   3   4   6   6
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5   5  20  60  80  60  40  30  30  10  10   5   5   5   5   5   5
-Precip Type           R   R   S   S   S   R   R                                    
-12 Hour QPF                    0.09            0.08            0.01            0.00
+Precip Prob (%)      50  30  30  30  10   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           R   R   R                                                    
+12 Hour QPF                    0.03            0.00            0.00            0.00
 12 Hour Snow                    0.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.4 8.6 8.4 8.3 8.3 9.0 9.0 8.8 8.5 8.3 8.0 7.9 7.6 8.0 8.4 8.6
+Snow Level (kft)    8.9 8.9 8.7 8.3 8.0 8.1 7.9 7.7 7.3 7.8 8.4 8.6 8.3 8.1 8.1 7.9
 
 
-...Provo Peak Area ...
+...Bunnels Fork (7904 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  BK  BK  BK  BK  SC  SC  SC  BK  OV  SC  SC  SC
-Cloud Cover (%)  90  95  95  95  80  70  60  60  55  50  30  40  55  70  50  40  35
-Temperature      39  39  35  34  32  33  34  35  33  32  32  31  30  30  33  36  33
-Min/Max Temp                     32              35              29              36
-Wind Dir          W  SW  SW  SW   W   W  NW   W  NW  NW   N   N   N  NE   W   W   W
-Wind (mph)       11   9  10  10   8  11  12  12  11   9   9   9   9   8   8   8   8
+Cloud Cover          BK  BK  BK  SC  FW  FW  SC  SC  SC  SC  FW  SC  SC  FW  FW  FW
+Cloud Cover (%)      65  55  60  40  25  20  35  45  50  30  25  25  30  15  10  10
+Temperature          37  41  43  38  37  35  35  34  34  41  45  41  39  38  38  38
+Max/Min Temp                     44              33              45              36
+Wind Dir             SW   W   W   W   S  SE   E   E  NE   E  NW  NW   E  SE   E   E
+Wind (mph)            9  11  12   9   5   6   5   5   3   5   6   5   4   6   6   9
 Wind Gust (mph)                                                                    
-Precip Prob (%)   0   5  20  70  80  60  50  30  30  10  10   5   5   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.14            0.10            0.01            0.00
-12 Hour Snow                    1.1             0.7             0.0             0.0
+Precip Prob (%)      50  30  40  40  10   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           R   R   S                                                    
+12 Hour QPF                    0.03            0.00            0.00            0.00
+12 Hour Snow                    0.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.4 9.4 8.3 8.2 8.2 8.2 9.0 9.0 8.8 8.6 8.3 8.1 8.0 7.7 8.0 8.3 8.5
+Snow Level (kft)    8.9 8.9 8.7 8.3 8.0 8.2 8.0 7.7 7.4 7.8 8.4 8.5 8.3 8.1 8.1 8.0
+
+
+...Provo Peak Area (10197 ft)...
+
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
+
+Cloud Cover          BK  BK  BK  SC  SC  FW  SC  SC  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      65  55  65  35  25  25  40  45  55  30  30  30  30  15  15  10
+Temperature          34  34  36  34  31  31  30  30  30  34  37  35  33  32  31  32
+Max/Min Temp                     36              29              37              31
+Wind Dir              W  NW  NW  NW  NW   S   W  NE   N  SW  NW  NW  NE   E  SE   E
+Wind (mph)           11  12  12  12   8   8   5   5   5   5   5   5   6   8   9   9
+Wind Gust (mph)                                                                    
+Precip Prob (%)      50  30  40  40  10   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S                                                    
+12 Hour QPF                    0.04            0.00            0.00            0.00
+12 Hour Snow                    0.3             0.0             0.0             0.0
+12 Hour Ice                    0.00            0.00            0.00            0.00
+Snow Level (kft)    9.0 8.9 8.8 8.4 8.1 8.3 8.1 7.9 7.5 8.0 8.7 8.5 8.3 8.0 8.0 7.9
 
 
 ****************************Logan Area*****************************
 
-...Cherry Peak ...
+...Cherry Peak (7451 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  OV  BK  BK  SC  BK  BK  SC  SC  SC
-Cloud Cover (%)  95  95  95 100  95  85  80  80  80  60  55  45  50  55  50  45  45
-Temperature      42  43  39  36  38  36  37  41  39  39  39  38  36  35  39  42  38
-Min/Max Temp                     36              41              35              42
-Wind Dir          S   S  SW  SW   W   W   W   W   W   W   W  NE  NE   E   W   W   W
-Wind (mph)        5   6   6   6   6   6   9   9   8   5   4   5   6   4   5   5   5
+Cloud Cover          OV  OV  OV  BK  SC  FW  SC  SC  SC  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      85  80  80  70  40  25  35  50  50  30  30  40  45  25  20  20
+Temperature          36  36  40  38  37  36  35  36  35  40  43  39  37  38  37  38
+Max/Min Temp                     40              35              43              36
+Wind Dir             NW   W   W   W   N  NE  NE  NE  SW   W   W  NE  SE  SE  SE  SE
+Wind (mph)            5   8   9   6   5   5   4   4   3   4   4   3   4   5   6   6
 Wind Gust (mph)                                                                    
-Precip Prob (%)  20  20  50  80  90  80  50  40  40  10  10   5   5   5   5   5   5
-Precip Type       R   R   S   S   S   S   R   R                                    
-12 Hour QPF                    0.20            0.11            0.01            0.00
+Precip Prob (%)      90  30  30  30  10   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           R   R   R                                                    
+12 Hour QPF                    0.15            0.00            0.00            0.00
 12 Hour Snow                    0.0             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.2 9.0 7.7 7.6 7.8 7.7 8.5 8.6 8.7 8.5 8.2 7.8 7.5 7.0 7.6 8.0 8.1
+Snow Level (kft)    8.3 8.3 8.4 8.3 8.0 8.0 7.8 7.7 7.4 7.7 8.0 8.2 8.0 7.8 7.7 7.6
 
 
-...Beaver Mountain ...
+...Beaver Mountain (6880 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  OV  BK  BK  SC  BK  BK  SC  SC  SC
-Cloud Cover (%)  95  90  90  95  95  80  85  70  80  70  55  45  55  55  50  45  40
-Temperature      44  37  34  34  34  34  40  42  39  33  31  30  29  29  42  45  40
-Min/Max Temp                     34              42              29              45
-Wind Dir          S   W  SW  SW   W   W   W   W   W   W   W  NW  NW  NE   W   W   W
-Wind (mph)        8   5   6   6   3  12  13  14  12   5   4   5   8   6  10  10  11
+Cloud Cover          OV  OV  OV  OV  BK  SC  SC  BK  SC  SC  SC  SC  SC  FW  SC  FW
+Cloud Cover (%)      80  80  75  70  50  35  40  55  50  35  35  35  45  25  25  25
+Temperature          35  41  42  40  35  31  29  28  28  43  45  41  32  30  28  28
+Max/Min Temp                     42              28              45              28
+Wind Dir              W   W  NW  NW  NW  NW   N  NW  SW  SW   W   W  SW   S  SE  SE
+Wind (mph)            9  13  13  11   6   5   1   1   3   9   8   5   1   3   6   6
 Wind Gust (mph)                                                                    
-Precip Prob (%)  20  30  60  80  90  80  60  40  40  20  20   5   5   5   5   5   5
-Precip Type       R   R   S   S   S   S   S   R   S   S                            
-12 Hour QPF                    0.21            0.10            0.01            0.00
-12 Hour Snow                    0.7             0.3             0.0             0.0
+Precip Prob (%)      90  50  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.09            0.01            0.00            0.00
+12 Hour Snow                    0.1             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.2 9.0 7.6 7.6 7.7 7.6 8.5 8.7 8.6 8.5 8.1 7.8 7.3 7.0 7.5 8.1 8.1
+Snow Level (kft)    8.4 8.4 8.4 8.3 8.0 7.9 7.6 7.4 7.4 7.9 8.5 8.3 8.2 7.9 7.8 7.5
 
 
-...Tony Grove ...
+...Tony Grove (8799 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  OV  BK  BK  SC  BK  BK  BK  SC  SC
-Cloud Cover (%)  95  95  95  95 100  85  90  90  80  65  60  45  55  60  50  50  45
-Temperature      33  32  32  33  33  33  33  33  33  28  26  32  30  30  36  38  33
-Min/Max Temp                     31              36              26              38
-Wind Dir         SW  SW  SW  SW   W   W   W   W   W   W  NW  NW  NW  NW   W   W   W
-Wind (mph)       10   9   9  11   9  14  16  16  14   9   8   9   9   8  11  11  11
+Cloud Cover          OV  OV  OV  OV  BK  SC  SC  BK  SC  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      85  85  75  75  50  30  35  50  50  30  35  35  45  25  20  20
+Temperature          34  36  34  33  30  27  30  29  30  37  39  34  29  28  33  33
+Max/Min Temp                     37              26              39              27
+Wind Dir              W   W   W  NW  NW  NW   W   W  NW   W   W  SW   W  SE  SE  SE
+Wind (mph)           11  16  16  13  10   8   4   3   5  10   9   6   6   6   9   9
 Wind Gust (mph)                                                                    
-Precip Prob (%)  20  30  60  80  90  80  60  40  40  20  20   5   5   5   5   5   5
-Precip Type       S   S   S   S   S   S   S   S   S   S                            
-12 Hour QPF                    0.37            0.29            0.03            0.00
-12 Hour Snow                    2.3             2.2             0.2             0.0
+Precip Prob (%)      90  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.17            0.01            0.00            0.00
+12 Hour Snow                    1.5             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.2 9.1 8.7 8.5 8.5 8.4 8.6 8.7 8.7 8.5 8.2 7.8 7.4 7.0 7.6 8.1 8.1
+Snow Level (kft)    8.4 8.4 8.5 8.4 8.0 8.0 7.8 7.6 7.4 8.0 8.5 8.4 8.2 7.8 7.8 7.7
 
 
-...Wellsville Mountains ...
+...Wellsville Mountains (8780 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  BK  BK  BK  BK  SC  SC  SC  BK  SC  SC  SC
-Cloud Cover (%)  95  95  95 100  90  70  55  60  65  50  45  40  45  55  45  40  35
-Temperature      40  40  36  35  33  33  35  35  34  34  35  34  33  32  34  37  35
-Min/Max Temp                     33              37              32              37
-Wind Dir         SW  SW   W   W   W   W   W   W   W   N   N   N  NE  NE  NW   W   W
-Wind (mph)        6   8   9   9  10  11   9   9   8   6   6   9   9   9   8   6   8
+Cloud Cover          OV  BK  BK  SC  SC  FW  SC  SC  SC  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      70  55  65  50  25  20  45  50  50  30  35  35  40  25  20  25
+Temperature          35  35  37  35  34  33  33  32  32  36  38  37  35  34  34  33
+Max/Min Temp                     37              32              39              33
+Wind Dir              W   W   W  NW   W  SW  SE   S  SW   W  NW   W  SE  SE  SE  SE
+Wind (mph)           10  10  10   9   8   8   8   8   6   5   5   5   6   9  10  11
 Wind Gust (mph)                                                                    
-Precip Prob (%)  10  20  40  80  90  70  60  40  40  10  10   5   5   5   5   5   5
-Precip Type       S   S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.17            0.17            0.01            0.00
-12 Hour Snow                    0.7             1.0             0.1             0.0
+Precip Prob (%)      80  20  30  30  10   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S                                                    
+12 Hour QPF                    0.11            0.00            0.00            0.00
+12 Hour Snow                    0.6             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.2 9.1 7.9 7.8 7.8 7.6 8.5 8.5 8.6 8.6 8.3 8.0 7.7 7.4 7.7 7.9 8.0
+Snow Level (kft)    8.4 8.3 8.4 8.4 8.0 8.0 7.9 7.8 7.5 7.6 8.1 8.2 8.2 8.1 8.1 8.2
 
 
 **************************Western Uintas***************************
 
-...Christmas Meadows ...
+...Christmas Meadows (8573 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  OV  OV  BK  BK  BK  BK  SC  SC  SC
-Cloud Cover (%)  95  95  95  95  95  90  85  80  95  80  65  60  65  60  45  40  40
-Temperature      43  35  32  33  32  33  37  37  32  31  28  26  24  26  41  45  38
-Min/Max Temp                     31              42              23              45
-Wind Dir          W  SW  SW  SW  SW   W   W   W   W   W  SW   W   W  SW  NW  NW   W
-Wind (mph)        6   6   6   5   2  10  10  11   9   4   3   4   6   6   6   6   6
+Cloud Cover          OV  OV  OV  OV  OV  BK  SC  SC  BK  SC  FW  SC  SC  SC  FW  FW
+Cloud Cover (%)      95  90  85  90  80  55  45  45  50  35  25  35  35  25  20  15
+Temperature          33  39  42  38  31  28  24  22  26  42  46  40  28  25  26  26
+Max/Min Temp                     42              21              46              25
+Wind Dir              W   W   W  NW  NW   S   S  SE  SW  NW  NW  NW   S   S   S   S
+Wind (mph)            9  11  11   8   3   2   2   2   3   4   5   3   2   3   6   6
 Wind Gust (mph)                                                                    
-Precip Prob (%)  10  20  20  50  80  80  60  50  40  20  20  10  10  10  10   5   5
-Precip Type       R   S   S   S   S   S   S   S   S   S                            
-12 Hour QPF                    0.06            0.08            0.05            0.00
-12 Hour Snow                    0.1             0.2             0.2             0.0
+Precip Prob (%)      90  60  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.09            0.03            0.00            0.00
+12 Hour Snow                    0.5             0.2             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.5 9.2 9.1 9.1 9.0 8.9 9.1 9.1 8.9 8.6 8.2 7.8 7.5 7.1 7.8 8.4 8.5
+Snow Level (kft)    9.0 9.0 8.8 8.5 8.2 8.0 7.7 7.3 7.4 8.0 8.7 8.7 8.2 7.5 7.4 7.4
 
 
-...Mirror Lake ...
+...Mirror Lake (10525 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  OV  BK  BK  SC  BK  BK  BK  SC  SC
-Cloud Cover (%)  90  90  95  95  95  90  85  85  90  65  60  50  65  65  50  45  45
-Temperature      33  31  31  30  31  31  29  31  27  27  27  25  24  23  32  33  27
-Min/Max Temp                     29              31              22              34
-Wind Dir         SW  SW  SW  SW   W  NW  NW  NW  NW  NW  NW   N  NW  NW  NW   W   W
-Wind (mph)       10   8   9   9   8  13  13  12  13  10   9   9   9   8   9   6   6
+Cloud Cover          OV  OV  OV  OV  BK  SC  SC  SC  BK  SC  SC  SC  SC  SC  FW  FW
+Cloud Cover (%)      90  90  80  80  60  45  40  50  55  35  30  40  35  30  20  15
+Temperature          32  30  31  29  27  26  24  24  25  33  36  29  26  27  27  28
+Max/Min Temp                     32              22              36              26
+Wind Dir              W  NW  NW  NW   N  SW   N   N  SW  NW  NW   W  SE  SE   S   S
+Wind (mph)           12  13  12  12  11  10   5   5   5   6   5   3   4   5   6   6
 Wind Gust (mph)                                                                    
-Precip Prob (%)  10  20  20  60  80  80  60  50  50  20  20  10  10  10  10  10  10
-Precip Type       S   S   S   S   S   S   S   S   S   S                            
-12 Hour QPF                    0.14            0.20            0.03            0.00
-12 Hour Snow                    1.5             1.8             0.3             0.0
+Precip Prob (%)      90  60  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.16            0.02            0.00            0.00
+12 Hour Snow                    1.5             0.2             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.6 9.3 9.3 9.2 9.2 9.1 9.2 9.2 9.0 8.4 8.0 7.6 7.5 7.1 7.9 8.6 8.6
+Snow Level (kft)    9.1 9.0 8.9 8.4 8.0 8.0 7.7 7.3 7.4 8.2 9.0 9.0 8.2 7.6 7.7 7.5
 
 
-...Samak ...
+...Samak (7648 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  OV  BK  SC  SC  BK  BK  SC  SC  SC
-Cloud Cover (%)  85  95  95  95 100  85  80  75  85  70  50  50  60  65  50  35  40
-Temperature      45  38  35  34  34  34  39  41  38  32  30  28  26  29  40  44  40
-Min/Max Temp                     33              41              26              44
-Wind Dir          W  SE  SE   S  NW   W  NW  NW  NW  NW   N   N   N   N  NW  NW   W
-Wind (mph)        4   4   4   4   3   6   9   9   9   4   4   4   5   5   5   4   4
+Cloud Cover          OV  OV  OV  BK  SC  SC  SC  SC  BK  SC  FW  SC  SC  FW  FW  FW
+Cloud Cover (%)      90  80  75  65  45  30  35  45  50  35  20  30  35  25  20  10
+Temperature          35  39  42  39  32  29  25  24  29  41  45  41  31  29  28  28
+Max/Min Temp                     42              24              45              28
+Wind Dir              W  NW  NW  NW   W   N   E   E   S   W   W   W   E   E  SE  SE
+Wind (mph)            6   9  10   8   4   4   2   2   2   3   3   1   2   3   4   4
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  20  70  80  70  50  40  40  10  10   5   5   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.12            0.11            0.01            0.00
-12 Hour Snow                    0.5             0.3             0.0             0.0
+Precip Prob (%)      70  40  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.06            0.01            0.00            0.00
+12 Hour Snow                    0.1             0.0             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.5 9.3 8.3 8.2 8.3 8.2 9.1 9.1 8.9 8.4 8.1 7.7 7.6 7.2 7.9 8.5 8.5
+Snow Level (kft)    9.0 9.0 8.9 8.4 8.0 7.9 7.6 7.2 7.2 8.0 8.8 8.7 8.2 7.9 7.9 7.7
 
 
-...Wolf Creek Pass ...
+...Wolf Creek Pass (9797 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  OV  BK  BK  SC  BK  BK  BK  SC  SC
-Cloud Cover (%)  90  95  95  95  95  85  80  75  75  70  55  45  60  65  55  35  35
-Temperature      34  34  33  33  33  33  35  35  33  30  29  28  25  28  36  40  35
-Min/Max Temp                     32              38              25              40
-Wind Dir          W  SW  SW  SW  NW  NW  NW  NW  NW  NW  NW  NW  NW  NW   W   W   W
-Wind (mph)        6   6   6   6   6  13  13  13  12  10   8   9  10   9   8   8   6
+Cloud Cover          OV  OV  OV  BK  BK  SC  SC  SC  BK  SC  SC  SC  SC  SC  FW  FW
+Cloud Cover (%)      85  75  75  70  50  30  35  45  55  40  25  30  35  30  20  10
+Temperature          35  35  38  34  29  28  26  25  30  38  42  36  28  28  28  28
+Max/Min Temp                     38              24              42              27
+Wind Dir             NW  NW  NW  NW  NW  NW  NW   W  NW  NW   W  SW   E  SE  NE   E
+Wind (mph)           12  12  12  12  10   8   5   4   4   5   5   3   4   4   5   6
 Wind Gust (mph)                                                                    
-Precip Prob (%)   5  10  20  70  70  70  50  40  40  10  10   5   5   5   5   5   5
-Precip Type           S   S   S   S   S   S   S                                    
-12 Hour QPF                    0.09            0.14            0.02            0.00
-12 Hour Snow                    0.8             1.0             0.1             0.0
+Precip Prob (%)      70  30  40  40  20   0   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.07            0.01            0.00            0.00
+12 Hour Snow                    0.5             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.5 9.4 8.9 8.9 8.8 8.8 9.2 9.2 9.0 8.6 8.1 7.6 7.7 7.2 8.0 8.6 8.6
+Snow Level (kft)    9.0 9.1 9.0 8.5 8.1 8.1 7.7 7.4 7.4 8.1 8.8 8.8 8.3 7.9 8.0 7.7
 
 
-...Thousand Peaks Ranch ...
+...Thousand Peaks Ranch (9600 ft)...
 
-Date                             Tuesday 11/02                   Wednesday 11/03
-Time (LT)        18  21  00  03  06  09  12  15  18  21  00  03  06  09  12  15  18
-                 6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  
+Date             Tuesday 11/02                   Wednesday 11/03                 
+Time (LT)        06  09  12  15  18  21  00  03  06  09  12  15  18  21  00  03  06
+                 6a  9a  12  3p  6p  9p  12  3a  6a  9a  12  3p  6p  9p  12  3a  6a  
 
-Cloud Cover      OV  OV  OV  OV  OV  OV  OV  OV  OV  OV  BK  BK  BK  BK  BK  SC  SC
-Cloud Cover (%)  85  95  95  95 100  90  90  90  95  75  55  50  60  65  50  40  40
-Temperature      41  38  37  35  34  34  37  39  36  33  30  29  28  28  38  41  36
-Min/Max Temp                     33              39              26              41
-Wind Dir         SW   S   S  SW   W   W   W   W  NW   W  NW   N  NW   S  NW  NW   W
-Wind (mph)        8   6   6   6   5  10  11  11   9   5   4   4   5   5   8   6   6
+Cloud Cover          OV  OV  OV  OV  BK  SC  SC  SC  BK  SC  SC  SC  SC  FW  FW  FW
+Cloud Cover (%)      95  90  85  80  65  40  35  45  55  35  30  30  35  25  15  10
+Temperature          33  36  38  35  31  30  26  26  27  39  42  37  31  31  29  29
+Max/Min Temp                     39              25              43              28
+Wind Dir              W   W   W  NW  SW  NE   E   E   S  NW  NW   W  SE  SE   S   S
+Wind (mph)           10  11  11   8   4   4   4   4   3   4   5   4   4   5   6   6
 Wind Gust (mph)                                                                    
-Precip Prob (%)  10  20  20  60  90  80  60  50  50  20  20  10  10  10  10   5   5
-Precip Type       S   S   S   S   S   S   S   S   S   S                            
-12 Hour QPF                    0.16            0.17            0.03            0.00
-12 Hour Snow                    0.8             0.7             0.1             0.0
+Precip Prob (%)     100  50  50  50  20   5   0   0   0   0   0   0   0   0   0   0
+Precip Type           S   S   S   S                                                
+12 Hour QPF                    0.12            0.02            0.00            0.00
+12 Hour Snow                    0.5             0.1             0.0             0.0
 12 Hour Ice                    0.00            0.00            0.00            0.00
-Snow Level (kft)9.5 9.2 8.7 8.7 8.6 8.6 9.1 9.2 8.9 8.5 8.2 7.7 7.5 7.1 7.8 8.4 8.5
+Snow Level (kft)   10.010.0 9.9 9.5 9.110.010.711.310.411.212.810.810.310.710.710.6
 
 $$
 
