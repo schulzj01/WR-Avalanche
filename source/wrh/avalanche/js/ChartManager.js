@@ -372,6 +372,7 @@ class ChartManager  {
 
 	updateChartData(locationForecast){
 
+		console.log(locationForecast)
 		//Get list of all times for Temperatures
 		let windSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind (mph)'],locationForecast.forecast['wind dir']);	
 		let windGustSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind gust (mph)'],locationForecast.forecast['wind dir']);	
@@ -380,7 +381,8 @@ class ChartManager  {
 		let snow12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour snow'],'float');	
 		let qpf12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour qpf'],'float');	
 		let tempSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'int');
-		let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'int');		
+		let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'float');	
+
 		let dateSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'date');	
 
 		let xAxisMin = dateSeries[0];
