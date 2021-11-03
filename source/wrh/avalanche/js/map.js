@@ -42,7 +42,7 @@ function plotAVGlocations(locationData) {
     var marker = L.marker( point, { icon: image });
     marker.location = locationData.location;
 		marker.layerType = 'marker';
-    marker.on('click', populateForecastFromMap)
+    marker.on('click', populateAvgContentFromMap)
     marker.bindTooltip(name,{
       direction: 'top',
       offset: [10,0],
@@ -56,7 +56,7 @@ function plotAVGlocations(locationData) {
       var border = L.geoJson(outline, {style: color_style});
 			border.location = locationData.location;
 			border.layerType = 'polygon';			
-      border.on('click', populateForecastFromMap)
+      border.on('click', populateAvgContentFromMap)
       border.bindTooltip(name,{
         direction: 'top',
         offset: [10,0],
@@ -151,13 +151,13 @@ function showCountyZone (LOCATION,COLOR,alertProduct) {
 };
 
 function legend(Legend) {
-  var logo = L.control({position: 'bottomleft'});
-      logo.onAdd = function(mainMap){
-      var div = L.DomUtil.create('div', 'myclass');
-          div.innerHTML= Legend;
-        return div;
-      }
-      logo.addTo(mainMap);
+	var logo = L.control({position: 'bottomleft'});
+	logo.onAdd = function(mainMap){
+	var div = L.DomUtil.create('div', 'myclass');
+			div.innerHTML= Legend;
+		return div;
+	}
+	logo.addTo(mainMap);
 }
 
 /**
@@ -170,8 +170,14 @@ function getLayerByLocationId(location){
 	return layer;
 }
 
-
-function populateForecastFromSelectMenu(location){
+/**
+ * Handle the population of the AVG forecast from a select menu choice.  Note that in order to query alerts, the select 
+ * menu will actually trigger the populateAvgContentFromMap with a click event.  This function just handles moving the 
+ * map.
+ * @param {String} location - the location id that matches the AVG and siteConfig files. 
+ *  
+ */
+function populateAvgContentFromSelectMenu(location){
 	layer = getLayerByLocationId(location);
 	let center;
 	//Depending on if it's a marker or polygon layer, find the location differently
@@ -185,29 +191,33 @@ function populateForecastFromSelectMenu(location){
 	clickLayer.getLayers().forEach(l => l.closeTooltip());
 
 	//Change our layer, trigger the new tooltip, and switch the forecast by triggering the click.
-	//This is essentially just calling populateForecastFromMap;
+	//This is essentially just calling populateAvgContentFromMap;
 	layer.fire('click');
 }
-
-function populateForecastFromMap(e){
-	let location = e.target.location;
+/**
+ * Handle the population of the AVG forecast and alerts from a click event on the map (programatically or user interactive)
+ * This will also query the area under the "clicked" location to determine if there are any alert areas under the click, and 
+ * populate the alert areas with them. 
+ * @param {Leaflet Eventd} e - Click event object
+ */
+function populateAvgContentFromMap(e){
+	$('#forecastTabs').removeClass('hidden')
+	let layer = e.target;
+	let location = layer.location;
 
 	//Update select menu.  Note that select menu protects against inifinite loops by only triggering a forecast change on an actual user interaction
 	$('#forecastPointSelectMenu').val(location);
 
 	populateForecast(location);
 
-	console.log(e)
-	//Determine if this is a map based click or select menu
+	//Determine if this is a map based click or select menu.  Map clicks have a e.latlng, 
 	let latlng;
-	if (e.latlng) { latlng = e.latlng; }
-	else { 
-		if (e.target.layerType == 'marker') { latlng = layer.getLatLng(); }
-		else { latlng = layer.getBounds().getCenter(); } //TODO Need to switch this from Center to entire polygon.
-	}	
+	if (layer.layerType == 'marker') { latlng = layer.getLatLng(); }
+	else { latlng = layer.getBounds().getCenter(); } //TODO Need to switch this from Center to entire polygon.
+	
 	//Query Alert polygons below marker to determine whether or not to display alerts
 	let alerts = findAlertsByLatLng(latlng);
-
+	populateAlerts(alerts)
 }
 
 function findAlertsByLatLng(latlng){

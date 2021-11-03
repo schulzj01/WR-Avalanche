@@ -216,7 +216,7 @@ function parseAndPopulateAvg(avgProducts){
 	
 	//Populate the discussion display, and show the tab if there is a discussion.
 	if (PARSED_AVG.discussion) { 
-		$('#forecastDiscussionTabContent').html(PARSED_AVG.discussion);
+		$('#forecastDiscussionTabContent').html(`<div class="alertSection">${PARSED_AVG.discussion}</div>`);
 		$('#forecastDiscussionTab').removeClass('hidden');
 		$('#forecastDiscussionTabContent').removeClass('hidden');
 	}
@@ -231,14 +231,10 @@ function parseAndPopulateAvg(avgProducts){
 	//Initialize the graphical forecast charts
 	CHART_MANAGER = new ChartManager();
 
-	//Add the locations to the select menu
+	//Add the locations to the select menu, and populate the first location
 	initializeSelectMenu();
-	
-	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
-	//This is just to populate the avgForecast for testing until the map and drop down is ready;
-	//This will eventually just be called by the map when it's ready
-	populateForecast(locations[0]);
 
+	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
 	//The below is just some debugging stuff to see the the output of a AVGParser Object and populate it in the forecast table.
 	locations.forEach(location => {
 		let fcst = PARSED_AVG.forecast(location);
@@ -251,10 +247,10 @@ function parseAndPopulateAvg(avgProducts){
 /**
  * 
  * Parses out active the NWS Alerts, and will populate the the Alert information with the products.
- * 
+ * If there are active alerts, add the alert class to style the tab and content
  * @param {NwsApi.Alert} alerts - A set of NWS API alert products. 
  */
-function parseAndPopulateAlerts(alerts){
+function populateAlerts(alerts){
 //	let alertDivHtml = '';
 //	// If the NWS API times out, throw an error
 //	if (!alerts) { throw Error('Weather.gov API is Unavailable')}
@@ -267,7 +263,27 @@ function parseAndPopulateAlerts(alerts){
 //		//Placeholder for Al
 //	} 
 
-	$('#forecastAlertsTabContent').html(alerts)
+	console.log(alerts)
+	if (alerts.length > 0) { 
+		$('#forecastAlertsTab').addClass('activeAlerts');
+		$('#forecastAlertsTabContent').addClass('activeAlerts');
+		$('#forecastAlertsTab').html('<span>Active Alerts</span>');
+		let alertHtmls = [];
+		alerts.forEach(alert => {
+			let $div = $('<div>')
+			$div.addClass('alertSection');
+			$div.append(`<h3>${alert.event}</h3>`);
+			$div.append(alert.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;"))
+			alertHtmls.push($div);
+		});
+		$('#forecastAlertsTabContent').html(alertHtmls)
+	}
+	else { 
+		$('#forecastAlertsTab').removeClass('activeAlerts');
+		$('#forecastAlertsTabContent').removeClass('activeAlerts');
+		$('#forecastAlertsTab').html('<span>No Active Alerts</span>');
+		$('#forecastAlertsTabContent').html('<div class="alertSection">There are no currently active weather alerts for this location.<br><br>For additional information on winter hazards for this location, visit <a href="https://www.avalanche.org">Avalanche.org</a></div>')
+	}
 }
 
 /**
@@ -280,12 +296,14 @@ function populateForecast(location){
 	var locationForecast = PARSED_AVG.forecast(location);
 	let tabularRawFcst = locationForecast.raw;
 	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
-	$('#forecastTabularTabContent').html(tabularHtml)
+	$('#forecastTable').html(tabularHtml)
 	CHART_MANAGER.updateChartData(locationForecast);
 }
-function changeForecastSelectMenu(e){
-	//Only fire this change event if a uesr selects
-	if (e.originalEvent) { populateForecastFromSelectMenu(e.target.value) }
+
+function changeForecastSelectMenu(e,force = false){
+
+	//Only fire this change event if a user selects
+	if (e.originalEvent || force) { populateAvgContentFromSelectMenu(e.target.value) }
 }
 
 //Initialize Select Menu with AVG locations 
@@ -300,6 +318,7 @@ function initializeSelectMenu(){
 		})
 		$selectMenu.append($option);
 	});
+	$selectMenu.init
 	$selectMenu.change(changeForecastSelectMenu);
 }
 
@@ -315,7 +334,7 @@ function populateStaticContent(cwa){
     tabContentContainers: '.c-tab',
   });
 	t.init();
-	t.goToTab(3);	
+	t.goToTab(2);	
 
 	// Pull in an AVG Product, and run a parser on it to populate the page.
 	let avgProduct = new NwsApi.Product({ 
@@ -329,39 +348,41 @@ function populateStaticContent(cwa){
 //National Standard Content Html 
 const pageHtml = {};
 pageHtml.staticContent= `
-<h1> </h1>
-<div id="forecastDisplay" class="center-content">
+<div id="forecastDisplay" class="center-content text-center">
+	<small style="font-style:italics">Choose an avalanche weather forecast location from the map or select menu below.</small>
 	<div id="map">Map Placeholder</div>
-	<h3><span id="forecastLocationInfo"></span> 
-	Avalanche Weather Forecast For: 
-	<select class="select-css" id="forecastPointSelectMenu" placeholder="Select a Location" control-id="ControlID-2"></select>
-</h3>
-	<div class="outline">
-		<div class="c-tabs" id="forecastTabs">
-			<div class="c-tabs-nav">
-				<div id="forecastAlertsTab" class="c-tabs-nav__link"><span>Active Alerts</span></div>
-				<div id="forecastTabularTab" class="c-tabs-nav__link"><span>Tabular Forecast</span></div>
-				<div id="forecastGraphicalTab" class="c-tabs-nav__link"><span>Graphical Forecast</span></div>			
-				<div id="forecastDiscussionTab" class="c-tabs-nav__link hidden"><span>Discussion</span></div>
-			</div>
-			<div class="c-tab">	
-				<div id="forecastAlertsTabContent" class="c-tab__content">When operational, this will display the active warnings when a user selects a forecast point. By default this tab should have the "hidden" class unless active.</div>
-			</div>		
-			<div class="c-tab">	
-				<div id="forecastTabularTabContent" class="c-tab__content preFormatted">Select a forecast point from the map or drop down menu above.</div>
-			</div>
-			<div class="c-tab">
-				<div id="forecastGraphicalTabContent" class="c-tab__content">
-				<div id="forecastChart"></div>
-				</div>
-			</div>
-			<div class="c-tab">
-				<div id="forecastDiscussionTabContent" class="c-tab__content hidden"></div>
-			</div>		
+	<h3>
+		Avalanche Weather Forecast For: 
+		<select class="select-css" id="forecastPointSelectMenu">
+			<option value="" disabled selected hidden>Select a Forecast Location</option>
+		</select>
+	</h3>
+	<div class="c-tabs outline hidden" id="forecastTabs">
+		<div class="c-tabs-nav">
+			<div id="forecastAlertsTab" class="c-tabs-nav__link"><span>Active Alerts</span></div>
+			<div id="forecastTabularTab" class="c-tabs-nav__link"><span>Tabular Forecast</span></div>
+			<div id="forecastGraphicalTab" class="c-tabs-nav__link"><span>Graphical Forecast</span></div>			
+			<div id="forecastDiscussionTab" class="c-tabs-nav__link hidden"><span>Discussion</span></div>
 		</div>
+		<div class="c-tab">	
+			<div id="forecastAlertsTabContent" class="c-tab__content"></div>
+		</div>		
+		<div class="c-tab">	
+			<div id="forecastTabularTabContent" class="c-tab__content">
+				<div id="forecastTable" class="preFormatted"></div>
+			</div>
+		</div>
+		<div class="c-tab">
+			<div id="forecastGraphicalTabContent" class="c-tab__content">
+			<div id="forecastChart"></div>
+			</div>
+		</div>
+		<div class="c-tab">
+			<div id="forecastDiscussionTabContent" class="c-tab__content hidden"></div>
+		</div>		
 	</div>
 </div>
 <div id="forecastDisplayParserFailure" class="hidden outline preFormatted"></div>
-<h3>Local Content (This space will be reserved for local office customization) </h3>
+
 </div>
 `;
