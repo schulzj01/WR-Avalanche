@@ -353,7 +353,7 @@ const pageHtml = {};
 pageHtml.staticContent= `
 <div id="forecastDisplay" class="center-content text-center">
 	<h2 style="margin-bottom:40px;">** Experimental Webpage - For Evaluation Only ** </h2>
-	<small style="font-style:italics">Choose an avalanche weather forecast location from the map or select menu below.</small>
+	<small style="font-style:italic">Choose an avalanche weather forecast location from the map or select menu below.</small>
 	<div id="map">Map Placeholder</div>
 	<h3>
 		Avalanche Weather Forecast For: 
