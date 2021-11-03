@@ -301,6 +301,11 @@ Avalanche Weather Guidance
 National Weather Service Salt Lake City UT
 805 AM MDT Tue Nov 2 2021
 
+.DISCUSSION...
+This is a test discussion from NWS SLC regarding avalanche content.
+This discussion will be at the top of all of AVG products.  You're currently
+viewing the one in the avgTestData.js testing data.
+
 **********************Northern Wasatch Front***********************
 
 ...Nordic Valley (6991 ft)...
