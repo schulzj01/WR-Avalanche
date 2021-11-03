@@ -342,6 +342,9 @@ function populateStaticContent(cwa){
 		type: 'AVG',
 		limit : 1
 	}).getAll(parseAndPopulateAvg)
+
+	//Set the correct full product URL. 
+	$('#fullProductLink').attr('href',`https://forecast.weather.gov/product.php?site=${cwa}&issuedby=${cwa}&product=AVG&format=txt&version=1&glossary=0`);
 }
 
 
@@ -349,6 +352,7 @@ function populateStaticContent(cwa){
 const pageHtml = {};
 pageHtml.staticContent= `
 <div id="forecastDisplay" class="center-content text-center">
+	<h2 style="margin-bottom:40px;">** Experimental Webpage - For Evaluation Only ** </h2>
 	<small style="font-style:italics">Choose an avalanche weather forecast location from the map or select menu below.</small>
 	<div id="map">Map Placeholder</div>
 	<h3>
@@ -370,6 +374,8 @@ pageHtml.staticContent= `
 		<div class="c-tab">	
 			<div id="forecastTabularTabContent" class="c-tab__content">
 				<div id="forecastTable" class="preFormatted"></div>
+				<br>
+				<small><a id="fullProductLink" target="_blank" href="">Full Avalanche Weather Guidance Forecast</a></small>
 			</div>
 		</div>
 		<div class="c-tab">
