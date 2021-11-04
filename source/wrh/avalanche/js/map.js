@@ -17,12 +17,15 @@ function makeMap() {
     for (i=0; i<cwaINFO.AVG_Sites.length; i++) {
       plotAVGlocations(cwaINFO.AVG_Sites[i])
     }
-    $.getJSON('https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=CWA+LIKE+%27'+WFO+'%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=4&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson', function (BOUNDARY) {
-      var outline = BOUNDARY.features[0].geometry;
-      var color_style={"color": "blue", "fillOpacity":0,"width":"2px"};
-      var border = L.geoJson(outline, {style: color_style});
-          border.addTo(mainMap);
-    });
+		//var outline = BOUNDARY.features[0].geometry;
+		var options={
+			color: '#2981ca',
+			width:'1px',
+			fillOpacity:0.8,			
+			fillColor: 'gray',
+			restrictBounds: false,
+		};
+		var border = L.mask('https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=CWA+LIKE+%27'+WFO+'%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=4&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson', options).addTo(mainMap);
   })
   queryWWA(WFO);
 }
@@ -80,8 +83,8 @@ function queryWWA(WFO){
 						'High Wind Warning','High Wind Watch','Extreme Wind Warning',
 						'Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch',
 						'Blizzard Warning','Blizzard Watch','Snow Squall Warning','Freezing Rain Advisory']
-	//}).getByCwa(WFO,getWWA,WFO);	 //TODO Make sure to switch back to CWA filtered WWAs before going live.
-	}).getAll(getWWA,WFO); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
+	}).getByCwa(WFO,getWWA,WFO);	 //TODO Make sure to switch back to CWA filtered WWAs before going live.
+	//}).getAll(getWWA,WFO); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
 }
 
 // Get Winter Wx Specific WWA for the CWA, plot on map

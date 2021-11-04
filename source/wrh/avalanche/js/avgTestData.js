@@ -300,6 +300,11 @@ AVALANCHE WEATHER GUIDANCE
 NATIONAL WEATHER SERVICE SALT LAKE CITY UT
 324 PM MDT TUE NOV 2 2021
 
+.DISCUSSION...
+This is a test discussion from NWS SLC regarding avalanche content.
+This discussion will be at the top of all of our AVG products.  You're currently
+viewing the one in the avgTestData.js testing data.
+
 **********************NORTHERN WASATCH FRONT***********************
 
 ...NORDIC VALLEY (6991 FT)...

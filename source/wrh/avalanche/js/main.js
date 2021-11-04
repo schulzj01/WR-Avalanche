@@ -191,8 +191,7 @@ pageHtml.staticContent= `
 	<h2 style="margin-bottom:40px;">** Experimental Webpage - For Evaluation Only ** </h2>
 	<p style="text-align:left">
 		The following page is designed to provide snow safety officials with a weather forecast over areas of backcountry recreation interest.  
-		This forecast is not meant to be indicative of actual snow and avalanche conditions in the backcountry.  Recreators should always visit <a href="https://avalanche.org/">Avalanche.org</a>
-		or contact your local avalanche center for information on the latest conditions. 
+		This forecast is not meant to be indicative of actual snow and avalanche conditions in the backcountry.  For the latest Avalanche Danger Rating and Avalanche Forecasts, visit <a href="https://www.avalanche.org">Avalanche.org</a>. 
 	</p>
 	<p>{{{Some sort of avalanche.org branding}}}</p>
 	<small style="font-style:italic">Choose an avalanche weather forecast location from the map or select menu below.</small>
