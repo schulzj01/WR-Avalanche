@@ -73,7 +73,6 @@ function parseAndPopulateAvg(avgProducts){
 	//The below is just some debugging stuff to see the the output of a AVGParser Object and populate it in the forecast table.
 	locations.forEach(locationId => {
 		let fcst = PARSED_AVG.forecast(locationId);
-		console.log(fcst);
 	});
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 	
 }
@@ -98,7 +97,6 @@ function populateAlerts(alerts){
 //		//Placeholder for Al
 //	} 
 
-	console.log(alerts)
 	if (alerts.length > 0) { 
 		$('#forecastAlertsTab').addClass('activeAlerts');
 		$('#forecastAlertsTabContent').addClass('activeAlerts');

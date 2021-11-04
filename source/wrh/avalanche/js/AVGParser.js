@@ -61,7 +61,6 @@ class AVGParser {
 		//Parse out the forecast points
 		const forecastData = {};
 		let avgFcsts = this.textBetweenStrings(this._productText,String.raw`\.\.\.`,String.raw`(\n\n\n|\$\$|\*\*\*)`,'gs');
-		console.log(avgFcsts)
 		//For each parsed out forecast section, parse it out further into a location and forecast text. 
 		//perhaps we also want to parse out the elevation from the location?
 		let timesRegex = new RegExp(/^(TIME).*/im);		

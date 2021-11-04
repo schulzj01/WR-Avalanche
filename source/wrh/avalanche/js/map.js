@@ -181,7 +181,6 @@ function getLayerByLocationId(locationId){
  *  
  */
 function populateAvgContentFromSelectMenu(locationId){
-	console.log(locationId)
 	layer = getLayerByLocationId(locationId);
 	let center;
 	//Depending on if it's a marker or polygon layer, find the location differently
