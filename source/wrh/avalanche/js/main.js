@@ -71,8 +71,8 @@ function parseAndPopulateAvg(avgProducts){
 
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
 	//The below is just some debugging stuff to see the the output of a AVGParser Object and populate it in the forecast table.
-	locations.forEach(location => {
-		let fcst = PARSED_AVG.forecast(location);
+	locations.forEach(locationId => {
+		let fcst = PARSED_AVG.forecast(locationId);
 		console.log(fcst);
 	});
 	// TEMPORARY DEVELOPMENT DEBUGGING INFO 	
@@ -126,9 +126,9 @@ function populateAlerts(alerts){
  * 
  * @param {String} location - A text string of an AVG location. Also found by a PARSED_AVG.locations call.
  */
-function populateForecast(location){
-	console.log('Switching Forecast to '+location)
-	var locationForecast = PARSED_AVG.forecast(location);
+function populateForecast(locationId){
+	console.log('Switching Forecast to '+locationId)
+	var locationForecast = PARSED_AVG.forecast(locationId);
 	let tabularRawFcst = locationForecast.raw;
 	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
 	$('#forecastTable').html(tabularHtml)
@@ -148,7 +148,7 @@ function initializeSelectMenu(){
 	locations.forEach( loc => {
 		let fcst = PARSED_AVG.forecast(loc);
 		let $option = $('<option>', {
-			value: fcst.name,
+			value: fcst.id,
 			text: `${fcst.name} (${fcst.elevation} ft)`
 		})
 		$selectMenu.append($option);
@@ -160,6 +160,7 @@ function initializeSelectMenu(){
 
 //Fill our staticContent with the base html then opulate and manipulate the base html with content
 function populateStaticContent(cwa){
+	cwa = cwa.toLowerCase();
 	$('#staticContent').html(pageHtml.staticContent);
 
 	//Initialize the forecast tabs

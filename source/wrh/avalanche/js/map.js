@@ -40,7 +40,7 @@ function plotAVGlocations(locationData) {
     });
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
     var marker = L.marker( point, { icon: image });
-    marker.location = locationData.location;
+    marker.locationId = locationData.location.toLowerCase();
 		marker.layerType = 'marker';
     marker.on('click', populateAvgContentFromMap)
     marker.bindTooltip(name,{
@@ -54,7 +54,7 @@ function plotAVGlocations(locationData) {
       var outline = shape.features[0].geometry;
       var color_style={"color": "blue", "fillColor":"blue","fillOpacity":0.5,"width":"1px"};
       var border = L.geoJson(outline, {style: color_style});
-			border.location = locationData.location;
+			border.locationId = locationData.location.toLowerCase();
 			border.layerType = 'polygon';			
       border.on('click', populateAvgContentFromMap)
       border.bindTooltip(name,{
@@ -164,9 +164,9 @@ function legend(Legend) {
  * Find a leaflet layer based on the associated location id from the parsed AVG and matching config file.
  * @param {String} location - The location identifier for the avalanche product
  */
-function getLayerByLocationId(location){
+function getLayerByLocationId(locationId){
 	let layer;
-	layer = clickLayer.getLayers().find(l => l.location == location);
+	layer = clickLayer.getLayers().find(l => l.locationId == locationId);
 	return layer;
 }
 
@@ -177,8 +177,9 @@ function getLayerByLocationId(location){
  * @param {String} location - the location id that matches the AVG and siteConfig files. 
  *  
  */
-function populateAvgContentFromSelectMenu(location){
-	layer = getLayerByLocationId(location);
+function populateAvgContentFromSelectMenu(locationId){
+	console.log(locationId)
+	layer = getLayerByLocationId(locationId);
 	let center;
 	//Depending on if it's a marker or polygon layer, find the location differently
 	if (layer.layerType == 'marker') { center = layer.getLatLng(); }
@@ -203,12 +204,12 @@ function populateAvgContentFromSelectMenu(location){
 function populateAvgContentFromMap(e){
 	$('#forecastTabs').removeClass('hidden')
 	let layer = e.target;
-	let location = layer.location;
+	let locationId = layer.locationId;
 
 	//Update select menu.  Note that select menu protects against inifinite loops by only triggering a forecast change on an actual user interaction
-	$('#forecastPointSelectMenu').val(location);
+	$('#forecastPointSelectMenu').val(locationId);
 
-	populateForecast(location);
+	populateForecast(locationId);
 
 	//Determine if this is a map based click or select menu.  Map clicks have a e.latlng, 
 	let latlng;

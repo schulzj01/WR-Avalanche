@@ -84,8 +84,10 @@ class AVGParser {
 				let forecast = this.parseForecastTable(tabularPart,times);
 				let rawForecast = [datePart,timePart,tabularPart].join('\n');
 
-				forecastData[String(location.name)] ={
+				let id = String(location.name.toLowerCase());
+				forecastData[id] ={
 					elevation : location.elevation,
+					id : id,
 					name : location.name,
 					forecast : forecast,
 					raw : rawForecast
@@ -272,7 +274,7 @@ class AVGParser {
 		//so just use a substring based on that index.
 
 		forecastLines.forEach( forecastLine => {
-			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim().toLowerCase();
+			let weatherType = forecastLine.substring(0,forecastTimes[0].start-1).trim().toLowerCase();
 			parsedForecastData[weatherType] = null; 
 			let parsedForecastDataArray = [];
 			for (let i=0; i < forecastTimes.length; i++){
@@ -280,7 +282,7 @@ class AVGParser {
 					val : '',
 					date : forecastTimes[i].date
 				};
-				let columnValue = forecastLine.substring(forecastTimes[i].start-1,forecastTimes[i].end).trim();
+				let columnValue = forecastLine.substring(forecastTimes[i].start-2,forecastTimes[i].end).trim();
 				if (!weatherType.includes('12 hour')){ parsedForecast.val = columnValue; }
 				else  { 
 					let regex; 
