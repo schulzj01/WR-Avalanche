@@ -226,10 +226,11 @@ function populateAvgContentFromMap(e){
 
 function findAlertsByLatLng(latlng){
 	let alerts = [];
-	var results = leafletPip.pointInLayer(latlng, standardLayer);
-	standardLayer.getLayers().forEach(l =>{
-		var results = leafletPip.pointInLayer(latlng, l);
-		if (results.length) { alerts.push(results[0].alertProduct); }
-	})
+	if (standardLayer){
+		standardLayer.getLayers().forEach(l =>{
+			let results = leafletPip.pointInLayer(latlng, l);
+			if (results.length) { alerts.push(results[0].alertProduct); }
+		})
+	}
 	return alerts;
 }
