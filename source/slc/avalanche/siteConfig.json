@@ -188,32 +188,11 @@
       }
     },
     {
-    "location":"Eastern Alaska",
-      "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Eastern_AK_Range_EditArea.json"
-      }
-    },
-    {
-    "location":"Atigun Pass",
-      "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Atigun_Pass_EditArea.json"
-      }
-    },
-    {
       "location":"Thousand Peaks Ranch",
       "geometry": {
         "type": "GridPoint",
         "coordinates": [ -111.04,40.83  ]
       }
     }
-  ],
-  "social": {
-      "Twitter":"nwssaltlakecity",
-      "Facebook": "nwssaltlakecity",
-      "Youtube": "nwssaltlakecity"
-  }
+  ]
 }
-
-
