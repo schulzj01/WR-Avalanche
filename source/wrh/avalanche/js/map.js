@@ -1,9 +1,9 @@
 let mainMap,clickLayer,standardLayer; 
 
 function makeMap() {
-//  var wfo = (window.location.pathname.replace('/','').replace('/avalanche','')).toLowerCase();
-  var wfo = (window.location.pathname.replace('/source/','').replace('/avalanche/','')).toLowerCase(); //test
-  var wfo = 'slc'; //test
+  var wfo = window.location.pathname.substr(1,3);
+  //console.log(wfo);
+  //var wfo = 'slc'; //test
   var WFO = wfo.toUpperCase();
   $.getJSON('/source/'+wfo+'/avalanche/siteConfig.json', function (cwaINFO) {
     var lat  = cwaINFO.MAPPING.centerLat;  
@@ -15,7 +15,7 @@ function makeMap() {
        position:'topright'
     }).addTo(mainMap);
     for (i=0; i<cwaINFO.AVG_Sites.length; i++) {
-      plotAVGlocations(cwaINFO.AVG_Sites[i])
+      plotAVGlocations(cwaINFO.AVG_Sites[i],wfo)
     }
 		//var outline = BOUNDARY.features[0].geometry;
 		var options={
@@ -30,7 +30,7 @@ function makeMap() {
   queryWWA(WFO);
 }
 
-function plotAVGlocations(locationData) {
+function plotAVGlocations(locationData,wfo) {
   if (!clickLayer) {
     clickLayer = L.layerGroup().addTo(mainMap);
   }
@@ -53,7 +53,7 @@ function plotAVGlocations(locationData) {
     marker.addTo(clickLayer);
   // Need to test with a shapefile from an officee using shapefiles
   } else if (type == 'ShapeFile') {
-    $.getJSON('/source/slc/avalanche/'+locationData.geometry.coordinates, function(shape) {
+    $.getJSON('/source/'+wfo+'/avalanche/'+locationData.geometry.coordinates, function(shape) {
       var outline = shape.features[0].geometry;
       var color_style={"color": "blue", "fillColor":"blue","fillOpacity":0.5,"width":"1px"};
       var border = L.geoJson(outline, {style: color_style});
