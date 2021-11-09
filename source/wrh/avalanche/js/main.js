@@ -52,7 +52,7 @@ function parseAndPopulateAvg(avgProducts,cwa){
 	
 	//Populate the discussion display, and show the tab if there is a discussion.
 	if (PARSED_AVG.discussion) { 
-		$('#forecastDiscussionTabContent').html(`<div class="alertSection">${PARSED_AVG.discussion}</div>`);
+		$('#forecastDiscussionTabContent').html(`<div class="alertSection">${PARSED_AVG.discussion}</div>Discussion Issued: <span class="productTime"></span>`);
 		$('#forecastDiscussionTab').removeClass('hidden');
 		$('#forecastDiscussionTabContent').removeClass('hidden');
 	}
@@ -131,7 +131,9 @@ function populateForecast(locationId){
 	let tabularRawFcst = locationForecast.raw;
 	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
 	$('#forecastTable').html(tabularHtml)
-	CHART_MANAGER.updateChartData(locationForecast);
+	let productTime =  PARSED_AVG.productTime.formatted;
+	$('.productTime').html(productTime);
+	CHART_MANAGER.updateChartData(locationForecast,productTime);
 }
 
 function changeForecastSelectMenu(e,force = false){
@@ -230,6 +232,8 @@ pageHtml.staticContent= `
 		<div class="c-tab">	
 			<div id="forecastTabularTabContent" class="c-tab__content">
 				<div id="forecastTable" class="preFormatted"></div>
+				<br>
+				<small>Forecast Issued: <span class="productTime"></span></small>
 				<br>
 				<small><a id="fullProductLink" target="_blank" href="">Full Avalanche Weather Guidance Forecast</a></small>
 			</div>

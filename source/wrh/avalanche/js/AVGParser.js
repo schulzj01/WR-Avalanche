@@ -13,7 +13,7 @@ class AVGParser {
 		this._productText = productText;
 		this._discussion = this.parseDiscussion();
 		this._forecast = this.parseForecastData();
-		this._productTime = this.parseProductTime() //TODO Need to grab this from the API object.
+		this._productTime = this.parseProductTime(); //TODO Need to grab this from the API object.
 		this._timeZone = ''; //TODO Grab this from API or at least parse from product.
 	}
 
@@ -57,19 +57,22 @@ class AVGParser {
 	parseProductTime() { 
 		let timeText = this.textBetweenStrings(this._productText,String.raw`(NATIONAL WEATHER SERVICE[^\n]*\n)`,String.raw`(\n)`,'gsi')[0];
 		let timeParts = timeText.split(' ');
-		
 		//separate our hours and minutes
 		let timeStrLen = timeParts[0].length;
 		let hour = timeParts[0].substr(-timeStrLen,timeStrLen-2);
 		let min = timeParts[0].substr(-2);
 		//Change Time to 24 hour time;
-		if (timeParts[1] == 'PM') { hour = String(parseInt(hour)+12) }
+		let hour24 = hour;
+		if (timeParts[1] == 'PM') { hour24 = String(parseInt(hour)+12) }
 
 		//Create a date using our string.
 		//let productTime = new Date('Feb 28 2013 19:00:00 EST');
-		let productTime = new Date(`${timeParts[4]} ${timeParts[5]} ${timeParts[6]} ${hour}:${min}:00 `);		
-		this._productTime = productTime;
-
+		let productTime = new Date(`${timeParts[4]} ${timeParts[5]} ${timeParts[6]} ${hour24}:${min}:00 `);		
+		let productHoomanTime = `${this.downslope(timeParts[3])} ${this.downslope(timeParts[4])} ${timeParts[5]} ${hour}:${min}${timeParts[1].toLowerCase()}`; 
+		return { 
+			time : productTime,
+			formatted : productHoomanTime
+		}
 	}
 
 	/**
@@ -147,7 +150,6 @@ class AVGParser {
 	 */
 	textBetweenStrings(text,begin,end,flags){
 		let betweenRegex = new RegExp(`(${begin})(?<between>.*?)(${end})`,flags);
-		console.log(betweenRegex)
 		let matches = [...text.matchAll(betweenRegex)];
 		let matchesText = matches.map(m => m.groups.between);
 		if (matchesText.length > 0) { return matchesText; }
@@ -341,5 +343,14 @@ class AVGParser {
 			parsedForecastData[weatherType] = parsedForecastDataArray;
 		});
 		return parsedForecastData;
+	}
+	/**
+	 * A utility function to change a string to a capitalized first letter and lower case body
+	 * I though the name of the function name was a fun twist on the fact this is an avalanche product.  Smile if you found this.
+	 * @param {String} string - String to convert
+	 * @returns {String} a string with the first letter uppercased, and the rest lowercast
+	 */
+	downslope(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 	}
 }

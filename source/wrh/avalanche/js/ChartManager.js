@@ -192,7 +192,7 @@ class ChartManager  {
 			//tickLength: 10,
 			labels: { 
 				enabled: true,
-				format: '{value: %b %d <br>%l%P }'
+				format: '{value: %a <br>%l%P }'
 			},
 			lineWidth: 2,
 			crosshair: {
@@ -330,7 +330,7 @@ class ChartManager  {
 			credits: { enabled: false },
 			legend: {	enabled: false },
 			subtitle: {
-				text: 'Source: National Weather Service',
+				text: '',
 				align: 'left'
 			},
 			chart: {
@@ -370,9 +370,8 @@ class ChartManager  {
 
 
 
-	updateChartData(locationForecast){
+	updateChartData(locationForecast,productTime){
 
-		console.log(locationForecast)
 		//Get list of all times for Temperatures
 		let windSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind (mph)'],locationForecast.forecast['wind dir']);	
 		let windGustSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind gust (mph)'],locationForecast.forecast['wind dir']);	
@@ -387,15 +386,7 @@ class ChartManager  {
 
 		let xAxisMin = dateSeries[0];
 		let xAxisMax = dateSeries[dateSeries.length-1];
-
-		//let windScales = this._chartWind.options.scales; 
-		//let windDatasets = this._chartWind.data.datasets;
-		//windDatasets[0].data = windSeries 
-		//windDatasets[1].data = windSeries		
-	
-
-
-		
+				
 		this._chart.get('s-temperature').setData(tempSeries);
 		this._chart.get('s-snowlevel').setData(snowLevelSeries);
 		this._chart.get('s-wind').setData(windSeries);
@@ -403,8 +394,6 @@ class ChartManager  {
 		this._chart.get('s-snowfall12').setData(snow12Series);
 		this._chart.get('s-qpf12').setData(qpf12Series);
 		this._chart.get('s-cloudcover').setData(cloudCoverSeries);		
-		
-
 	
 		if (locationForecast.elevation){
 			let elevationText = `${locationForecast.elevation} ft`
@@ -418,42 +407,11 @@ class ChartManager  {
 			this._chart.setTitle({ text: `Avalanche Weather Forecast Guidance For ${locationForecast.name}`});
 		}
 
-//		this._chart.get('s-temperature').setData(tempSeries);
-//		this._chart.get('s-qpf12').setData(qpf12Series);
-		//this._chart.get('s-snowlevel').setData(snowLevelSeries);
-		//this._chart.get('s-snowfall12').setData(snow12Series);		
-		//this._chart.get('s-wind').setData(windSeries);
-
-		//this._chart.series[4].setData(qpf12Series);						
-		//windScales.xAxisDayLabels.min = xAxisMin;
-		//windScales.xAxisDayLabels.max = xAxisMax;
-		//windScales.xAxis1.min = xAxisMin;
-		//windScales.xAxis1.max = xAxisMax;
+		//Update the subtitle
+		this._chart.setTitle(null, { text: `Source: National Weather Service &nbsp;&nbsp;&nbsp;&nbsp; Issued: ${productTime}` });		
+		
 		this._chart.redraw();
 
-		/*
-		let tempScales = this._chartTemp.options.scales; 
-		let tempDatasets = this._chartWind.data.datasets;
-		tempDatasets[0].data = tempSeries 
-		tempDatasets[1].data = snowLevelSeries
-		tempScales.xAxisDayLabels.min = xAxisMin;
-		tempScales.xAxisDayLabels.max = xAxisMax;
-		tempScales.xAxis1.min = xAxisMin;
-		tempScales.xAxis1.max = xAxisMax;		
-		this._chartTemp.update();
-  
-		this._chartPrecip.data.datasets[0].data = windSeries;
-    this._chartPrecip.data.datasets[1].data = windSeries;
-		this._chartPrecip.data.datasets[2].data = snow12Series;
-		
-		this._chartPrecip.data.datasets[4].data = tempSeries;
-		this._chartPrecip.data.datasets[5].data = snowLevelSeries;
-		this._chartPrecip.options.scales.xAxisDayLabels.min = dateSeries[0];
-		this._chartPrecip.options.scales.xAxisDayLabels.max = dateSeries[dateSeries.length-1]
-		this._chartPrecip.options.scales.xAxis1.min = dateSeries[0];
-		this._chartPrecip.options.scales.xAxis1.max = dateSeries[dateSeries.length-1]	
-		this._chartPrecip.update();*/
-		
 	}
 
 
