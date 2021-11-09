@@ -30,15 +30,16 @@ let CHART_MANAGER;
  * @param {NwsApi.Product} avgProducts - An AVG Product from the NWS API
  */
 //Parse out the AVG product text, assign it to a global, and populate the appropriate divs
-function parseAndPopulateAvg(avgProducts){
+function parseAndPopulateAvg(avgProducts,cwa){
 	// If the NWS API times out, throw an error
-	if (!avgProducts) { throw Error('Weather.gov API is Unavailable')}
 
 	let avgToParse;
 	try {
+		if (!avgProducts) { throw Error('Weather.gov API is Unavailable')}
+
 		// For testing, if no avg is available in the database, use the dummy test data in avgTestData.js
-		// //TODO Once done testing, we have to set some stuff in here so the page isn't empty come summer.
-		if (avgProducts.length == 0) { avgToParse = avg.slc; }
+		// TODO.  This if statement is only here because of the lack of AVG in the API, this can eventually be removed and replaced with what is in the if statement.
+		if ((typeof avgProducts) == 'string') { avgToParse = avgProducts; }
 		//If our avg query from the API is successful, parse it out with the AVG parser.
 		else { avgToParse = avgProducts[0]; }
 		PARSED_AVG = new AVGParser(avgToParse);
@@ -61,7 +62,7 @@ function parseAndPopulateAvg(avgProducts){
 	let locations = PARSED_AVG.locations;
 
 	//Add the locations to the map
-	makeMap();
+	makeMap(cwa);
 
 	//Initialize the graphical forecast charts
 	CHART_MANAGER = new ChartManager();
@@ -159,6 +160,7 @@ function initializeSelectMenu(){
 //Fill our staticContent with the base html then opulate and manipulate the base html with content
 function populateStaticContent(cwa){
 	cwa = cwa.toLowerCase();
+	let CWA = cwa.toUpperCase();
 	$('#staticContent').html(pageHtml.staticContent);
 
 	//Initialize the forecast tabs
@@ -171,11 +173,26 @@ function populateStaticContent(cwa){
 	t.goToTab(2);	
 
 	// Pull in an AVG Product, and run a parser on it to populate the page.
-	let avgProduct = new NwsApi.Product({ 
-		//location : 'BTV',  //TODO This setting will eventually want to be the CWA variable.  It's not set at the moment, and should randomize to whichever CWA the API grabs first.  Useful for testing!
+	// TODO <- Reopen this up once the AVG is in the API. 
+/*	let avgProduct = new NwsApi.Product({ 
+		location : cwa, 
 		type: 'AVG',
 		limit : 1
-	}).getAll(parseAndPopulateAvg)
+	}).getAll(parseAndPopulateAvg,cwa)*/
+
+	//The below fetch is in leiu of the AVG not in the API.  This should eventually get converted.  
+	let url = `https://w1.weather.gov/data/${CWA}/AVG${CWA}`;
+	let avgProduct = fetch(url)
+  .then(response => {
+		if (response.ok) { return response.text(); } 
+		else { 
+			console.error(`Unable to view product from URL: ${url}.  Is the CWA variable incorrect?`)
+			parseAndPopulateAvg(false,cwa);
+			throw new Error(response); 
+		}
+	})
+	.then(text => { parseAndPopulateAvg(text,cwa)})
+	//The above fetch is in leiu of the AVG not in the API.  This should eventually get converted.  
 
 	//Set the correct full product URL. 
 	$('#fullProductLink').attr('href',`https://forecast.weather.gov/product.php?site=${cwa}&issuedby=${cwa}&product=AVG&format=txt&version=1&glossary=0`);
@@ -186,7 +203,7 @@ function populateStaticContent(cwa){
 const pageHtml = {};
 pageHtml.staticContent= `
 <div id="forecastDisplay" class="center-content text-center">
-	<h2 style="margin-bottom:40px;">** Experimental Webpage - For Evaluation Only ** </h2>
+	<h2 style="margin-bottom:40px; color:firebrick;">** Experimental Webpage - For Evaluation Only ** </h2>
 	<p style="text-align:left">
 		The following page is designed to provide snow safety officials with a weather forecast over areas of backcountry recreation interest.  
 		This forecast is not meant to be indicative of actual snow and avalanche conditions in the backcountry.  For the latest Avalanche Danger Rating and Avalanche Forecasts, visit <a href="https://www.avalanche.org">Avalanche.org</a>. 

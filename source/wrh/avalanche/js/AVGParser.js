@@ -13,7 +13,7 @@ class AVGParser {
 		this._productText = productText;
 		this._discussion = this.parseDiscussion();
 		this._forecast = this.parseForecastData();
-		this._productTime = ''; //TODO Need to grab this from the API object.
+		this._productTime = this.parseProductTime() //TODO Need to grab this from the API object.
 		this._timeZone = ''; //TODO Grab this from API or at least parse from product.
 	}
 
@@ -40,6 +40,36 @@ class AVGParser {
 		else { 
 			throw Error(`Location ${location} not available in AVG or is improperly formatted`);
 		}
+	}
+	/**
+	 * Parses out the issuance time of the product.  This will need to be changed once the AVG is available in the API.
+	 * @returns {Date} - time of the issuance (timezone enabled)
+	 * Example timeParts: 324 AM MST TUE NOV 9 2021
+	 *                   [0]: Time
+	 *                   [1]: Meridian
+	 *                   [2]: Timezone
+	 *                   [3]: Day of the week
+	 *                   [4]: Month
+	 *                   [5]: Day
+	 *                   [6]: Year
+	 * new Date('Feb 28 2013 19:00:00 EST')
+	 */
+	parseProductTime() { 
+		let timeText = this.textBetweenStrings(this._productText,String.raw`(NATIONAL WEATHER SERVICE[^\n]*\n)`,String.raw`(\n)`,'gsi')[0];
+		let timeParts = timeText.split(' ');
+		
+		//separate our hours and minutes
+		let timeStrLen = timeParts[0].length;
+		let hour = timeParts[0].substr(-timeStrLen,timeStrLen-2);
+		let min = timeParts[0].substr(-2);
+		//Change Time to 24 hour time;
+		if (timeParts[1] == 'PM') { hour = String(parseInt(hour)+12) }
+
+		//Create a date using our string.
+		//let productTime = new Date('Feb 28 2013 19:00:00 EST');
+		let productTime = new Date(`${timeParts[4]} ${timeParts[5]} ${timeParts[6]} ${hour}:${min}:00 `);		
+		this._productTime = productTime;
+
 	}
 
 	/**
@@ -117,6 +147,7 @@ class AVGParser {
 	 */
 	textBetweenStrings(text,begin,end,flags){
 		let betweenRegex = new RegExp(`(${begin})(?<between>.*?)(${end})`,flags);
+		console.log(betweenRegex)
 		let matches = [...text.matchAll(betweenRegex)];
 		let matchesText = matches.map(m => m.groups.between);
 		if (matchesText.length > 0) { return matchesText; }
