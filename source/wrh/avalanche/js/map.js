@@ -1,7 +1,6 @@
 let mainMap,clickLayer,standardLayer; 
 
-function makeMap() {
-  var wfo = window.location.pathname.substr(1,3);
+function makeMap(wfo) {
   //console.log(wfo);
   //var wfo = 'slc'; //test
   var WFO = wfo.toUpperCase();
@@ -89,6 +88,7 @@ function queryWWA(WFO){
 
 // Get Winter Wx Specific WWA for the CWA, plot on map
 function getWWA(WWA,WFO) {
+	console.log(WWA,WFO)
   $.getJSON('/source/slc/common_data/support.json', function (support) {
 		//TODO  Do we need to specify that these are only winter/avalanche relatd hazards?
 		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Watches, Warnings and Advisories<br>are for the '+WFO+' County Warning Area only'; 
