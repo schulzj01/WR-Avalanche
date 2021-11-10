@@ -227,19 +227,28 @@ class AVGParser {
 		//Find all listed times in the time string and convert to an array.
 		let tPosRegex = new RegExp(/([0-9]{1,2})/g);
 		let timeMatches = [...timePart.matchAll(tPosRegex)];
-		//Create a useable object that has the times and character indices of each hour
+		
+
+
+		//Create a useable object that has the times and character indices of each hour	
 		let allAvailableTimes = [];
 		timeMatches.forEach(tMatch => {
 			allAvailableTimes.push({
 				hour : parseInt(tMatch[0]),
 				start : tMatch.index,
 				end : tMatch.index + tMatch[0].length
-			})
+			});
+			
 		});
+		//Forecast data is actually left justified compared to the times. So instead of using the same start/end indices of the time
+		//string.  We need to use the same end index, and then count back until the the previous end index.
+		//The character distance between times. Could be 2-4 characters depending on the AVG version.
+		//Note that the AVG is odd in that every column it gives 2-4 characters, unless it's the first time period, where it only gets up to 3
+		let defaultLengthBetweenFcst = allAvailableTimes[1].end - allAvailableTimes[0].end;
 
-		//Loop through the available timestamps, and determine the correct date and character placement
-		let forecastTimes = [];		
-		allAvailableTimes.forEach(availableTime => {
+		//Loop through the available timestamps, and determine the correct date and character placement of the tabular data.
+		let forecastTimes = [];
+		allAvailableTimes.forEach((availableTime,i) => {
 			let dMatchIndex = allAvailableDates.findIndex( availableDate => {
 				if ((availableDate.start <= availableTime.start) && (availableDate.end > availableTime.end)) { return true; }
 			});
@@ -250,9 +259,14 @@ class AVGParser {
 			else { forecastTimeDate = new Date(+allAvailableDates[dMatchIndex].date); }
 			forecastTimeDate.setHours(forecastTimeDate.getHours() + availableTime.hour);
 
+			//Forecast data is actually left justified compared to the times. So instead of using the same start/end indices of the time
+			//string.  We need to use the same end index, and then count back until the the previous end index.
+			//The character distance between times. Could be 2-4 characters depending on the AVG version.
+			//Note that the AVG is odd in that every column it gives 2-4 characters, unless it's the first time period, where it only gets up to 3
+			let offset = (i === 0) ? 1 : 0;
 			forecastTimes.push({
 				date : forecastTimeDate,
-				start : availableTime.start,
+				start : availableTime.end - defaultLengthBetweenFcst + offset,
 				end : availableTime.end
 			})
 		});
@@ -306,7 +320,7 @@ class AVGParser {
 		//so just use a substring based on that index.
 
 		forecastLines.forEach( forecastLine => {
-			let weatherType = forecastLine.substring(0,forecastTimes[0].start-1).trim().toLowerCase();
+			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim().toLowerCase();
 			parsedForecastData[weatherType] = null; 
 			let parsedForecastDataArray = [];
 			for (let i=0; i < forecastTimes.length; i++){
@@ -314,7 +328,7 @@ class AVGParser {
 					val : '',
 					date : forecastTimes[i].date
 				};
-				let columnValue = forecastLine.substring(forecastTimes[i].start-2,forecastTimes[i].end).trim();
+				let columnValue = forecastLine.substring(forecastTimes[i].start,forecastTimes[i].end).trim();
 				if (!weatherType.includes('12 hour')){ parsedForecast.val = columnValue; }
 				else  { 
 					let regex; 
@@ -343,6 +357,7 @@ class AVGParser {
 			parsedForecastData[weatherType] = parsedForecastDataArray;
 		});
 		return parsedForecastData;
+		
 	}
 	/**
 	 * A utility function to change a string to a capitalized first letter and lower case body
