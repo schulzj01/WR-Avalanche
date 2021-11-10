@@ -1,0 +1,193 @@
+{"wfo": "AFC",
+  "MAPPING":{
+    "centerLat":66.41,
+    "centerLon":-161.95,
+    "mapZoom":4
+  },
+  "AVG_Sites": [
+    {
+    "location":"Cordova (Sea level to 1000 ft)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Cordova_0_to_1000_EditArea.json"
+      }
+    },
+    {
+    "location":"Cordova (1000 to 2000 ft)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Cordova_1000_to_2000_EditArea.json"
+      }
+    },
+    {
+    "location":"Cordova (Above 2000 ft)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Cordova_above_2000_EditArea.json"
+      }
+    },
+    {
+    "location":"EASTERN KENAI LAKE (3000 TO 5000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Eastern_Kenai_Lake_3000_EditArea.json"
+      }
+    },
+    {
+    "location":"EASTERN KENAI LAKE (500 TO 1000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Eastern_Kenai_Lake_500_EditArea.json"
+      }
+    },
+    {
+    "location":"GIRDWOOD AREA (1500 TO 3000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Girdwood_1500_to_3000_EditArea.json"
+      }
+    },
+    {
+    "location":"GIRDWOOD AREA (3000 TO 4500 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Girdwood_3000_to_4500_EditArea.json"
+      }
+    },
+    {
+    "location":"GIRDWOOD AREA (500 TO 1500 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Girdwood_500_to_1500_EditArea.json"
+      }
+    },
+    {
+    "location":"GIRDWOOD AREA (ABOVE 4500 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Girdwood_above_4500ft_EditArea.json"
+      }
+    },
+    {
+    "location":"GRANDVIEW (1600 TO 4000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Grandview_1600_to_4000_EditArea.json"
+      }
+    },
+    {
+    "location":"GRANDVIEW (500 TO 1600 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Grandview_500_to_1600_EditArea.json"
+      }
+    },
+    {
+    "location":"HATCHER PASS (1000 TO 2500 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Hatcher_Pass_1000_to_2500_EditArea.json"
+      }
+    },
+    {
+    "location":"HATCHER PASS (2500 TO 4000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Hatcher_Pass_2500_to_4000_EditArea.json"
+      }
+    },
+    {
+    "location":"HATCHER PASS (ABOVE 4000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Hatcher_Pass_above_4000_EditArea.json"
+      }
+    },
+    {
+    "location":"PORTAGE VALLEY (200 TO 1600 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Portage_200_to_1600_EditArea.json"
+      }
+    },
+    {
+    "location":"PORTAGE VALLEY (ABOVE 1600 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Portage_above_1600_EditArea.json"
+      }
+    },
+    {
+    "location":"SUMMIT LAKE (1500 TO 2500 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Summit_Lake_1500_to_2500_EditArea.json"
+      }
+    },
+    {
+    "location":"SUMMIT LAKE (2500 TO 3500 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Summit_Lake_2500_to_3500_EditArea.json"
+      }
+    },
+    {
+    "location":"SUMMIT LAKE (ABOVE 3500 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Summit_Lake_above_3500_EditArea.json"
+      }
+    },
+    {
+    "location":"THOMPSON PASS (1000 TO 2000 FT CONTINENTAL)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Thompson_Pass_1000_2000_EditArea.json"
+      }
+    },
+    {
+    "location":"THOMPSON PASS (2000 TO 4000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Thompson_Pass_2000_to_4000_EditArea.json"
+      }
+    },
+    {
+    "location":"THOMPSON PASS (500 TO 2000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Thompson_Pass_500_to_2000_EditArea.json"
+      }
+    },
+    {
+    "location":"THOMPSON PASS (ABOVE 4000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Thompson_Pass_Above_4000_EditArea.json"
+      }
+    },
+    {
+    "location":"TURNAGAIN PASS (1500 TO 3000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Turnagain_Pass_1500_to_3000_EditArea.json"
+      }
+    },
+    {
+    "location":"TURNAGAIN PASS (500 TO 1500 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Turnagain_Pass_500_to_1500ft_EditArea.json"
+      }
+    },
+    {
+    "location":"TURNAGAIN PASS (ABOVE 3000 FT)",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Turnagain_Pass_above_3000_EditArea.json"
+      }
+    }
+  ]
+}
+
+
