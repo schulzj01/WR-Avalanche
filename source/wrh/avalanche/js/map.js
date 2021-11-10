@@ -92,7 +92,7 @@ function getWWA(WWA,WFO) {
 	console.log(WWA,WFO)
   $.getJSON('/source/slc/common_data/support.json', function (support) {
 		//TODO  Do we need to specify that these are only winter/avalanche relatd hazards?
-		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Watches, Warnings and Advisories<br>are for the '+WFO+' County Warning Area only'; 
+		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Active Winter Related Watches & <br>Warnings in the Highlighted Area'; 
 		var NUM = WWA.features.length;
 		if (NUM != "0") {
 			for (i=0; i<NUM; i++) {
@@ -117,7 +117,7 @@ function getWWA(WWA,WFO) {
 			Legend += '</table>';
 			legend(Legend);
 		} else {
-			Legend += '<tr><td colspan="2">There are no watches, warnings <br>or advisories in effect.</td></tr></table>';
+			Legend += '<tr><td colspan="2">-- No Active Watches/Warnings -- </td></tr></table>';
 			legend(Legend);
 		}
   });
