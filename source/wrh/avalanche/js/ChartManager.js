@@ -196,7 +196,7 @@ class ChartManager  {
 			},
 			lineWidth: 2,
 			crosshair: {
-				width: 30,
+				width: 36,
 				color: '#33333310'
 			},
 		},{
@@ -293,15 +293,14 @@ class ChartManager  {
 			//pointPlacement: .5,
 			//pointRange: 60*60*12*1000,
 			color: this._chartProps.wxColors.qpf,
-			opacity: 0.75,
 			tooltip: { 
 				valueSuffix: ' in',
 			},
+			opacity: 0.75,
 			grouping:false,
 			groupPadding: 0,
 			pointPadding: 0,			
 			borderWidth: 0,
-			opacity: 0.75,
 		},{
 			name: 'Cloud Cover',
 			id: 's-cloudcover',
