@@ -1,0 +1,65 @@
+{
+  "MAPPING":{
+    "centerLat":43.06,
+    "centerLon":-113.2,
+    "mapZoom":7
+  },
+  "AVG_Sites": [
+    {
+      "location":"Bald Mtn",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -114.42,43.66 ]
+      }
+    },
+    {
+      "location":"Titus Peak",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -114.73,43.85  ]
+      }
+    },
+    {
+      "location":"Soldier Mtn",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -114.92,43.48  ]
+      }
+    },
+    {
+      "location":"Vienna Mine",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -114.84,43.81  ]
+      }
+    },
+    {
+      "location":"Copper Mtn",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -115.19,44.34  ]
+      }
+    },
+    {
+      "location":"Pine Creek Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.21,43.57 ]
+      }
+    },
+    {
+      "location":"Targhee Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.27,44.657  ]
+      }
+    },
+    {
+      "location":"Bloomington Lake",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.556,42.173  ]
+      }
+    }
+  ]
+}
