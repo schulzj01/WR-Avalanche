@@ -39,6 +39,7 @@ function plotAVGlocations(locationData,wfo) {
     let icon = ImageRepo.asUrl('snowflakeBlue')
     var image = L.icon({
         iconUrl: icon,
+				iconSize: [25,25]
     });
     var point = [locationData.geometry.coordinates[1],locationData.geometry.coordinates[0]];	// Used to position the marker on the map
     var marker = L.marker( point, { icon: image });
