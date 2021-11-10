@@ -126,7 +126,6 @@ function populateAlerts(alerts){
  * @param {String} location - A text string of an AVG location. Also found by a PARSED_AVG.locations call.
  */
 function populateForecast(locationId){
-	console.log('Switching Forecast to '+locationId)
 	var locationForecast = PARSED_AVG.forecast(locationId);
 	let tabularRawFcst = locationForecast.raw;
 	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
