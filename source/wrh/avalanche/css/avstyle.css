@@ -20,6 +20,8 @@ td {
 body { 
 	color: #222222;
 }
+h3 { margin: 25px 0 25px 0; }
+small { font-size: 0.75em; }
 
 .hidden { 
 	display:none;
@@ -54,7 +56,7 @@ body {
 	color:#ff2121;
 	text-align:center;
 }
-h3 { margin: 25px 0 25px 0; }
+
 
 .preFormatted {
 	font-family:monospace;
