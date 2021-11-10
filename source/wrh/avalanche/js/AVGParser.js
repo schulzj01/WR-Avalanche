@@ -262,14 +262,19 @@ class AVGParser {
 			//Forecast data is actually left justified compared to the times. So instead of using the same start/end indices of the time
 			//string.  We need to use the same end index, and then count back until the the previous end index.
 			//The character distance between times. Could be 2-4 characters depending on the AVG version.
-			//Note that the AVG is odd in that every column it gives 2-4 characters, unless it's the first time period, where it only gets up to 3
-			let offset = (i === 0) ? 1 : 0;
+			//Note that the AVG is odd in that every column it gives 2-4 characters, unless it's the first time period, where it only gets 3
+			//in this situation just always make the first start index back 3.			
+			let end = availableTime.end;
+			let len = (i === 0) ?  3 : defaultLengthBetweenFcst;
+			let start = end - len;
+			
 			forecastTimes.push({
 				date : forecastTimeDate,
-				start : availableTime.end - defaultLengthBetweenFcst + offset,
-				end : availableTime.end
+				start : start,
+				end : end
 			})
 		});
+		console.log(forecastTimes);
 		return forecastTimes;
 	}	
 	/**
