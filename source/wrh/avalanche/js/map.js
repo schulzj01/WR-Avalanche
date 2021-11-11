@@ -48,7 +48,7 @@ function plotAVGlocations(locationData,wfo) {
     marker.on('click', populateAvgContentFromMap)
     marker.bindTooltip(name,{
       direction: 'top',
-      offset: [10,0],
+      offset: [0,-7],
     });
     marker.addTo(clickLayer);
   // Need to test with a shapefile from an officee using shapefiles
@@ -62,7 +62,6 @@ function plotAVGlocations(locationData,wfo) {
       border.on('click', populateAvgContentFromMap)
       border.bindTooltip(name,{
         direction: 'top',
-        offset: [10,0],
       });
       border.addTo(clickLayer);
 		})
@@ -92,7 +91,7 @@ function getWWA(WWA,WFO) {
 	console.log(WWA,WFO)
   $.getJSON('/source/slc/common_data/support.json', function (support) {
 		//TODO  Do we need to specify that these are only winter/avalanche relatd hazards?
-		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Active Winter Related Watches & <br>Warnings in the Highlighted Area'; 
+		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Winter Related Watches & <br>Warnings in the Highlighted Area'; 
 		var NUM = WWA.features.length;
 		if (NUM != "0") {
 			for (i=0; i<NUM; i++) {
