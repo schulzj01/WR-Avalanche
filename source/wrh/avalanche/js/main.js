@@ -205,11 +205,17 @@ const pageHtml = {};
 pageHtml.staticContent= `
 <div id="forecastDisplay" class="center-content text-center">
 	<h2 style="margin-bottom:40px; color:firebrick;">** Experimental Webpage - For Evaluation Only ** </h2>
-	<p style="text-align:left">
-		The following page is designed to provide snow safety officials with a weather forecast over areas of backcountry recreation interest.  
-		This forecast is not meant to be indicative of actual snow and avalanche conditions in the backcountry.  For the latest Avalanche Danger Rating and Avalanche Forecasts, visit <a href="https://www.avalanche.org">Avalanche.org</a>. 
-	</p>
-	<p>{{{Some sort of avalanche.org branding}}}</p>
+	<div id="introductionText">
+		<p style="text-align:left">
+			The following page is designed to provide snow safety officials with a weather forecast over specific areas of backcountry recreation interest.  
+			This forecast is not meant to be indicative of actual snow and avalanche conditions in the backcountry.  For the latest official Avalanche Danger Rating and Avalanche Forecasts for your area, visit <a href="https://www.avalanche.org">Avalanche.org</a>. 
+		</p>
+		<br>
+		<a alt="Avalanche.org" title="Avalanche.org" href="https://www.avalanche.org"><img width="250" src="/images/wrh/avalanche/avy-org-logo-dark.png"></a></p>
+	</div>
+	
+
+	<div class="clear"></div>
 	<small style="font-style:italic">Choose an avalanche weather forecast location from the map or select menu below.</small>
 	<div id="map">Map Placeholder</div>
 	<h3>
@@ -232,9 +238,11 @@ pageHtml.staticContent= `
 			<div id="forecastTabularTabContent" class="c-tab__content">
 				<div id="forecastTable" class="preFormatted"></div>
 				<br>
-				<small>Forecast Issued: <span class="productTime"></span></small>
-				<br>
-				<small><a id="fullProductLink" target="_blank" href="">Full Avalanche Weather Guidance Forecast</a></small>
+				<small>
+					<a id="fullProductLink" target="_blank" href="">
+						Forecast Issued: <span class="productTime"></span>
+					</a>
+				</small>
 			</div>
 		</div>
 		<div class="c-tab">
