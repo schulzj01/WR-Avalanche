@@ -31,14 +31,25 @@ class AVGParser {
 	get productTime() { return this._productTime; }
 
 	/**
-	 * 
-	 * @param {*} location - a location defined in the AVG
+	 * Get the forecast object for a particular location id
+	 * @param {*} locationId - a locationId defined in the AVG
 	 * @returns {Object} - Forecast object for a particular location 
 	 */
-	forecast(location) { 
-		if (this.locations.includes(location)) { return this._forecast[location]; }
+	forecast(locationId) { 
+		if (this.locations.includes(locationId)) { return this._forecast[locationId]; }
 		else { 
-			throw Error(`Location ${location} not available in AVG or is improperly formatted`);
+			throw Error(`Location ${locationId} not available in AVG or is improperly formatted`);
+		}
+	}
+	/**
+	 * Shortcut to get the location name for a given id
+	 * @param {*} locationId - a locationId defined in the AVG
+	 * @returns {Object} - Forecast object for a particular location 
+	 */
+	locationName(locationId) { 
+		if (this.locations.includes(locationId)) { return this._forecast[locationId].name; }
+		else { 
+			throw Error(`Location ${locationId} not available in AVG or is improperly formatted`);
 		}
 	}
 	/**

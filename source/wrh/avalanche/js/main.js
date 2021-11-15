@@ -52,7 +52,7 @@ function parseAndPopulateAvg(avgProducts,cwa){
 	
 	//Populate the discussion display, and show the tab if there is a discussion.
 	if (PARSED_AVG.discussion) { 
-		$('#forecastDiscussionTabContent').html(`<div class="alertSection">${PARSED_AVG.discussion}</div>Discussion Issued: <span class="productTime"></span>`);
+		$('#forecastDiscussionTabContent').html(`<div class="alertSection">${PARSED_AVG.discussion}</div><small>Discussion Issued: <span class="productTime"></span></small>`);
 		$('#forecastDiscussionTab').removeClass('hidden');
 		$('#forecastDiscussionTabContent').removeClass('hidden');
 	}
@@ -85,18 +85,8 @@ function parseAndPopulateAvg(avgProducts,cwa){
  * If there are active alerts, add the alert class to style the tab and content
  * @param {NwsApi.Alert} alerts - A set of NWS API alert products. 
  */
-function populateAlerts(alerts){
-//	let alertDivHtml = '';
-//	// If the NWS API times out, throw an error
-//	if (!alerts) { throw Error('Weather.gov API is Unavailable')}
-//	else if (alerts.features.length === 0) { alertDivHtml = 'No active watches or warnings'; }
-//	//If our query from the API is successful, indicate it to the user.
-//	else { 
-//		alertDivHtml = 'Active Watches & Warnings In Effect.  Click on map above (below?) for more information';
-//		alertDivHtml+= `<pre>${JSON.stringify(alerts,null,2)}</pre>`
-//		//Add the alerts to the map
-//		//Placeholder for Al
-//	} 
+function populateAlerts(alerts,locationId){
+	let locationName = PARSED_AVG.locationName(locationId);
 
 	if (alerts.length > 0) { 
 		$('#forecastAlertsTab').addClass('activeAlerts');
@@ -116,7 +106,7 @@ function populateAlerts(alerts){
 		$('#forecastAlertsTab').removeClass('activeAlerts');
 		$('#forecastAlertsTabContent').removeClass('activeAlerts');
 		$('#forecastAlertsTab').html('<span>No Active Alerts</span>');
-		$('#forecastAlertsTabContent').html('<div class="alertSection">There are no currently active weather alerts for this location.<br><br>For additional information on winter hazards for this location, visit <a href="https://www.avalanche.org">Avalanche.org</a></div>')
+		$('#forecastAlertsTabContent').html(`<div class="alertSection">There are no currently active weather alerts for ${locationName}.<br><br>For additional information on winter hazards for this location, visit <a href="https://www.avalanche.org">Avalanche.org</a></div>`)
 	}
 }
 
@@ -126,7 +116,7 @@ function populateAlerts(alerts){
  * @param {String} location - A text string of an AVG location. Also found by a PARSED_AVG.locations call.
  */
 function populateForecast(locationId){
-	var locationForecast = PARSED_AVG.forecast(locationId);
+	let locationForecast = PARSED_AVG.forecast(locationId);
 	let tabularRawFcst = locationForecast.raw;
 	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
 	$('#forecastTable').html(tabularHtml)

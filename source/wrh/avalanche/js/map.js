@@ -89,10 +89,9 @@ function queryWWA(WFO){
 
 // Get Winter Wx Specific WWA for the CWA, plot on map
 function getWWA(WWA,WFO) {
-	console.log(WWA,WFO)
   $.getJSON('/source/slc/common_data/support.json', function (support) {
 		//TODO  Do we need to specify that these are only winter/avalanche relatd hazards?
-		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Winter Related Watches & <br>Warnings in the Highlighted Area'; 
+		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Winter Related Watches & Warnings<br>Displayed Only in the Highlighted Area'; 
 		var NUM = WWA.features.length;
 		if (NUM != "0") {
 			for (i=0; i<NUM; i++) {
@@ -221,7 +220,7 @@ function populateAvgContentFromMap(e){
 	
 	//Query Alert polygons below marker to determine whether or not to display alerts
 	let alerts = findAlertsByLatLng(latlng);
-	populateAlerts(alerts)
+	populateAlerts(alerts,locationId)
 }
 
 function findAlertsByLatLng(latlng){
