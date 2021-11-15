@@ -227,13 +227,18 @@ class ChartManager  {
 		},{
 			name: 'Snow Level',
 			id: 's-snowlevel',
-			type: 'spline',
+			type: 'areaspline',
 			yAxis: 'y-snowlevel',
 			xAxis : 0,			
 			data: [],
 			color: this._chartProps.wxColors.snowlevel,
+			fillOpacity: 0.15,
 		//pointInterval: 438e5, // three hours
-			tooltip: { valueSuffix: ' kft' }		
+			tooltip: { valueSuffix: ' kft' },
+			zones: [{
+				value: 25,
+				fillColor: 'rgba(0,0,0,0)'
+		}]				
 		},{
 			name: 'Wind Speed',
 			id : 's-wind',
@@ -396,10 +401,15 @@ class ChartManager  {
 	
 		if (locationForecast.elevation){
 			let elevationText = `${locationForecast.elevation} ft`
+			let elevationKft = Number(locationForecast.elevation / 1000).toFixed(1);
 			this._chart.setTitle({ text: `Avalanche Weather Forecast Guidance For ${locationForecast.name} (${elevationText})` });
 			
 			//Update the elevation plot line.  
-			this._chart.get('y-snowlevel').plotLinesAndBands[0].options.value = Number(locationForecast.elevation / 1000).toFixed(1);
+			this._chart.get('y-snowlevel').plotLinesAndBands[0].options.value = elevationKft;
+
+			//Update the color highlighting when snow level is over the elevation
+			this._chart.get('s-snowlevel').zones[0].value = elevationKft;
+
 			this._chart.get('y-snowlevel').update();			
 		}
 		else {
