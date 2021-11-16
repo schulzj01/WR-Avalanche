@@ -92,6 +92,7 @@ function getWWA(WWA,WFO) {
   $.getJSON('/source/slc/common_data/support.json', function (support) {
 		//TODO  Do we need to specify that these are only winter/avalanche relatd hazards?
 		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Winter Related Watches & Warnings<br>Displayed Only in the Highlighted Area'; 
+		console.log(WWA)
 		var NUM = WWA.features.length;
 		if (NUM != "0") {
 			for (i=0; i<NUM; i++) {
