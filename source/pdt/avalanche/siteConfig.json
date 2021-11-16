@@ -1,0 +1,23 @@
+{"wfo": "PDT",
+  "MAPPING":{
+    "centerLat":45.18,
+    "centerLon":-118.55,
+    "mapZoom":6
+  },
+  "AVG_Sites": [
+    {
+      "location":"Broken Top",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -121.88,44.31 ]
+      }
+    },
+    {
+      "location":"Tam McArthur Rim",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -117.77,45.38  ]
+      }
+    }
+  ]
+}

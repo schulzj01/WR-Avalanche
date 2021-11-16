@@ -1,0 +1,135 @@
+{"wfo": "RIW",
+  "MAPPING":{
+    "centerLat":43.06,
+    "centerLon":-108.45,
+    "mapZoom":6
+  },
+  "AVG_Sites": [
+    {
+      "location":"RENDEZVOUS MOUNTAIN",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.88,43.57 ]
+      }
+    },
+    {
+      "location":"JACKSON AIRPORT",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.74,43.61  ]
+      }
+    },
+    {
+      "location":"BT AVALANCHE CENTER",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.83,43.59  ]
+      }
+    },
+    {
+      "location":"SNOW KING MOUNTAIN",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.76,43.46  ]
+      }
+    },
+    {
+      "location":"FREDS MOUNTAIN",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.94,43.79  ]
+      }
+    },
+    {
+      "location":"BLIND BULL SUMMIT",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.61,42.95  ]
+      }
+    },
+    {
+      "location":"MOUNT COFFIN",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.64,42.64  ]
+      }
+    },
+    {
+      "location":"COMMISSARY RIDGE",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.73,42.58  ]
+      }
+    },
+    {
+      "location":"SPRING CREEK DIVIDE SNOTEL",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.66,42.53  ]
+      }
+    },
+    {
+      "location":"LAVA MOUNTAIN",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.03,43.67  ]
+      }
+    },
+    {
+      "location":"TOGWOTEE MOUNTAIN LODGE",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.20,43.82  ]
+      }
+    },
+    {
+      "location":"BROOKS LAKE LODGE",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.01,43.75  ]
+      }
+    },
+    {
+      "location":"PINE CREEK PASS SNOTEL",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.21,43.57  ]
+      }
+    },
+    {
+      "location":"SHEEP MOUNTAIN SNOTEL",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -111.68,43.22  ]
+      }
+    },
+    {
+      "location":"SYLVAN PASS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.13,44.46  ]
+      }
+    },
+    {
+      "location":"MOUNT GLORY",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.95,43.51  ]
+      }
+    },
+    {
+      "location":"FERRY PEAK",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.98,43.21  ]
+      }
+    },
+    {
+      "location":"BEAVER MOUNTAIN",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -110.61,43.26  ]
+      }
+    }
+  ]
+}
