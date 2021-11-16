@@ -178,18 +178,40 @@ class AVGParser {
 	 * ...SQUAW FLAT SNOTEL (6240 FT)...
 	 */
 	parseLocation(locationPart){
-		let name = this.textBetweenStrings(locationPart,'',String.raw`\(`,'gs')
+		let name = this.textBetweenStrings(locationPart,'',String.raw`(\(|\.\.\.)`,'gs')
 		if (name) { name = name[0].trim(); }
-		let elevation = this.textBetweenStrings(locationPart,String.raw`\(`,String.raw`\)`,'gs')[0];
-		
-		if (elevation) { 
-			elevation = elevation.trim(); 
-			if (elevation.includes('-')){ //TODO HANDLE elevation ranges
-				elevation = elevation.replace(/[^0-9]/g, "");	
+
+		//Try to parse out the elevation.  If we can't find it, set the text to null
+		let parsedElevation = this.textBetweenStrings(locationPart,String.raw`\(`,String.raw`\)`,'gs')
+		let elevationText = (parsedElevation) ?	parsedElevation[0] : '';
+		let elevation = {
+			low : null,
+			high : null,
+			text : elevationText
+		}
+		//If we do have elevation text, try to parse it out depending on what the users have in there. 
+		//Parseable values include: (4000FT), (ABOVE 4000FT), (BELOW 4000 FT), (3500 TO 4000 FT), (3500-4000FT)
+		if (elevationText) { 
+			elevationText = elevationText.toLowerCase().trim(); 
+
+			//Try to handle elevation ranges.  
+			if (elevationText.includes('-')){ 
+				let elevationParts = elevationText.split('-');
+				elevation.low = this.strToKft(elevationParts[0]);	
+				elevation.high = this.strToKft(elevationParts[1]);	
 			}
-			else { elevation = elevation.replace(/[^0-9]/g, "");	}
-			//Convert to kft
-			//elevation = Number(parseInt(elevation) / 1000).toFixed(1)
+			else if (elevationText.includes('to')){ 
+				let elevationParts = elevationText.split('to');
+				elevation.low = this.strToKft(elevationParts[0]);
+				elevation.high = this.strToKft(elevationParts[1]);	
+			}
+			else if (elevationText.includes('above')){ 
+				elevation.low = this.strToKft(elevationText);	
+			}
+			else if (elevationText.includes('below')){ 
+				elevation.high = this.strToKft(elevationText);	
+			} 
+			else { elevation.high = this.strToKft(elevationText);	}
 		}
 		return { 
 			name : name,
@@ -382,5 +404,14 @@ class AVGParser {
 	 */
 	downslope(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+	}
+	/**
+	 * Utility function to strip out anything but numbers from a string and convert ft to kft.
+	 * @param {String} string - String to convert
+	 * @returns {Float} - The elevation value in kft.
+	 */
+	strToKft(string){
+		let int = parseInt(string.replace(/[^0-9]/g, ""));
+		return Number(int / 1000).toFixed(1);
 	}
 }

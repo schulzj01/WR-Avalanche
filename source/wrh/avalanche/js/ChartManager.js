@@ -67,16 +67,34 @@ class ChartManager  {
 			height: this._chartProps.axisHeights[0],
 			top: this._chartProps.axisTops[0],
 			plotLines: [{
-				id : 'l-elevation',
+				id : 'l-elevation-low',
 				color: this._chartProps.wxColors.snowlevel,
 				dashStyle: 'Dash',
-				value: 3,
+				value: -20,
 				zIndex: 5,
 				label: {
 					align: 'right',
 					x: 12,
 					y: 3,
-					
+					style: { 
+						color: this._chartProps.wxColors.snowlevel,
+						//fontWeight: 'bold',
+						paintOrder: 'stroke',
+						stroke:'#FFFFFF',
+						strokeWidth:'5px'
+					},
+					formatter: function () { return (this.options.value); },
+				}
+			},{
+				id : 'l-elevation-high',
+				color: this._chartProps.wxColors.snowlevel,
+				dashStyle: 'Dash',
+				value: -20,
+				zIndex: 5,			
+				label: {
+					align: 'right',
+					x: 12,
+					y: 3,
 					style: { 
 						color: this._chartProps.wxColors.snowlevel,
 						//fontWeight: 'bold',
@@ -232,7 +250,7 @@ class ChartManager  {
 			xAxis : 0,			
 			data: [],
 			color: this._chartProps.wxColors.snowlevel,
-			fillOpacity: 0.15,
+			fillOpacity: 0.2,
 		//pointInterval: 438e5, // three hours
 			tooltip: { valueSuffix: ' kft' },
 			zones: [{
@@ -399,25 +417,39 @@ class ChartManager  {
 		this._chart.get('s-qpf12').setData(qpf12Series);
 		this._chart.get('s-cloudcover').setData(cloudCoverSeries);		
 	
-		if (locationForecast.elevation){
-			let elevationText = `${locationForecast.elevation} ft`
-			let elevationKft = Number(locationForecast.elevation / 1000).toFixed(1);
-			this._chart.setTitle({ text: `Avalanche Weather Forecast Guidance For ${locationForecast.name} (${elevationText})` });
-			
-			//Update the elevation plot line.  
-			this._chart.get('y-snowlevel').plotLinesAndBands[0].options.value = elevationKft;
+		let elevation = locationForecast.elevation;
 
-			//Update the color highlighting when snow level is over the elevation
-			this._chart.get('s-snowlevel').zones[0].value = elevationKft;
-
-			this._chart.get('y-snowlevel').update();			
-		}
-		else {
-			this._chart.setTitle({ text: `Avalanche Weather Forecast Guidance For ${locationForecast.name}`});
-		}
-
+		//Set our title text for the chart
+		let elevationTitleText = (elevation.text !== '') ? `(${elevation.text})` : '';
+		this._chart.setTitle({ text: `Avalanche Weather Forecast Guidance For ${locationForecast.name} ${elevationTitleText}` });
+		
 		//Update the subtitle
 		this._chart.setTitle(null, { text: `Source: National Weather Service &nbsp;&nbsp;&nbsp;&nbsp; Issued: ${productTime}` });		
+
+		//Hide all the plot lines and zones first, and then turn them on if they have a value.
+		//Set our plot line values.  Our chart is in KFT, so convert to KFT.
+		let zoneLevelVal = 25;
+		let plotLineHighVal = -20;
+		let plotLineLowVal = -20;
+
+		if (elevation.high) { 
+			plotLineHighVal = elevation.high;
+			zoneLevelVal = elevation.high;
+		}
+		if (elevation.low) {
+			plotLineHighVal = elevation.low;
+			zoneLevelVal = elevation.low;
+		}
+		
+		//Change the values of our plot lines
+		this._chart.get('y-snowlevel').plotLinesAndBands[0].options.value = plotLineHighVal;
+		this._chart.get('y-snowlevel').plotLinesAndBands[1].options.value = plotLineHighVal;		
+		//Update the color highlighting when snow level is over the elevation
+		this._chart.get('s-snowlevel').zones[0].value = zoneLevelVal;
+		this._chart.get('y-snowlevel').update();			
+	
+
+
 		
 		this._chart.redraw();
 
@@ -475,7 +507,6 @@ class ChartManager  {
 		function cloudCoverToGrayscale(pct){ 
 			let val = (255 - pct).toString(16)
 			let hexString = '#'+[val,val,val].join('');
-			console.log(hexString)
 			return hexString;
 		}	
 		function cloudCoverToColor(pct){

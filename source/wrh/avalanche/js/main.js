@@ -139,7 +139,7 @@ function initializeSelectMenu(){
 		let fcst = PARSED_AVG.forecast(loc);
 		let $option = $('<option>', {
 			value: fcst.id,
-			text: `${fcst.name} (${fcst.elevation} ft)`
+			text: `${fcst.name} (${fcst.elevation.text})`
 		})
 		$selectMenu.append($option);
 	});
