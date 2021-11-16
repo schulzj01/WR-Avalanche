@@ -134,12 +134,13 @@ function changeForecastSelectMenu(e,force = false){
 //Initialize Select Menu with AVG locations 
 function initializeSelectMenu(){
 	let locations = PARSED_AVG.locations; 
-	$selectMenu = $('#forecastPointSelectMenu');
+	$selectMenu = $('#forecastPointSelectMenu');	
 	locations.forEach( loc => {
 		let fcst = PARSED_AVG.forecast(loc);
+		let elevationTitleText = (fcst.elevation.text !== '') ? `(${fcst.elevation.text})` : '';		
 		let $option = $('<option>', {
 			value: fcst.id,
-			text: `${fcst.name} (${fcst.elevation.text})`
+			text: `${fcst.name} ${elevationTitleText}`
 		})
 		$selectMenu.append($option);
 	});
