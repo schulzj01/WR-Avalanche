@@ -418,6 +418,7 @@ class ChartManager  {
 		this._chart.get('s-cloudcover').setData(cloudCoverSeries);		
 	
 		let elevation = locationForecast.elevation;
+		console.log(elevation)
 
 		//Set our title text for the chart
 		let elevationTitleText = (elevation.text !== '') ? `(${elevation.text})` : '';
@@ -437,13 +438,13 @@ class ChartManager  {
 			zoneLevelVal = elevation.high;
 		}
 		if (elevation.low) {
-			plotLineHighVal = elevation.low;
+			plotLineLowVal = elevation.low;
 			zoneLevelVal = elevation.low;
 		}
 		
 		//Change the values of our plot lines
 		this._chart.get('y-snowlevel').plotLinesAndBands[0].options.value = plotLineHighVal;
-		this._chart.get('y-snowlevel').plotLinesAndBands[1].options.value = plotLineLowVal;		
+		this._chart.get('y-snowlevel').plotLinesAndBands[1].options.value = plotLineLowVal;	
 		//Update the color highlighting when snow level is over the elevation
 		this._chart.get('s-snowlevel').zones[0].value = zoneLevelVal;
 		this._chart.get('y-snowlevel').update();			
