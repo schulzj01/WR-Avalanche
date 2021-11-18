@@ -1,0 +1,65 @@
+<html>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>	
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+	<style>
+		#container { 
+			margin:0 auto;
+			width:875px;
+		}
+		#map { 
+			width:850px;
+			height:400px;
+			border:thin gray solid;
+		}
+	</style>
+	<body>
+		<div id="container">
+			<div id="map"></div>
+			<blockquote>
+				<p>Move the map around to find the zoom level and center lat/lon to use. To zoom:</p> 
+				<ul>
+					<li>Click the buttons in the upper left</li>
+					<li>Use the mouse wheel</li>
+					<li>Hold the <strong>Shift Key</strong> then <strong>Click & Drag</strong> to draw a box</li>
+				</ul>
+		</blockquote>
+		</div>
+	</body>
+	
+<script>
+var map = L.map('map', {
+	center: [40, -95],
+	zoom: 4,
+	zoomSnap: 0.1,
+	zoomDelta: 0.25
+});
+
+
+//var positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png').addTo(map);
+var esri = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}').addTo(map);
+
+var ZoomViewer = L.Control.extend({
+	onAdd: function(){
+		var container= L.DomUtil.create('div');
+		var gauge = L.DomUtil.create('div');
+		container.style.width = '200px';
+		container.style.background = 'rgba(255,255,255,0.5)';
+		container.style.textAlign = 'left';	
+		map.on('load moveend zoomend', function(ev){
+			let zoom = (map.getZoom()) ? map.getZoom().toFixed(2) : '?';
+			let lat = (map.getCenter()) ? map.getCenter().lat.toFixed(5) : '?';
+			let lon = (map.getCenter()) ? map.getCenter().lng.toFixed(5) : '?';
+			gauge.innerHTML = `
+				Zoom level:  ${zoom} <br>
+				Latitude:  ${lat} <br>
+				Longitude:  ${lon}     
+			`
+		})
+		container.appendChild(gauge);
+		return container;
+	}
+});
+(new ZoomViewer).addTo(map);
+map.setView([40, -95],4)
+</script>
+</html>
