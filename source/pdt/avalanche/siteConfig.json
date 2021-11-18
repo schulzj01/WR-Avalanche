@@ -1,23 +1,87 @@
-{"wfo": "PDT",
-  "MAPPING":{
-    "centerLat":45.18,
-    "centerLon":-118.55,
-    "mapZoom":6
-  },
-  "AVG_Sites": [
-    {
-      "location":"Broken Top",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -121.88,44.31 ]
-      }
-    },
-    {
-      "location":"Tam McArthur Rim",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -117.77,45.38  ]
-      }
-    }
-  ]
+{
+	"wfo": "PDT",
+	"MAPPING": {
+		"centerLat": 45.12,
+		"centerLon": -119.77,
+		"mapZoom": 7
+	},
+	"AVG_Sites": [{
+			"location": "ANTHONY LAKES AREA",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-118.25,44.96]
+			}
+		},
+		{
+			"location": "BLUE MOUNTAINS",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-118.06,45.70]
+			}
+		},
+		{
+
+			"location": "NORWAY AREA",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-117.22,45.09]
+			}
+		},
+		{
+
+			"location": "CATHERINE CREEK AREA",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-117.53,45.14]
+			}
+		},
+		{
+
+			"location": "CLEAR CREEK AREA",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-117.11,45.08]
+			}
+		},
+		{
+
+			"location": "SALT CREEK AREA",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-117.04,45.22]
+			}
+		},
+		{
+
+			"location": "WALLOWA MOUNTAINS",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-117.26,45.27]
+			}
+		},
+		{
+
+			"location": "NEWBERRY CRATER",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-121.24,43.69]
+			}
+		},
+		{
+
+			"location": "TAM MCARTHUR RIM",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-121.64,44.10]
+			}
+		},
+		{
+
+			"location": "BROKEN TOP",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [-121.67,44.08]
+			}
+		}
+	]
 }
