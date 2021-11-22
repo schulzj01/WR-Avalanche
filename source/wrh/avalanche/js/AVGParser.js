@@ -11,10 +11,9 @@
 class AVGParser {
 	constructor(productText) {
 		this._productText = productText;
+		this._productTime = this.parseProductTime(); //TODO Need to grab this from the API object once operational.
 		this._discussion = this.parseDiscussion();
 		this._forecast = this.parseForecastData();
-		this._productTime = this.parseProductTime(); //TODO Need to grab this from the API object.
-		this._timeZone = ''; //TODO Grab this from API or at least parse from product.
 	}
 
 	/**
@@ -78,10 +77,12 @@ class AVGParser {
 
 		//Create a date using our string.
 		//let productTime = new Date('Feb 28 2013 19:00:00 EST');
-		let productTime = new Date(`${timeParts[4]} ${timeParts[5]} ${timeParts[6]} ${hour24}:${min}:00 `);		
+		let tzOffset = this.awipsTzHourOffset(timeParts[2])
+		let productTime = new Date(`${timeParts[4]} ${timeParts[5]} ${timeParts[6]} ${hour24}:${min}:00 GMT-0${tzOffset}:00 `);		
 		let productHoomanTime = `${this.downslope(timeParts[3])} ${this.downslope(timeParts[4])} ${timeParts[5]} ${hour}:${min}${timeParts[1].toLowerCase()}`; 
 		return { 
 			time : productTime,
+			tzOffset : tzOffset,
 			formatted : productHoomanTime
 		}
 	}
@@ -321,8 +322,8 @@ class AVGParser {
 		let day = datestamp.split('/')[1];
 		let now = new Date();
 		//Need to account for a year change here.
-		//TODO need to account for timezone here.
-		let d = new Date(`${now.getFullYear()}-${mon}-${day}T00:00:00.000-07:00`)
+		let tzOffset = this._productTime.tzOffset;
+		let d = new Date(`${now.getFullYear()}-${mon}-${day}T00:00:00.000-0${tzOffset}:00`)
 		let dOff = new Date(+d);
 		dOff.setDate(dOff.getDate()+dateOffset);
 		return dOff;
@@ -413,5 +414,41 @@ class AVGParser {
 	strToKft(string){
 		let int = parseInt(string.replace(/[^0-9]/g, ""));
 		return Number(int / 1000).toFixed(1);
+	}
+	/**
+	 * Returns an hour offset from a given AWIPS timezone code
+	 */
+	awipsTzHourOffset(awipsTzCode){
+		let offset;
+		switch(awipsTzCode){
+			case 'EDT':
+				offset = 4;
+				break;
+			case 'CDT':
+			case 'EST':
+				offset = 5;
+				break;				
+			case 'CST':
+			case 'MDT':
+				offset = 6;
+				break;				
+			case 'MST':
+			case 'PDT':
+				offset = 7;
+				break;
+			case 'PST':
+			case 'PDT':
+				offset = 7;
+				break;	
+			case 'AKDT':
+				offset = 8;
+				break;
+			case 'AKST':
+				offset = 9;
+				break;							
+			default:
+				offset = 0;
+		}
+		return offset;
 	}
 }
