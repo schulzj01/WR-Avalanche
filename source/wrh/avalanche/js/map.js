@@ -6,10 +6,13 @@ function makeMap(wfo) {
     var lat  = cwaINFO.MAPPING.centerLat;  
     var lon  = cwaINFO.MAPPING.centerLon;  
     var zoom = cwaINFO.MAPPING.mapZoom;  
-    mainMap = L.map('map',{ zoomControl: false }).setView([lat, lon],zoom);
+    mainMap = L.map('map',{ 
+			zoomControl: false,
+			zoomSnap: 0.1,
+		}).setView([lat, lon],zoom);
     L.esri.basemapLayer('Topographic',).addTo(mainMap);
     L.control.zoom({
-       position:'topright'
+      position:'topright'
     }).addTo(mainMap);
     for (i=0; i<cwaINFO.AVG_Sites.length; i++) {
       plotAVGlocations(cwaINFO.AVG_Sites[i],wfo)
