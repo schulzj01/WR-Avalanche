@@ -418,8 +418,7 @@ class ChartManager  {
 		this._chart.get('s-cloudcover').setData(cloudCoverSeries);		
 	
 		let elevation = locationForecast.elevation;
-		console.log(elevation)
-
+		
 		//Set our title text for the chart
 		let elevationTitleText = (elevation.text !== '') ? `(${elevation.text})` : '';
 		this._chart.setTitle({ text: `Avalanche Weather Forecast Guidance For ${locationForecast.name} ${elevationTitleText}` });
