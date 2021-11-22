@@ -1,65 +1,179 @@
 {
-  "MAPPING":{
-    "centerLat":43.06,
-    "centerLon":-113.2,
-    "mapZoom":7
-  },
-  "AVG_Sites": [
-    {
-      "location":"Bald Mtn",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -114.42,43.66 ]
-      }
-    },
-    {
-      "location":"Titus Peak",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -114.73,43.85  ]
-      }
-    },
-    {
-      "location":"Soldier Mtn",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -114.92,43.48  ]
-      }
-    },
-    {
-      "location":"Vienna Mine",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -114.84,43.81  ]
-      }
-    },
-    {
-      "location":"Copper Mtn",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -115.19,44.34  ]
-      }
-    },
-    {
-      "location":"Pine Creek Pass",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -111.21,43.57 ]
-      }
-    },
-    {
-      "location":"Targhee Pass",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -111.27,44.657  ]
-      }
-    },
-    {
-      "location":"Bloomington Lake",
-      "geometry": {
-        "type": "GridPoint",
-        "coordinates": [ -111.556,42.173  ]
-      }
-    }
-  ]
+	"MAPPING":{
+		"centerLat":43.479,
+		"centerLon":-112.85,
+		"mapZoom":7.1
+	},
+	"AVG_Sites": [
+		{
+			"location":"Baker Lake - Smoky Mountains",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.67,43.7 ]
+			}
+		},{
+			"location":"Bald Mountain",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.405,43.662 ]
+			}
+		},{
+			"location":"Bear Valley Mountain",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.37,44.45 ]
+			}
+		},{
+			"location":"Copper Mountain - Banner Summit",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.19,44.34 ]
+			}
+		},{
+			"location":"Dollarhide Mountain - Smoky Mountains",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.68,43.61 ]
+			}
+		},{
+			"location":"Mores Creek Summit - Boise Mountains",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.69,43.96 ]
+			}
+		},{
+			"location":"Muldoon Summit - Little Wood",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.11,43.48 ]
+			}
+		},{
+			"location":"Hyndman Peak - Pioneers",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.11,43.76 ]
+			}
+		},{
+			"location":"Potato Mountain - Stanley Foothills",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.91,44.31 ]
+			}
+		},{
+			"location":"Williams Peak - Sawtooths",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115,44.14 ]
+			}
+		},{
+			"location":"Bench Lakes - Sawtooths",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.96,44.13 ]
+			}
+		},{
+			"location":"Skeleton Creek - Western Smoky Mountains",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.99,43.69 ]
+			}
+		},{
+			"location":"Soldier Mountain",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.92,43.48 ]
+			}
+		},{
+			"location":"Titus Peak - Galena Summit",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.73,43.85	]
+			}
+		},{
+			"location":"Vienna Mine",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.84,43.81	]
+			}
+		},{
+			"location":"4th of July Creek - White Clouds",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.65,44.05 ]
+			}
+		},{
+			"location":"Garnes Mountain",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.333,43.66 ]
+			}
+		},{
+			"location":"Palisades Peak",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.089,43.44 ]
+			}
+		},{
+			"location":"Pine Creek Pass",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.21,43.57 ]
+			}
+		},{
+			"location":"Sheep Mountain",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.69,43.21 ]
+			}
+		},{
+			"location":"Bloomington Canyon Yurt",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.556,42.173 ]
+			}
+		},{
+			"location":"Emigrant Summit",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.5667,42.367 ]
+			}
+		},{
+			"location":"Franklin Basin",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.6,42.05 ]
+			}
+		},{
+			"location":"Paris Peak",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.55,42.203 ]
+			}
+		},{
+			"location":"St Charles Peak",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.565,42.14 ]
+			}
+		},{
+			"location":"Elephant - Mid-Sawtell",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.4167,44.533 ]
+			}
+		},{
+			"location":"Lionhead Mountain",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.323,42.71 ]
+			}
+		},
+		{
+			"location":"Targhee Pass",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -111.28,44.68	]
+			}
+		}
+	]
 }
