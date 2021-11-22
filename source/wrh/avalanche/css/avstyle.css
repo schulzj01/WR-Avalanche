@@ -61,7 +61,7 @@ small { font-size: 0.85em; }
 .preFormatted {
 	font-family:monospace;
 	white-space: pre-wrap;
-	font-size:15px;
+	font-size:14px;
 	line-height: 1.5em;
 	background-color:#ffffff;
 	padding: 10px 0 10px 0;
