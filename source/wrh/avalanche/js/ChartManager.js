@@ -399,56 +399,68 @@ class ChartManager  {
 		let windGustSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind gust (mph)'],locationForecast.forecast['wind dir']);	
 		let cloudCoverSeries = this.createCloudCoverSeriesFromAvg(locationForecast.forecast['cloud cover (%)']);	
 
+		
 		let snow12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour snow'],'float');	
 		let qpf12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour qpf'],'float');	
 		let tempSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'int');
-		let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'float');	
-
-		let dateSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'date');	
+		
+		/*let dateSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'date');	
 
 		let xAxisMin = dateSeries[0];
-		let xAxisMax = dateSeries[dateSeries.length-1];
+		let xAxisMax = dateSeries[dateSeries.length-1];*/
 				
 		this._chart.get('s-temperature').setData(tempSeries);
-		this._chart.get('s-snowlevel').setData(snowLevelSeries);
 		this._chart.get('s-wind').setData(windSeries);
 		this._chart.get('s-windgust').setData(windGustSeries);
 		this._chart.get('s-snowfall12').setData(snow12Series);
 		this._chart.get('s-qpf12').setData(qpf12Series);
 		this._chart.get('s-cloudcover').setData(cloudCoverSeries);		
-	
+
+		
+
+
 		let elevation = locationForecast.elevation;
 		
+		//If we have snow level in our product, edit some of the chart to include things like elevation or elevation ranges.
+		if (locationForecast.forecast.hasOwnProperty('snow level (kft)')) { 
+			let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'float');	
+			this._chart.get('s-snowlevel').setData(snowLevelSeries);
+		
+			//Hide all the plot lines and zones first, and then turn them on if they have a value.
+			//Set our plot line values.  Our chart is in KFT, so convert to KFT.
+			let zoneLevelVal = 25;
+			let plotLineHighVal = -20;
+			let plotLineLowVal = -20;
+
+			if (elevation.high) { 
+				plotLineHighVal = elevation.high;
+				zoneLevelVal = elevation.high;
+			}
+			if (elevation.low) {
+				plotLineLowVal = elevation.low;
+				zoneLevelVal = elevation.low;
+			}
+			
+			//Change the values of our plot lines
+			this._chart.get('y-snowlevel').plotLinesAndBands[0].options.value = plotLineHighVal;
+			this._chart.get('y-snowlevel').plotLinesAndBands[1].options.value = plotLineLowVal;	
+			//Update the color highlighting when snow level is over the elevation
+			this._chart.get('s-snowlevel').zones[0].value = zoneLevelVal;
+		}
+		//Snow Level is optional in the AVG and ER doesn't do it.  Hide it if not available, but don't remove the Y axis as we want the border line still there.
+		else { 
+			this._chart.get('y-snowlevel').userOptions.title.text = '';
+		}
+		this._chart.get('y-snowlevel').update();			
+
+
+	
 		//Set our title text for the chart
 		let elevationTitleText = (elevation.text !== '') ? `(${elevation.text})` : '';
 		this._chart.setTitle({ text: `Avalanche Weather Forecast Guidance For ${locationForecast.name} ${elevationTitleText}` });
 		
 		//Update the subtitle
 		this._chart.setTitle(null, { text: `Source: National Weather Service &nbsp;&nbsp;&nbsp;&nbsp; Issued: ${productTime}` });		
-
-		//Hide all the plot lines and zones first, and then turn them on if they have a value.
-		//Set our plot line values.  Our chart is in KFT, so convert to KFT.
-		let zoneLevelVal = 25;
-		let plotLineHighVal = -20;
-		let plotLineLowVal = -20;
-
-		if (elevation.high) { 
-			plotLineHighVal = elevation.high;
-			zoneLevelVal = elevation.high;
-		}
-		if (elevation.low) {
-			plotLineLowVal = elevation.low;
-			zoneLevelVal = elevation.low;
-		}
-		
-		//Change the values of our plot lines
-		this._chart.get('y-snowlevel').plotLinesAndBands[0].options.value = plotLineHighVal;
-		this._chart.get('y-snowlevel').plotLinesAndBands[1].options.value = plotLineLowVal;	
-		//Update the color highlighting when snow level is over the elevation
-		this._chart.get('s-snowlevel').zones[0].value = zoneLevelVal;
-		this._chart.get('y-snowlevel').update();			
-	
-
 
 		
 		this._chart.redraw();
