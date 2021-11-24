@@ -68,6 +68,18 @@ small { font-size: 0.85em; }
 	margin-top: 15px;
 }
 
+/** Fix for html labels overlaying tooltip  */
+.highcharts-tooltip > span {
+	padding: 8px;
+	/*margin-left: -6px !important;
+	margin-top: -6px !important;
+	background-color: white;*/
+	background: rgba(255,255,255,0.7);
+  border: 1px solid #f7a35c;/* #9ab;*/
+  border-radius: 3px;
+  box-shadow: 1px 1px 2px #888;	
+}
+
 #forecastTabularTabContent {
 	text-align:center;
 }

@@ -13,8 +13,8 @@ class ChartManager  {
 		//Set up our configuration options;
 		this._chartProps = {
 			wxColors : {
-				qpf: Highcharts.getOptions().colors[2],
-				snowfall: Highcharts.getOptions().colors[0],
+				qpf: '#27e85e',
+				snowfall: '#3b8ddb',
 				wind: Highcharts.getOptions().colors[5],
 				temperature: Highcharts.getOptions().colors[3],
 				snowlevel: '#00b774',
@@ -304,7 +304,22 @@ class ChartManager  {
 			groupPadding: 0,
 			pointPadding: 0,
 			borderWidth: 0,			
-			opacity: 0.75,
+			opacity: 0.60,
+			//Add in some lines at the top of the columns to make them stand out.
+			dataLabels: {
+				enabled: true,
+				useHTML: true,
+				align: 'left',
+				padding: 0,
+				verticalAlign:'bottom',
+				allowOverlap: true,
+				formatter: function() {
+					console.log(this)
+					let width = this.point.pointWidth + 1;
+					return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}"">&nbsp;</div>`; 
+				},
+				y: 0
+			}			
 		},{
 			name: '12 Hour Liquid Precip',
 			id: 's-qpf12',
@@ -319,11 +334,26 @@ class ChartManager  {
 			tooltip: { 
 				valueSuffix: ' in',
 			},
-			opacity: 0.75,
+			opacity: 0.60,
 			grouping:false,
 			groupPadding: 0,
 			pointPadding: 0,			
 			borderWidth: 0,
+			//Add in some lines at the top of the columns to make them stand out.
+			dataLabels: {
+				enabled: true,
+				useHTML: true,
+				align: 'left',
+				padding: 0,
+				verticalAlign:'bottom',
+				allowOverlap: true,
+				formatter: function() {
+					console.log(this)
+					let width = this.point.pointWidth + 1;
+					return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}">&nbsp;</div>`; 
+				},
+				y: 0
+			}
 		},{
 			name: 'Cloud Cover',
 			id: 's-cloudcover',
@@ -368,6 +398,8 @@ class ChartManager  {
 				shared:true,
 				followPointer: true,
 				followTouchMove: true,
+				useHTML: true,
+				padding:0,
 				//stickOnContact: true,
 			},
 			series : series,
