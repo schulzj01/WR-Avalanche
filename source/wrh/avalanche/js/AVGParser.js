@@ -393,7 +393,6 @@ class AVGParser {
 				parsedForecastDataArray.push(parsedForecast);
 			};
 			parsedForecastData[weatherType] = parsedForecastDataArray;
-			console.log(parsedForecastData)
 		});
 		return parsedForecastData;
 		
