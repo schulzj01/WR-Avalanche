@@ -106,7 +106,6 @@ class AVGParser {
 		//Parse out the forecast points
 		const forecastData = {};
 		let avgFcsts = this.textBetweenStrings(this._productText,String.raw`^\.\.\.`,String.raw`(\n\n\n|\$\$|\*\*\*)`,'gms');
-		console.log(avgFcsts)
 		//For each parsed out forecast section, parse it out further into a location and forecast text. 
 		//perhaps we also want to parse out the elevation from the location?
 		let timesRegex = new RegExp(/^(TIME).*/im);		
@@ -357,11 +356,11 @@ class AVGParser {
 		let forecastLines = forecastTable.split('\n');
 		//The header text could be anything before the first time period. I'd love to regex this out, but probably impossible 
 		//so just use a substring based on that index.
-
 		forecastLines.forEach( forecastLine => {
 			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim().toLowerCase();
 			parsedForecastData[weatherType] = null; 
 			let parsedForecastDataArray = [];
+
 			for (let i=0; i < forecastTimes.length; i++){
 				let parsedForecast = {
 					val : '',
@@ -376,8 +375,8 @@ class AVGParser {
 					//Only look for snow  where the data column starts with #.# 
 					else if (weatherType.includes('snow')) { regex = new RegExp(/[0-9]{1}\.[0-9]{1}/); }	
 					if (regex.test(columnValue)) { 
-						//If our value is QPF look back an extra couple columns to get the full string.
-						columnValue = forecastLine.substring(forecastTimes[i-2].start-1,forecastTimes[i].end).trim();
+						//If our value is QPF look back an extra couple spaces to get the full string.
+						columnValue = forecastLine.substring(forecastTimes[i].start-2,forecastTimes[i].end).trim();
 						//if (columnValue == '') { columnValue = null; }
 						parsedForecast.val = columnValue;
 						//12 hourly data is look behind not look forward, so search back through previous times and add when needed.
@@ -394,6 +393,7 @@ class AVGParser {
 				parsedForecastDataArray.push(parsedForecast);
 			};
 			parsedForecastData[weatherType] = parsedForecastDataArray;
+			console.log(parsedForecastData)
 		});
 		return parsedForecastData;
 		
