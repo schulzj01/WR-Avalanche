@@ -79,7 +79,7 @@ class AVGParser {
 		//let productTime = new Date('Feb 28 2013 19:00:00 EST');
 		let tzOffset = this.awipsTzHourOffset(timeParts[2])
 		let productTime = new Date(`${timeParts[4]} ${timeParts[5]} ${timeParts[6]} ${hour24}:${min}:00 GMT-0${tzOffset}:00 `);		
-		let productHoomanTime = `${this.downslope(timeParts[3])} ${this.downslope(timeParts[4])} ${timeParts[5]} ${hour}:${min}${timeParts[1].toLowerCase()}`; 
+		let productHoomanTime = `${this.downslope(timeParts[3])} ${this.downslope(timeParts[4])} ${timeParts[5]} ${hour}:${min}${timeParts[1].toLowerCase()} ${timeParts[2]} `; 
 		return { 
 			time : productTime,
 			tzOffset : tzOffset,
