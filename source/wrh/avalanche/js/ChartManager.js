@@ -314,7 +314,6 @@ class ChartManager  {
 				verticalAlign:'bottom',
 				allowOverlap: true,
 				formatter: function() {
-					console.log(this)
 					let width = this.point.pointWidth + 1;
 					return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}"">&nbsp;</div>`; 
 				},
@@ -348,7 +347,6 @@ class ChartManager  {
 				verticalAlign:'bottom',
 				allowOverlap: true,
 				formatter: function() {
-					console.log(this)
 					let width = this.point.pointWidth + 1;
 					return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}">&nbsp;</div>`; 
 				},
@@ -489,7 +487,7 @@ class ChartManager  {
 	
 		//Set our title text for the chart
 		let elevationTitleText = (elevation.text !== '') ? `(${elevation.text})` : '';
-		this._chart.setTitle({ text: `Avalanche Weather Forecast Guidance For ${locationForecast.name} ${elevationTitleText}` });
+		this._chart.setTitle({ text: `Forecast Guidance For ${locationForecast.name} ${elevationTitleText}` });
 		
 		//Update the subtitle
 		this._chart.setTitle(null, { text: `Source: National Weather Service &nbsp;&nbsp;&nbsp;&nbsp; Issued: ${productTime}` });		
