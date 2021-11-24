@@ -315,7 +315,9 @@ class ChartManager  {
 				allowOverlap: true,
 				formatter: function() {
 					let width = this.point.pointWidth + 1;
-					return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}"">&nbsp;</div>`; 
+					if (this.y !== 0) {
+						return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}"">&nbsp;</div>`; 
+					}
 				},
 				y: 0
 			}			
@@ -348,7 +350,9 @@ class ChartManager  {
 				allowOverlap: true,
 				formatter: function() {
 					let width = this.point.pointWidth + 1;
-					return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}">&nbsp;</div>`; 
+					if (this.y !== 0) {
+						return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}"">&nbsp;</div>`; 
+					}
 				},
 				y: 0
 			}
@@ -481,6 +485,11 @@ class ChartManager  {
 		else { 
 			this._chart.get('y-snowlevel').userOptions.title.text = '';
 		}
+
+		//Update the crosshair to match the actual width of the columns
+		this._chart.get('x-main').crosshair.width = this._chart.get('s-snowfall12').barW;
+
+		//Update the chart
 		this._chart.get('y-snowlevel').update();			
 
 
