@@ -1,193 +1,290 @@
 {"wfo": "AFC",
   "MAPPING":{
-    "centerLat":66.41,
-    "centerLon":-161.95,
-    "mapZoom":4
+    "centerLat":61.086,
+    "centerLon":-147.380,
+    "mapZoom":7
   },
   "AVG_Sites": [
     {
-    "location":"Cordova (Sea level to 1000 ft)",
+    "location":"CORDOVA LOW ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Cordova_0_to_1000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -145.738,60.536 ]
       }
     },
     {
-    "location":"Cordova (1000 to 2000 ft)",
+    "location":"CORDOVA MID ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Cordova_1000_to_2000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -145.738,60.556 ]
       }
     },
     {
-    "location":"Cordova (Above 2000 ft)",
+    "location":"CORDOVA UPPER ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Cordova_above_2000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -145.720,60.560 ]
       }
     },
     {
-    "location":"EASTERN KENAI LAKE (3000 TO 5000 FT)",
+    "location":"EASTERN KENAI LAKE LOW ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Eastern_Kenai_Lake_3000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.348,60.377 ]
       }
     },
     {
-    "location":"EASTERN KENAI LAKE (500 TO 1000 FT)",
+    "location":"EASTERN KENAI LAKE UPPER ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Eastern_Kenai_Lake_500_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.308,60.378 ]
       }
     },
     {
-    "location":"GIRDWOOD AREA (1500 TO 3000 FT)",
+    "location":"GIRDWOOD AREA LOW ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Girdwood_1500_to_3000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.111,60.959 ]
       }
     },
     {
-    "location":"GIRDWOOD AREA (3000 TO 4500 FT)",
+    "location":"GIRDWOOD AREA MID ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Girdwood_3000_to_4500_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.091,60.960 ]
       }
     },
     {
-    "location":"GIRDWOOD AREA (500 TO 1500 FT)",
+    "location":"GIRDWOOD AREA UPPER ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Girdwood_500_to_1500_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.059,60.959 ]
       }
     },
     {
-    "location":"GIRDWOOD AREA (ABOVE 4500 FT)",
+    "location":"GIRDWOOD AREA HIGH ALPINE",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Girdwood_above_4500ft_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -148.992,61.039 ]
       }
     },
     {
-    "location":"GRANDVIEW (1600 TO 4000 FT)",
+    "location":"GRANDVIEW LOW ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Grandview_1600_to_4000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.065,60.609 ]
       }
     },
     {
-    "location":"GRANDVIEW (500 TO 1600 FT)",
+    "location":"GRANDVIEW UPPER ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Grandview_500_to_1600_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.024,60.617 ]
       }
     },
     {
-    "location":"HATCHER PASS (1000 TO 2500 FT)",
+    "location":"HATCHER PASS LOW ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Hatcher_Pass_1000_to_2500_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.236,61.744 ]
       }
     },
     {
-    "location":"HATCHER PASS (2500 TO 4000 FT)",
+    "location":"HATCHER PASS MID ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Hatcher_Pass_2500_to_4000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.276,61.777 ]
       }
     },
     {
-    "location":"HATCHER PASS (ABOVE 4000 FT)",
+    "location":"HATCHER PASS UPPER ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Hatcher_Pass_above_4000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.244,61.787 ]
       }
     },
     {
-    "location":"PORTAGE VALLEY (200 TO 1600 FT)",
+    "location":"PORTAGE VALLEY LOW ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Portage_200_to_1600_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -148.938,60.799 ]
       }
     },
     {
-    "location":"PORTAGE VALLEY (ABOVE 1600 FT)",
+    "location":"PORTAGE VALLEY UPPER ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Portage_above_1600_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -148.846,60.801 ]
       }
     },
     {
-    "location":"SUMMIT LAKE (1500 TO 2500 FT)",
+    "location":"SUMMIT LAKE LOW ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Summit_Lake_1500_to_2500_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.494,60.645 ]
       }
     },
     {
-    "location":"SUMMIT LAKE (2500 TO 3500 FT)",
+    "location":"SUMMIT LAKE MID ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Summit_Lake_2500_to_3500_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.469,60.630 ]
       }
     },
     {
-    "location":"SUMMIT LAKE (ABOVE 3500 FT)",
+    "location":"SUMMIT LAKE UPPER ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Summit_Lake_above_3500_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -149.437,60.619 ]
       }
     },
     {
-    "location":"THOMPSON PASS (1000 TO 2000 FT CONTINENTAL)",
+    "location":"THOMPSON PASS LOW ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Thompson_Pass_1000_2000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -145.766,61.122 ]
       }
     },
     {
-    "location":"THOMPSON PASS (2000 TO 4000 FT)",
+    "location":"THOMPSON PASS MID ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Thompson_Pass_2000_to_4000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -145.728,61.150 ]
       }
     },
     {
-    "location":"THOMPSON PASS (500 TO 2000 FT)",
+    "location":"THOMPSON PASS UPPER ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Thompson_Pass_500_to_2000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -145.802,61.140 ]
       }
     },
     {
-    "location":"THOMPSON PASS (ABOVE 4000 FT)",
+    "location":"THOMPSON PASS LOW ELEVATIONS CONTINENTAL",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Thompson_Pass_Above_4000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -145.360,61.236 ]
       }
     },
     {
-    "location":"TURNAGAIN PASS (1500 TO 3000 FT)",
+    "location":"THOMPSON PASS MID ELEVATIONS CONTINENTAL",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Turnagain_Pass_1500_to_3000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -145.361,61.252 ]
       }
     },
     {
-    "location":"TURNAGAIN PASS (500 TO 1500 FT)",
+    "location":"THOMPSON PASS UPPER ELEVATIONS CONTINENTAL",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Turnagain_Pass_500_to_1500ft_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -145.280,61.224 ]
       }
     },
     {
-    "location":"TURNAGAIN PASS (ABOVE 3000 FT)",
+    "location":"VALDEZ COASTAL LOW ELEVATIONS",
       "geometry": {
-        "type": "ShapeFile",
-        "coordinates": "Turnagain_Pass_above_3000_EditArea.json"
+        "type": "GridPoint",
+        "coordinates": [ -146.156,61.114 ]
       }
+    },
+    {
+    "location":"VALDEZ COASTAL MID ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -146.100,61.102 ]
+      }
+    },
+    {
+    "location":"VALDEZ COASTAL UPPER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -146.306,61.165 ]
+      }  
+    },
+    {
+    "location":"TURNAGAIN PASS LOW ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.194,60.800 ]
+      }
+    },
+    {
+    "location":"TURNAGAIN PASS MID ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.158,60.782 ]
+      }
+    },
+    {
+    "location":"TURNAGAIN PASS UPPER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.095,60.755 ]
+      }
+    },
+    {
+    "location":"CHUGACH FRONT RANGE SOUTH LOWER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.710,61.107 ]
+      }
+    },
+    {
+    "location":"CHUGACH FRONT RANGE SOUTH UPPER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.667,61.090 ]
+      }
+    },
+    {
+    "location":"CHUGACH FRONT RANGE SOUTH UPPER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.667,61.090 ]
+      } 
+    },
+    {
+    "location":"CHUGACH FRONT RANGE NORTH LOWER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.601,61.235 ]
+      }  
+    },
+    {
+    "location":"CHUGACH FRONT RANGE NORTH UPPER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.504,61.262 ]
+      }    
+    },
+    {
+    "location":"INDIAN LOWER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.517,61.007 ]
+      }
+    },
+    {
+    "location":"INDIAN UPPER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.567,61.036 ]
+      } 
+    },
+    {
+    "location":"PLACER VALLEY LOWER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -148.970,60.759 ]
+      }  
+    },
+    {
+    "location":"PLACER VALLEY UPPER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -148.957,60.735 ]
+      }  
     }
   ]
 }
-
 

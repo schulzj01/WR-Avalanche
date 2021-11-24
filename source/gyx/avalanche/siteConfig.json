@@ -1,0 +1,72 @@
+{"wfo": "GYX",
+  "MAPPING":{
+    "centerLat":44.20,
+    "centerLon":-70.60,
+    "mapZoom":7
+  },
+  "AVG_Sites": [
+    {
+      "location":"Presidential Range Forecast Area/Mount Washington",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -71.30327,44.27203 ]
+      }
+    },
+    {
+      "location":"Franconia Notch/Mount Lafayette",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -71.64455,44.16128  ]
+      }
+    },
+    {
+      "location":"Tuckerman and Huntington Ravines",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -71.29842,44.26330  ]
+      }
+    },
+    {
+      "location":"Crawford Notch AMC Highland Center",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -71.412093,44.220014  ]
+      }
+    },
+    {
+      "location":"Kancamagus Highway Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -71.49266,44.02572  ]
+      }
+    },
+    {
+      "location":"Mount Osceola",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -71.53604,44.00143  ]
+      }
+    },
+    {
+      "location":"Cannon Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -71.698453,44.156570  ]
+      }
+    },
+    {
+      "location":"Baldface Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -71.077951,44.230043  ]
+      }
+    },
+    {
+      "location":"Mount Moosilauke",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -71.831312,44.023453  ]
+      }
+    }
+  ]
+}
