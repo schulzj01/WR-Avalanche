@@ -377,6 +377,9 @@ class ChartManager  {
 		}]
 
 		const chartConfig = {
+			/*time: { TODO : Set the timezone of the office in here once we switch to the API. https://api.highcharts.com/class-reference/Highcharts.Time#dateFormat
+        timezone: 'Europe/London' 
+    	}*/
 			title: {
 				text: '',
 				align: 'left'
