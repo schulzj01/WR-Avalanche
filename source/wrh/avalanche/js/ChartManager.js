@@ -316,7 +316,7 @@ class ChartManager  {
 				formatter: function() {
 					let width = this.point.pointWidth + 1;
 					if (this.y !== 0) {
-						return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}"">&nbsp;</div>`; 
+						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}">&nbsp;</div>`; 
 					}
 				},
 				y: 0
@@ -351,7 +351,7 @@ class ChartManager  {
 				formatter: function() {
 					let width = this.point.pointWidth + 1;
 					if (this.y !== 0) {
-						return `<div width="100%" style="width:${width}; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}"">&nbsp;</div>`; 
+						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}">&nbsp;</div>`; 
 					}
 				},
 				y: 0
