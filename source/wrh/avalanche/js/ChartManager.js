@@ -189,7 +189,6 @@ class ChartManager  {
 			showLastLabel: false,
 			gridLineWidth: 0,
 			endOnTick: false,
-			offset: 0,
 			max: 1.1,
 			offset:3,
 			min: 0,
@@ -290,21 +289,28 @@ class ChartManager  {
 		},{
 			name: '12 Hour Snowfall',
 			id: 's-snowfall12',
-			type: 'column',
+			type: 'area',
 			yAxis: 'y-snowfall',
 			xAxis : 0,			
 			data:  [],
 			color: this._chartProps.wxColors.snowfall,
-			//pointPlacement: .5,
-			//pointRange: 60*60*3*1000,
 			tooltip: { 
 				valueSuffix: ' in',
 			},
-			grouping:false,
-			groupPadding: 0,
-			pointPadding: 0,
-			borderWidth: 0,			
-			opacity: 0.60,
+			lineWidth: 0,
+			step: 'left',
+			connectNulls: true,
+			stacking: 'normal',
+			marker: {
+				enabled: false,
+				states: {
+					hover: { enabled: false }
+				}
+			},
+			states: { 
+				hover: { enabled: false }
+			},			
+			fillOpacity: 0.30,
 			//Add in some lines at the top of the columns to make them stand out.
 			dataLabels: {
 				enabled: true,
@@ -313,33 +319,46 @@ class ChartManager  {
 				padding: 0,
 				verticalAlign:'bottom',
 				allowOverlap: true,
+				crop: false,
+				overflow: 'allow',
 				formatter: function() {
-					let width = this.point.pointWidth + 1;
+					let thisPoint = this.point;
+					let width = 0;
+					if (thisPoint.index !== thisPoint.series.data.length-1) { 
+						let nextPoint = thisPoint.series.data[thisPoint.index+1];
+						width = nextPoint.plotX - thisPoint.plotX; 
+					}
 					if (this.y !== 0) {
 						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}">&nbsp;</div>`; 
 					}
 				},
-				y: 0
+				y: 1
 			}			
 		},{
 			name: '12 Hour Liquid Precip',
 			id: 's-qpf12',
-			type: 'column',
+			type: 'area',
 			yAxis: 'y-qpf',
 			xAxis : 0,			
 			data: [],
-			color: this._chartProps.wxColors.qpf,				
-			//pointPlacement: .5,
-			//pointRange: 60*60*12*1000,
 			color: this._chartProps.wxColors.qpf,
 			tooltip: { 
 				valueSuffix: ' in',
+			}, 
+			lineWidth: 0,
+			step: 'left',
+			connectNulls: true,
+			stacking: 'normal',
+			marker: {
+				enabled: false,
+				states: {
+					hover: { enabled: false }
+				}
 			},
-			opacity: 0.60,
-			grouping:false,
-			groupPadding: 0,
-			pointPadding: 0,			
-			borderWidth: 0,
+			states: { 
+				hover: { enabled: false }
+			},
+			fillOpacity: 0.30,
 			//Add in some lines at the top of the columns to make them stand out.
 			dataLabels: {
 				enabled: true,
@@ -348,13 +367,21 @@ class ChartManager  {
 				padding: 0,
 				verticalAlign:'bottom',
 				allowOverlap: true,
+				crop: false,
+				overflow: 'allow',
 				formatter: function() {
-					let width = this.point.pointWidth + 1;
+					let thisPoint = this.point;
+					let width = 0;
+					console.log(thisPoint.series.data)
+					if (thisPoint.index !== thisPoint.series.data.length-1) { 
+						let nextPoint = thisPoint.series.data[thisPoint.index+1];
+						width = nextPoint.plotX - thisPoint.plotX; 
+					}
 					if (this.y !== 0) {
 						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}">&nbsp;</div>`; 
 					}
 				},
-				y: 0
+				y: 1
 			}
 		},{
 			name: 'Cloud Cover',
@@ -490,7 +517,7 @@ class ChartManager  {
 		}
 
 		//Update the crosshair to match the actual width of the columns
-		this._chart.get('x-main').crosshair.width = this._chart.get('s-snowfall12').barW;
+		this._chart.get('x-main').crosshair.width = this._chart.get('s-cloudcover').barW;
 
 		//Update the chart
 		this._chart.get('y-snowlevel').update();			
