@@ -84,12 +84,12 @@ function queryWWA(WFO){
 						'High Wind Warning','High Wind Watch','Extreme Wind Warning',
 						'Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch',
 						'Blizzard Warning','Blizzard Watch','Snow Squall Warning','Freezing Rain Advisory']
-	}).getByCwa(WFO,getWWA,WFO);	 //TODO Make sure to switch back to CWA filtered WWAs before going live.
+	}).getByCwa(WFO,getWwa,WFO);	 //TODO Make sure to switch back to CWA filtered WWAs before going live.
 	//}).getAll(getWWA,WFO); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
 }
 
 // Get Winter Wx Specific WWA for the CWA, plot on map
-function getWWA(WWA,WFO) {
+function getWwa(WWA,WFO) {
   $.getJSON('/source/slc/common_data/support.json', function (support) {
 		//TODO  Do we need to specify that these are only winter/avalanche relatd hazards?
 		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Winter Related Watches & Warnings<br>Displayed Only in the Highlighted Area'; 
