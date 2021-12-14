@@ -8,7 +8,7 @@
  *  * 
  *  @param {Object} // A response of products from the NWS API endpoint
  */
-class AVGParser {
+ class AVGParser {
 	constructor(productText) {
 		this._productText = productText;
 		this._productTime = this.parseProductTime(); //TODO Need to grab this from the API object once operational.
@@ -378,16 +378,17 @@ class AVGParser {
 						//If our value is QPF look back an extra couple spaces to get the full string.
 						columnValue = forecastLine.substring(forecastTimes[i].start-2,forecastTimes[i].end).trim();
 						//if (columnValue == '') { columnValue = null; }
-						parsedForecast.val = columnValue;
 						//12 hourly data is look behind not look forward, so search back through previous times and add when needed.
 						let j = 0;
 						do { 
-							if (parsedForecast.date.getTime() - parsedForecastDataArray[j].date.getTime()  < 432e5 ) { 
+							if (parsedForecast.date.getTime() - parsedForecastDataArray[j].date.getTime() <= 432e5 ) { 
 								parsedForecastDataArray[j].val = columnValue;
 							}
 							j++;
 						}
 						while (i > j);
+						//Set up the current time with an empty value that could be populated by the above loop the next time it hits 12 hours.
+						parsedForecast.val = null;
 					}
 				}
 				parsedForecastDataArray.push(parsedForecast);
