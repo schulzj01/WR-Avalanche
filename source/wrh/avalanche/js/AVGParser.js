@@ -277,7 +277,9 @@ class AVGParser {
 		//Forecast data is actually left justified compared to the times. So instead of using the same start/end indices of the time
 		//string.  We need to use the same end index, and then count back until the the previous end index.
 		//The character distance between times. Could be 2-4 characters depending on the AVG version.
-		//Note that the AVG is odd in that every column it gives 2-4 characters, unless it's the first time period, where it only gets up to 3
+		//Note that the AVG changed so that the first time period may only be 3 characters if it's old or 4 if it's new. Gotta account for this till
+		//everyone is on the latest formatter.
+		let firstStartColumnLength = (allAvailableTimes[0].start <= 18) ? 3 : 4;
 		let defaultLengthBetweenFcst = allAvailableTimes[1].end - allAvailableTimes[0].end;
 
 		//Loop through the available timestamps, and determine the correct date and character placement of the tabular data.
@@ -299,7 +301,7 @@ class AVGParser {
 			//Note that the AVG is odd in that every column it gives 2-4 characters, unless it's the first time period, where it only gets 3
 			//in this situation just always make the first start index back 3.			
 			let end = availableTime.end;
-			let len = (i === 0) ?  3 : defaultLengthBetweenFcst;
+			let len = (i === 0) ?  firstStartColumnLength : defaultLengthBetweenFcst;
 			let start = end - len;
 			
 			forecastTimes.push({
