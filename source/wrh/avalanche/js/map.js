@@ -80,8 +80,7 @@ function queryWWA(WFO){
 		event: ['Avalanche Advisory','Avalanche Warning','Avalanche Watch', 
 						'Winter Storm Advisory','Winter Storm Warning','Winter Storm Watch',
 						'Wind Advisory','Wind Chill Advisory','Wind Chill Warning','Wind Chill Watch',
-						'Winter Storm Advisory','Winter Storm Warning','Winter Storm Watch',
-						'High Wind Warning','High Wind Watch','Extreme Wind Warning',
+						'Winter Weather Advisory','High Wind Warning','High Wind Watch','Extreme Wind Warning',
 						'Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch',
 						'Blizzard Warning','Blizzard Watch','Snow Squall Warning','Freezing Rain Advisory']
 	}).getByCwa(WFO,getWwa,WFO);	 //TODO Make sure to switch back to CWA filtered WWAs before going live.
