@@ -1,0 +1,58 @@
+{"wfo": "BTV",
+  "MAPPING":{
+    "centerLat":44.125,
+    "centerLon":-73.3,
+    "mapZoom":7
+  },
+  "AVG_Sites": [
+    {
+      "location":"Smugglers Notch, VT",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -72.8,44.554 ]
+      }
+    },
+    {
+      "location":"Mount Marcy, NY",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -73.92356,44.11271 ]
+      }
+    },
+	{
+      "location":"Algonquin Peak, NY",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -73.98654,44.14368 ]
+      }
+    },
+	{
+      "location":"Whiteface Mountain, NY",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -73.90301,44.36579 ]
+      }
+    },
+	{
+      "location":"Dix Mountain, NY",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -73.7863,44.08218 ]
+      }
+    },
+	{
+      "location":"Mount Colden, NY",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -73.95988,44.12698 ]
+      }
+    },
+	{
+      "location":"Mount Colvin, NY",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -73.83458,44.09403 ]
+      }
+    }
+  ]
+}

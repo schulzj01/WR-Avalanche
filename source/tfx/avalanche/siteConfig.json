@@ -1,0 +1,156 @@
+{"wfo": "TFX",
+  "MAPPING":{
+    "centerLat":46.776,
+    "centerLon":-111.323,
+    "mapZoom":6.3
+  },
+  "AVG_Sites": [
+    {
+      "location":"Glacier Nat'l Park/Marias Pass",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "GlacierParkBadgerPass.json"
+      }
+    },
+     {
+      "location":"Bob Marshall/Scapegoat Wilderness",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "BobMarshall_ScapegoatWilderness.json"
+      }
+    },
+    {
+      "location":"Nevada Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "SouthernLandCClarkRanges.json"
+      }
+    },
+    {
+      "location":"Elkhorn/Boulder Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "ElkhornMountains.json"
+      }
+    },
+    {
+      "location":"Big Belt Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Big_Belts.json"
+      }
+    },
+    {
+      "location":"Little Belt Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Little_Belts.json"
+      }
+    },
+    {
+      "location":"Highwood Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Highwoods.json"
+      }
+    },
+    {
+      "location":"Snowy/Judith Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Snowies_Judith.json"
+      }
+    },
+    {
+      "location":"Bears Paw Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "BearPaws.json"
+      }
+    },
+    {
+      "location":"Castle/Crazy Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Crazy_Castle.json"
+      }
+    },
+    {
+      "location":"Bridger Range",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Bridger.json"
+      }
+    },
+    {
+      "location":"Madison Range/Spanish Peaks",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "MadisonRange.json"
+      }
+    },
+    {
+      "location":"Gallatin Range/Hyalite Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "GallatinRange.json"
+      }
+    },
+    {
+      "location":"Lionhead Range",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Lionhead.json"
+      }
+    },
+    {
+      "location":"Tobacco Root Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "TobaccoRoots.json"
+      }
+    },
+    {
+      "location":"Snowcrest/Gravelly/Ruby/Blacktail Ranges",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "SnowcrestGravellyRuby.json"
+      }
+    },
+    {
+      "location":"Centennial Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Centennial.json"
+      }
+    },
+    {
+      "location":"Anaconda/Highland Ranges",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "AnacondaHighland.json"
+      }
+    },
+    {
+      "location":"Pioneer Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Pioneer.json"
+      }
+    },
+    {
+      "location":"Beaverhead/Tendoy Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Beaverhead.json"
+      }
+    },
+    {
+      "location":"Absoraka-Beartooth/Cooke City Mountains",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "CookeCity.json"
+      }
+    }
+  ]
+}
