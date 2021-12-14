@@ -298,7 +298,7 @@ class ChartManager  {
 				valueSuffix: ' in',
 			},
 			lineWidth: 0,
-			step: 'left',
+			step: 'right',
 			connectNulls: true,
 			stacking: 'normal',
 			marker: {
@@ -315,7 +315,8 @@ class ChartManager  {
 			dataLabels: {
 				enabled: true,
 				useHTML: true,
-				align: 'left',
+				align: 'right',
+				inside: 'false',
 				padding: 0,
 				verticalAlign:'bottom',
 				allowOverlap: true,
@@ -324,16 +325,17 @@ class ChartManager  {
 				formatter: function() {
 					let thisPoint = this.point;
 					let width = 0;
-					if (thisPoint.index !== thisPoint.series.data.length-1) { 
-						let nextPoint = thisPoint.series.data[thisPoint.index+1];
-						width = nextPoint.plotX - thisPoint.plotX; 
+					let prevPointX = 0; 
+					if (thisPoint.index !== 0) { 
+						prevPointX = thisPoint.series.data[thisPoint.index-1].plotX;
 					}
+					width = Math.ceil(thisPoint.plotX - prevPointX); 
 					if (this.y !== 0) {
 						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}">&nbsp;</div>`; 
 					}
 				},
-				y: 1
-			}			
+				y: 1,
+			}		
 		},{
 			name: '12 Hour Liquid Precip',
 			id: 's-qpf12',
@@ -346,7 +348,7 @@ class ChartManager  {
 				valueSuffix: ' in',
 			}, 
 			lineWidth: 0,
-			step: 'left',
+			step: 'right',
 			connectNulls: true,
 			stacking: 'normal',
 			marker: {
@@ -363,7 +365,8 @@ class ChartManager  {
 			dataLabels: {
 				enabled: true,
 				useHTML: true,
-				align: 'left',
+				align: 'right',
+				inside: 'false',
 				padding: 0,
 				verticalAlign:'bottom',
 				allowOverlap: true,
@@ -372,16 +375,16 @@ class ChartManager  {
 				formatter: function() {
 					let thisPoint = this.point;
 					let width = 0;
-					console.log(thisPoint.series.data)
-					if (thisPoint.index !== thisPoint.series.data.length-1) { 
-						let nextPoint = thisPoint.series.data[thisPoint.index+1];
-						width = nextPoint.plotX - thisPoint.plotX; 
+					let prevPointX = 0; 
+					if (thisPoint.index !== 0) { 
+						prevPointX = thisPoint.series.data[thisPoint.index-1].plotX;
 					}
+					width = Math.ceil(thisPoint.plotX - prevPointX);
 					if (this.y !== 0) {
 						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}">&nbsp;</div>`; 
 					}
 				},
-				y: 1
+				y: 1,
 			}
 		},{
 			name: 'Cloud Cover',
