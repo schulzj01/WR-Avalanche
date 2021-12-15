@@ -67,11 +67,8 @@ function plotAVGlocations(locationData,wfo) {
   // Need to test with a shapefile from an officee using shapefiles
   } else if (type == 'ShapeFile') {
     $.getJSON('/source/'+wfo+'/avalanche/'+locationData.geometry.coordinates, function(shape) {
-      var color_style={color: "#0000FF", fillColor:"white",fillOpacity:0, weight:2};
-      //var border = L.geoJson(outline, {style: color_style});
-			
-			//let border = L.polygon(outline, {style : color_style});
-			let border = L.GeoJSON.geometryToLayer(shape.features[0],color_style)//latLngsToCoords			
+      let color_style={color: "#0000FF", fillColor:"white",fillOpacity:0, weight:2};
+			let border = L.GeoJSON.geometryToLayer(shape.features[0],color_style)	
 			border.locationId = locationData.location.toLowerCase();
 			border.layerType = 'polygon';			
       border.on('click', populateAvgContentFromMap)
