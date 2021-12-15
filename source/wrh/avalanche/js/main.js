@@ -89,8 +89,6 @@ function populateAlerts(alerts,locationId){
 	let locationName = PARSED_AVG.locationName(locationId);
 
 	if (alerts.length > 0) { 
-		//Reverse the order of the alerts, so the higher priority is first.
-		alerts = alerts.reverse();
 		$('#forecastAlertsTab').addClass('activeAlerts');
 		$('#forecastAlertsTabContent').addClass('activeAlerts');
 		$('#forecastAlertsTab').html('<span>Active Alerts</span>');
