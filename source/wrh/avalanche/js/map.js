@@ -26,7 +26,7 @@ function makeMap(wfo) {
     }
 
 		//Set an initial opacity on the overlays.
-		mainMap.getPane('overlayPane').style.opacity = 0.6		
+		mainMap.getPane('overlayPane').style.opacity = 0.65	
 
 		//var outline = BOUNDARY.features[0].geometry;
 		var options={
@@ -67,9 +67,11 @@ function plotAVGlocations(locationData,wfo) {
   // Need to test with a shapefile from an officee using shapefiles
   } else if (type == 'ShapeFile') {
     $.getJSON('/source/'+wfo+'/avalanche/'+locationData.geometry.coordinates, function(shape) {
-      var outline = shape.features[0].geometry;
-      var color_style={"color": "blue", "fillColor":"blue","fillOpacity":0.8,"width":"1px"};
-      var border = L.geoJson(outline, {style: color_style});
+      var color_style={color: "#0000FF", fillColor:"white",fillOpacity:0, weight:2};
+      //var border = L.geoJson(outline, {style: color_style});
+			
+			//let border = L.polygon(outline, {style : color_style});
+			let border = L.GeoJSON.geometryToLayer(shape.features[0],color_style)//latLngsToCoords			
 			border.locationId = locationData.location.toLowerCase();
 			border.layerType = 'polygon';			
       border.on('click', populateAvgContentFromMap)
@@ -99,8 +101,8 @@ function getWwa(WWA,WFO) {
 		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Winter Related Watches & Warnings<br>Displayed Only in the Highlighted Area'; 
 		var NUM = WWA.features.length;
 		if (NUM != "0") {
-			//Sort hazards into lowest to highest priority so the highest priority show up on the map last.
-			let sortedWWAFeatures = WWA.features.sort((featA,featB) => queryEventTypes.indexOf(featB.properties.event) - queryEventTypes.indexOf(featA.properties.event));
+			//Sort hazards into highest to lowest priority so the highest priority show up on the map last.
+			let sortedWWAFeatures = WWA.features.sort((featA,featB) => queryEventTypes.indexOf(featA.properties.event) - queryEventTypes.indexOf(featB.properties.event));
 			sortedWWAFeatures.forEach(feat => {
 				let props = feat.properties;
 				var Phenom = (props.event);					
@@ -135,14 +137,16 @@ function getWwa(WWA,WFO) {
 function showPolygon (DATA,COLOR,OPAC) {
   if (!standardLayer) {
     standardLayer = L.featureGroup().addTo(mainMap);
+
   }
   plot = DATA.features[0].geometry;
   var originalMsg = JSON.stringify(plot);
   originalMsg = originalMsg.replace('rings','Polygon');
   var newObj = JSON.parse(originalMsg); 
-  var color_style={"color": COLOR, "weight":2,"fillColor":COLOR, fillOpacity: 1};
+  var color_style={"color": COLOR, "weight":2,"fillColor":COLOR, fillOpacity: 0.9};
   var foreFront = L.geoJson(newObj, {style: color_style});
   foreFront.addTo(standardLayer);
+	standardLayer.bringToBack();
 };
 
 // COunty/Zone based warnings
@@ -151,13 +155,14 @@ function showCountyZone (LOCATION,COLOR,alertProduct) {
     standardLayer = L.featureGroup().addTo(mainMap);
   }
   $.getJSON(LOCATION, function(plot) {
-    var color_style={"color": COLOR, "weight":0,"fillColor":COLOR, fillOpacity: 1};
+    var color_style={"color": COLOR, "weight":0,"fillColor":COLOR, fillOpacity: 0.9};
     var foreFront = L.geoJson(plot, {
 			style: color_style,
 			interactive:false,
 		});
 		foreFront.getLayers()[0].alertProduct = alertProduct;
     foreFront.addTo(standardLayer);
+		standardLayer.bringToBack();
   })
 };
 
