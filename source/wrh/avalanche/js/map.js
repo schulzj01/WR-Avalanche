@@ -107,7 +107,7 @@ function getWwa(WWA,WFO) {
 					if (Phenom == support.fill[m].product) {
 						FC = support.fill[m].hex;
 						var ZONES = props.affectedZones.length;
-						var description = props.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;");
+						let description = (props.description) ? props.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;") : ''; 
 						if (Legend.includes(Phenom)) {
 							Legend += '' 
 						} else {
