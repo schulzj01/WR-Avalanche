@@ -498,6 +498,7 @@ class ChartManager  {
 			let zoneLevelVal = 25;
 			let plotLineHighVal = -20;
 			let plotLineLowVal = -20;
+			let plotYAxisMax = 16;
 
 			if (elevation.high) { 
 				plotLineHighVal = elevation.high;
@@ -507,10 +508,17 @@ class ChartManager  {
 				plotLineLowVal = elevation.low;
 				zoneLevelVal = elevation.low;
 			}
+			if (elevation.max) {
+				plotYAxisMax = Math.ceil(elevation.max);
+			}
 			
 			//Change the values of our plot lines
 			this._chart.get('y-snowlevel').plotLinesAndBands[0].options.value = plotLineHighVal;
 			this._chart.get('y-snowlevel').plotLinesAndBands[1].options.value = plotLineLowVal;	
+
+			//Update our snow level y-axis to 1k more than the rounded max elevation.
+			this._chart.get('y-snowlevel').userOptions.softMax = plotYAxisMax;
+
 			//Update the color highlighting when snow level is over the elevation
 			this._chart.get('s-snowlevel').zones[0].value = zoneLevelVal;
 		}

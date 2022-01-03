@@ -10,6 +10,7 @@
  */
 class AVGParser {
 	constructor(productText) {
+		this._maxElevation = 0;		
 		this._productText = productText;
 		this._productTime = this.parseProductTime(); //TODO Need to grab this from the API object once operational.
 		this._discussion = this.parseDiscussion();
@@ -35,7 +36,11 @@ class AVGParser {
 	 * @returns {Object} - Forecast object for a particular location 
 	 */
 	forecast(locationId) { 
-		if (this.locations.includes(locationId)) { return this._forecast[locationId]; }
+		if (this.locations.includes(locationId)) { 
+			let forecast = this._forecast[locationId];
+			forecast.elevation.max = this._maxElevation;
+			return forecast; 
+		}
 		else { 
 			throw Error(`Location ${locationId} not available in AVG or is improperly formatted`);
 		}
@@ -51,6 +56,7 @@ class AVGParser {
 			throw Error(`Location ${locationId} not available in AVG or is improperly formatted`);
 		}
 	}
+
 	/**
 	 * Parses out the issuance time of the product.  This will need to be changed once the AVG is available in the API.
 	 * @returns {Date} - time of the issuance (timezone enabled)
@@ -188,7 +194,7 @@ class AVGParser {
 		let elevation = {
 			low : null,
 			high : null,
-			text : elevationText
+			text : elevationText,
 		}
 		//If we do have elevation text, try to parse it out depending on what the users have in there. 
 		//Parseable values include: (4000FT), (ABOVE 4000FT), (BELOW 4000 FT), (3500 TO 4000 FT), (3500-4000FT)
@@ -196,13 +202,13 @@ class AVGParser {
 			elevationText = elevationText.toLowerCase().trim(); 
 
 			//Try to handle elevation ranges.  
-			if (elevationText.includes('-')){ 
-				let elevationParts = elevationText.split('-');
+			if (elevationText.includes(' to ')){ 
+				let elevationParts = elevationText.split('to');
 				elevation.low = this.strToKft(elevationParts[0]);	
 				elevation.high = this.strToKft(elevationParts[1]);	
 			}
-			else if (elevationText.includes('to')){ 
-				let elevationParts = elevationText.split('to');
+			else if (elevationText.includes('-')){ 
+				let elevationParts = elevationText.split('-');
 				elevation.low = this.strToKft(elevationParts[0]);
 				elevation.high = this.strToKft(elevationParts[1]);	
 			}
@@ -213,6 +219,9 @@ class AVGParser {
 				elevation.high = this.strToKft(elevationText);	
 			} 
 			else { elevation.high = this.strToKft(elevationText);	}
+
+			//Update a maximum elevation for all the points that go through the parser.  This is to allow offices to have better snow level values along a chart y axis.
+			this._maxElevation = Math.max(this._maxElevation, elevation.low, elevation.high);
 		}
 		return { 
 			name : name,
@@ -415,7 +424,9 @@ class AVGParser {
 	 */
 	strToKft(string){
 		let int = parseInt(string.replace(/[^0-9]/g, ""));
-		return Number(int / 1000).toFixed(1);
+		if (isNaN(int)) { int = 0; }
+		console.log('INT:'+ int)
+		return +Number(int / 1000).toFixed(1);
 	}
 	/**
 	 * Returns an hour offset from a given AWIPS timezone code
