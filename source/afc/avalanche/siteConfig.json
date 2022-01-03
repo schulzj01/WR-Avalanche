@@ -283,7 +283,56 @@
       "geometry": {
         "type": "GridPoint",
         "coordinates": [ -148.957,60.735 ]
-      }  
+      }
+	},
+	{
+    "location":"CURRY",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -150.019,62.590 ]
+      }  	  
+    },
+	{
+    "location":"LOST LAKE LOWER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.377,60.255 ]
+      }  	  
+    },
+	{
+    "location":"LOST LAKE MID ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.432,60.289 ]
+      }  	  
+    },
+	{
+    "location":"LOST LAKE UPPER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.499,60.256 ]
+      }  	  
+    },
+	{
+    "location":"SEWARD AREA LOWER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.348,60.165 ]
+      }  	  
+    },
+	{
+    "location":"SEWARD AREA MID ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.332,60.132 ]
+      }  	  
+    },
+	{
+    "location":"SEWARD AREA UPPER ELEVATIONS",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.510,60.112 ]
+      }  	  
     }
   ]
 }
