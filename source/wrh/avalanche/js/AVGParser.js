@@ -425,7 +425,6 @@ class AVGParser {
 	strToKft(string){
 		let int = parseInt(string.replace(/[^0-9]/g, ""));
 		if (isNaN(int)) { int = 0; }
-		console.log('INT:'+ int)
 		return +Number(int / 1000).toFixed(1);
 	}
 	/**
