@@ -68,6 +68,17 @@ small { font-size: 0.85em; }
 	margin-top: 15px;
 }
 
+.disabledLegend td:first-child{
+	background-color:lightgray;
+}
+.disabledLegend td:last-child{
+  filter: brightness(4) grayscale(1);
+	text-decoration:line-through;
+}
+.interactiveLegend{
+	cursor:pointer;
+}
+
 /** Fix for html labels overlaying tooltip  */
 .highcharts-tooltip > span {
 	padding: 8px;

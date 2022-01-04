@@ -111,7 +111,7 @@ function getWwa(WWA,WFO) {
 						if (Legend.includes(Phenom)) {
 							Legend += '' 
 						} else {
-							Legend += '<tr><td bgcolor="'+FC+'" width="10px">&nbsp;</td><td>'+Phenom+'</td></tr>';
+							Legend += '<tr class="interactiveLegend" onClick="toggleLegend(this)"><td bgcolor="'+FC+'" width="10px"></td><td>'+Phenom+'</td></tr>';
 						}
 						for (j=0; j< ZONES; j++) {
 							var Affected = (props.affectedZones[j])
@@ -242,4 +242,28 @@ function findAlertsByLatLng(latlng){
 		})
 	}
 	return alerts;
+}
+
+function toggleLegend(el){
+	let color = el.firstChild.getAttribute('bgcolor');
+	if (el.classList.contains('disabledLegend')) { 
+		el.classList.remove('disabledLegend');
+		toggleLeafletLayerByColor(true,color); 
+	}
+	else { 
+		el.classList.add('disabledLegend');
+		toggleLeafletLayerByColor(false,color); 
+	}
+}
+
+function toggleLeafletLayerByColor(show = true, color){
+	if (standardLayer){
+		standardLayer.getLayers().forEach(lg =>{
+			if (lg.options.style.fillColor == color) { 
+				let opacity = 0 ;
+				if (show) { opacity = 0.9; }
+				lg.setStyle({ fillOpacity : opacity });
+			}
+		})
+	}	
 }
