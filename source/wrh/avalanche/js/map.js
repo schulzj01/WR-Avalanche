@@ -1,11 +1,10 @@
 let mainMap,clickLayer,standardLayer; 
 
 //An list of event types ordered by priority on the map
-let queryEventTypes = ['Avalanche Warning','Avalanche Advisory','Avalanche Watch', 
-'Winter Storm Warning','Winter Weather Advisory','Winter Storm Watch','Blizzard Warning',
-'Blizzard Watch','Snow Squall Warning','Extreme Wind Warning','High Wind Warning',
-'High Wind Watch','Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch',
-'Wind Advisory','Wind Chill Advisory','Wind Chill Warning','Wind Chill Watch','Freezing Rain Advisory']
+let queryEventTypes = ['Snow Squall Warning','Avalanche Warning','Avalanche Advisory','Avalanche Watch', 
+'Winter Storm Warning','Blizzard Warning','Blizzard Watch','Extreme Wind Warning','High Wind Warning',
+'High Wind Watch','Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch','Winter Storm Watch',
+'Freezing Rain Advisory','Winter Weather Advisory','Wind Chill Warning','Wind Advisory','Wind Chill Watch','Wind Chill Advisory']
 
 function makeMap(wfo) {
   var WFO = wfo.toUpperCase();
