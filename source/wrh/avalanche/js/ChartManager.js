@@ -273,7 +273,7 @@ class ChartManager  {
 			name: 'Wind Gusts',
 			id: 's-windgust',
 			type: 'spline',
-			yAxis: 'y-windgust',
+			yAxis: 'y-wind',
 			xAxis : 0,			
 			data: [],
 			lineWidth: 0,
