@@ -1,0 +1,32 @@
+{"wfo": "AFG",
+  "MAPPING":{
+    "centerLat":66.41,
+    "centerLon":-161.95,
+    "mapZoom":4
+  },
+  "AVG_Sites": [
+    {
+    "location":"Eastern Alaska Range",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Eastern_AK_Range_EditArea.json"
+      }
+    },
+    {
+    "location":"Atigun Pass",
+      "geometry": {
+        "type": "ShapeFile",
+        "coordinates": "Atigun_Pass_EditArea.json"
+      }
+    },
+    {
+      "location":"Atigun Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -149.5900,68.1623 ]
+      }
+    }
+  ]
+}
+
+

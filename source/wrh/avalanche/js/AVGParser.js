@@ -1,27 +1,28 @@
 /**
- * 
- * 
+ *
+ *
  * @description - A class to parse out a standardized AVG Product and allow it to be displayed in all of its parts
  * separately on a webpage.  Deviating from the AVG product and its format may impact this.
- * 
- * @author Jeremy.Schulz@noaa.gov 
- *  * 
+ *
+ * @author Jeremy.Schulz@noaa.gov
+ *  *
  *  @param {Object} // A response of products from the NWS API endpoint
  */
 class AVGParser {
 	constructor(productText) {
-		this._maxElevation = 0;		
+		this._maxElevation = 0;
 		this._productText = productText;
 		this._productTime = this.parseProductTime(); //TODO Need to grab this from the API object once operational.
 		this._discussion = this.parseDiscussion();
 		this._forecast = this.parseForecastData();
+		console.log(this._forecast)
 	}
 
 	/**
 	 * Getter for the forecast discussion text.
 	 */
 	get discussion() { return this._discussion; }
-	/** 
+	/**
 	 * Getter for a list of all available forecast locations.
 	 */
 	get locations() { return Object.keys(this._forecast); }
@@ -33,26 +34,26 @@ class AVGParser {
 	/**
 	 * Get the forecast object for a particular location id
 	 * @param {*} locationId - a locationId defined in the AVG
-	 * @returns {Object} - Forecast object for a particular location 
+	 * @returns {Object} - Forecast object for a particular location
 	 */
-	forecast(locationId) { 
-		if (this.locations.includes(locationId)) { 
+	forecast(locationId) {
+		if (this.locations.includes(locationId)) {
 			let forecast = this._forecast[locationId];
 			forecast.elevation.max = this._maxElevation;
-			return forecast; 
+			return forecast;
 		}
-		else { 
+		else {
 			throw Error(`Location ${locationId} not available in AVG or is improperly formatted`);
 		}
 	}
 	/**
 	 * Shortcut to get the location name for a given id
 	 * @param {*} locationId - a locationId defined in the AVG
-	 * @returns {Object} - Forecast object for a particular location 
+	 * @returns {Object} - Forecast object for a particular location
 	 */
-	locationName(locationId) { 
+	locationName(locationId) {
 		if (this.locations.includes(locationId)) { return this._forecast[locationId].name; }
-		else { 
+		else {
 			throw Error(`Location ${locationId} not available in AVG or is improperly formatted`);
 		}
 	}
@@ -70,7 +71,7 @@ class AVGParser {
 	 *                   [6]: Year
 	 * new Date('Feb 28 2013 19:00:00 EST')
 	 */
-	parseProductTime() { 
+	parseProductTime() {
 		let timeText = this.textBetweenStrings(this._productText,String.raw`(NATIONAL WEATHER SERVICE[^\n]*\n)`,String.raw`(\n)`,'gsi')[0];
 		let timeParts = timeText.split(' ');
 		//separate our hours and minutes
@@ -84,9 +85,9 @@ class AVGParser {
 		//Create a date using our string.
 		//let productTime = new Date('Feb 28 2013 19:00:00 EST');
 		let tzOffset = this.awipsTzHourOffset(timeParts[2])
-		let productTime = new Date(`${timeParts[4]} ${timeParts[5]} ${timeParts[6]} ${hour24}:${min}:00 GMT-0${tzOffset}:00 `);		
-		let productHoomanTime = `${this.downslope(timeParts[3])} ${this.downslope(timeParts[4])} ${timeParts[5]} ${hour}:${min}${timeParts[1].toLowerCase()} ${timeParts[2]} `; 
-		return { 
+		let productTime = new Date(`${timeParts[4]} ${timeParts[5]} ${timeParts[6]} ${hour24}:${min}:00 GMT-0${tzOffset}:00 `);
+		let productHoomanTime = `${this.downslope(timeParts[3])} ${this.downslope(timeParts[4])} ${timeParts[5]} ${hour}:${min}${timeParts[1].toLowerCase()} ${timeParts[2]} `;
+		return {
 			time : productTime,
 			tzOffset : tzOffset,
 			formatted : productHoomanTime
@@ -94,15 +95,15 @@ class AVGParser {
 	}
 
 	/**
-	 * Parses out the discussion text based between the word '.DISCUSSION...' and the next '...' 
+	 * Parses out the discussion text based between the word '.DISCUSSION...' and the next '...'
 	 * @returns {String} - Trimmed up discussion text.
-	 */	
-	parseDiscussion() { 
+	 */
+	parseDiscussion() {
 		let discussion = this.textBetweenStrings(this._productText,String.raw`\n\.DISCUSSION\.\.\.`,String.raw`(\n\.\.\.|\*\*\*)`,'gsi');
-		if (discussion) { 
+		if (discussion) {
 			return discussion[0].trim().replaceAll('\n\n','<br><br>') //Get our new lines into a html friendly format.
 		}
-		else { return '' }; 
+		else { return '' };
 	}
 	/**
 	 * Parses out the forecast points into an object that holds the location and forecast data.
@@ -112,9 +113,9 @@ class AVGParser {
 		//Parse out the forecast points
 		const forecastData = {};
 		let avgFcsts = this.textBetweenStrings(this._productText,String.raw`^\.\.\.`,String.raw`(\n\n\n|\$\$|\*\*\*)`,'gms');
-		//For each parsed out forecast section, parse it out further into a location and forecast text. 
+		//For each parsed out forecast section, parse it out further into a location and forecast text.
 		//perhaps we also want to parse out the elevation from the location?
-		let timesRegex = new RegExp(/^(TIME).*/im);		
+		let timesRegex = new RegExp(/^(TIME).*/im);
 		let datesRegex = new RegExp(/^(DATE).*/im);
 		let tabularRegex = new RegExp(/^(CLOUD)[\S\s]*/im)
 		if (avgFcsts) {
@@ -129,7 +130,7 @@ class AVGParser {
 				let timePart = avgFcst.match(timesRegex)[0];
 				let datePart = avgFcst.match(datesRegex)[0];
 				let times = this.parseForecastTimes(datePart,timePart)
-				
+
 				let tabularPart = avgFcst.match(tabularRegex)[0].trim();
 				let forecast = this.parseForecastTable(tabularPart,times);
 				let rawForecast = [datePart,timePart,tabularPart].join('\n');
@@ -147,12 +148,12 @@ class AVGParser {
 		return forecastData;
 	}
 
-	
+
 	/**
 	 * Utility function to return a regex between two given strings
 	 * @param {String} begin - Text of the first string to look for
 	 * @param {String} end - Text of the last string to look for
-	 * @param {String} flags - Unseparated list of which query flags to run in the regex(g,s,i,etc) 
+	 * @param {String} flags - Unseparated list of which query flags to run in the regex(g,s,i,etc)
 	 * @returns {RegExp} - A Regex that can be matched off of.
 	 */
 	regexBetweenStrings(begin,end,flags){
@@ -163,7 +164,7 @@ class AVGParser {
 	 * @param {String} text - Text to search through
 	 * @param {String} begin - Text of the first string to look for
 	 * @param {String} end - Text of the last string to look for
-	 * @param {String} flags - Unseparated list of which query flags to run in the regex(g,s,i,etc) 
+	 * @param {String} flags - Unseparated list of which query flags to run in the regex(g,s,i,etc)
 	 * @returns {String} - A Regex that can be matched off of.
 	 */
 	textBetweenStrings(text,begin,end,flags){
@@ -180,7 +181,7 @@ class AVGParser {
 	/**
 	 * Location data parsed out into a name and elevation
 	 * @returns {Object} - a parsed out location that includes the name and the elevation
-	 * 
+	 *
 	 * Example locationPart:
 	 * ...SQUAW FLAT SNOTEL (6240 FT)...
 	 */
@@ -196,34 +197,34 @@ class AVGParser {
 			high : null,
 			text : elevationText,
 		}
-		//If we do have elevation text, try to parse it out depending on what the users have in there. 
+		//If we do have elevation text, try to parse it out depending on what the users have in there.
 		//Parseable values include: (4000FT), (ABOVE 4000FT), (BELOW 4000 FT), (3500 TO 4000 FT), (3500-4000FT)
-		if (elevationText) { 
-			elevationText = elevationText.toLowerCase().trim(); 
+		if (elevationText) {
+			elevationText = elevationText.toLowerCase().trim();
 
-			//Try to handle elevation ranges.  
-			if (elevationText.includes(' to ')){ 
+			//Try to handle elevation ranges.
+			if (elevationText.includes(' to ')){
 				let elevationParts = elevationText.split('to');
-				elevation.low = this.strToKft(elevationParts[0]);	
-				elevation.high = this.strToKft(elevationParts[1]);	
+				elevation.low = this.strToKft(elevationParts[0]);
+				elevation.high = this.strToKft(elevationParts[1]);
 			}
-			else if (elevationText.includes('-')){ 
+			else if (elevationText.includes('-')){
 				let elevationParts = elevationText.split('-');
 				elevation.low = this.strToKft(elevationParts[0]);
-				elevation.high = this.strToKft(elevationParts[1]);	
+				elevation.high = this.strToKft(elevationParts[1]);
 			}
-			else if (elevationText.includes('above')){ 
-				elevation.low = this.strToKft(elevationText);	
+			else if (elevationText.includes('above')){
+				elevation.low = this.strToKft(elevationText);
 			}
-			else if (elevationText.includes('below')){ 
-				elevation.high = this.strToKft(elevationText);	
-			} 
+			else if (elevationText.includes('below')){
+				elevation.high = this.strToKft(elevationText);
+			}
 			else { elevation.high = this.strToKft(elevationText);	}
 
 			//Update a maximum elevation for all the points that go through the parser.  This is to allow offices to have better snow level values along a chart y axis.
 			this._maxElevation = Math.max(this._maxElevation, elevation.low, elevation.high);
 		}
-		return { 
+		return {
 			name : name,
 			elevation : elevation
 		}
@@ -232,10 +233,10 @@ class AVGParser {
 	 * Parse out the forecast times into an array of objects that include positional data for each column.
 	 * @param {String} timePart - Unparsed date/time headers from the AVG forecast table
 	 * @returns {ObjectArray} - an array of objects that include the date of the forecast time as well as the start / end character locations
-	 * 
-	 * Example datePart: 
+	 *
+	 * Example datePart:
 	 * DATE             THURSDAY 01/14          FRIDAY 01/15
-	 * Example timePart: 	  
+	 * Example timePart:
 	 * TIME (LT)        06 09 12 15 18 21 00 03 06 09 12 15 18 21 00 03 06
 	 */
 	parseForecastTimes(datePart,timePart){
@@ -243,8 +244,8 @@ class AVGParser {
 		let dPosRegex = new RegExp(/([A-Z]+ [0-9]{1,2}\/[0-9]{1,2})/ig);
 
 		let dateMatches = [...datePart.matchAll(dPosRegex)];
-		
-		//This is going to be a bit hokey, but we're going to set previous and future dates in the dateMatches, essentially adding creating where 
+
+		//This is going to be a bit hokey, but we're going to set previous and future dates in the dateMatches, essentially adding creating where
 		//they "should" be in the string index if they were in fact there.  We'll find out the length of the date based on character values between
 		//the first and second date.
 		let lengthBetweenDateText = dateMatches[1].index - dateMatches[0].index;
@@ -270,10 +271,10 @@ class AVGParser {
 		//Find all listed times in the time string and convert to an array.
 		let tPosRegex = new RegExp(/([0-9]{1,2})/g);
 		let timeMatches = [...timePart.matchAll(tPosRegex)];
-		
 
 
-		//Create a useable object that has the times and character indices of each hour	
+
+		//Create a useable object that has the times and character indices of each hour
 		let allAvailableTimes = [];
 		timeMatches.forEach(tMatch => {
 			allAvailableTimes.push({
@@ -281,7 +282,7 @@ class AVGParser {
 				start : tMatch.index,
 				end : tMatch.index + tMatch[0].length
 			});
-			
+
 		});
 		//Forecast data is actually left justified compared to the times. So instead of using the same start/end indices of the time
 		//string.  We need to use the same end index, and then count back until the the previous end index.
@@ -308,11 +309,11 @@ class AVGParser {
 			//string.  We need to use the same end index, and then count back until the the previous end index.
 			//The character distance between times. Could be 2-4 characters depending on the AVG version.
 			//Note that the AVG is odd in that every column it gives 2-4 characters, unless it's the first time period, where it only gets 3
-			//in this situation just always make the first start index back 3.			
+			//in this situation just always make the first start index back 3.
 			let end = availableTime.end;
 			let len = (i === 0) ?  firstStartColumnLength : defaultLengthBetweenFcst;
 			let start = end - len;
-			
+
 			forecastTimes.push({
 				date : forecastTimeDate,
 				start : start,
@@ -320,7 +321,7 @@ class AVGParser {
 			})
 		});
 		return forecastTimes;
-	}	
+	}
 	/**
 	 * Converts a AVG date format to a javascript date format.
 	 * @param {String} dateText - string formatted date with out the year Example : MONDAY 9/18
@@ -340,12 +341,12 @@ class AVGParser {
 		return dOff;
 	}
 	/**
-	 * 
+	 *
 	 * @param {String} forecastTable - Unparsed tabular forecast data from the AVG
 	 * @param {ObjectArray} forecastTimes - Time and character position data from parseForecastTimes
 	 * @returns {ObjectArray} - Listing of forecast data parsed out by weather type and time
-	 * 
-	 * Example forecastTable: 
+	 *
+	 * Example forecastTable:
 	 * CLOUD COVER      SC SC SC SC FW FW SC SC SC SC BK BK OV OV SC SC SC
 	 * CLOUD COVER (%)  30 30 25 25 15 15 35 35 40 40 70 70 80 80 40 40 35
 	 * TEMPERATURE      15 17 30 32 26 24 25 23 23 24 33 32 28 27 26 24 22
@@ -365,35 +366,38 @@ class AVGParser {
 
 		//Separate each line into an array that we can parse later.
 		let forecastLines = forecastTable.split('\n');
-		//The header text could be anything before the first time period. I'd love to regex this out, but probably impossible 
+		//The header text could be anything before the first time period. I'd love to regex this out, but probably impossible
 		//so just use a substring based on that index.
 		forecastLines.forEach( forecastLine => {
 			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim().toLowerCase();
-			parsedForecastData[weatherType] = null; 
+			parsedForecastData[weatherType] = null;
 			let parsedForecastDataArray = [];
-
 			for (let i=0; i < forecastTimes.length; i++){
 				let parsedForecast = {
 					val : '',
 					date : forecastTimes[i].date
 				};
 				let columnValue = forecastLine.substring(forecastTimes[i].start,forecastTimes[i].end).trim();
+				let columnWidth = forecastTimes[i].end - forecastTimes[i].start;
+				console.log(columnWidth)
 				if (!weatherType.includes('12 hour')){ parsedForecast.val = columnValue; }
-				else  { 
-					let regex; 
-					//Only look for ice and QPF where the data column starts with .## Then we know we have a start to 12 hour block. 
+				else  {
+					let regex;
+					//Only look for ice and QPF where the data column starts with .## Then we know we have a start to 12 hour block.
 					if (weatherType.includes('qpf') || weatherType.includes('ice')) {  regex = new RegExp(/\.[0-9]{2}/); }
-					//Only look for snow  where the data column starts with #.# 
-					else if (weatherType.includes('snow')) { regex = new RegExp(/[0-9]{1}\.[0-9]{1}/); }	
-					if (regex.test(columnValue)) { 
+					//Only look for snow  where the data column starts with #.#
+					else if (weatherType.includes('snow')) { regex = new RegExp(/[0-9]{1}\.[0-9]{1}/); }
+					if (regex.test(columnValue)) {
 						//If our value is QPF look back an extra couple spaces to get the full string.
-						columnValue = forecastLine.substring(forecastTimes[i].start-2,forecastTimes[i].end).trim();
+						if (columnWidth <= 4) {
+							columnValue = forecastLine.substring(forecastTimes[i].start-2,forecastTimes[i].end).trim();
+						}
 						//if (columnValue == '') { columnValue = null; }
 						parsedForecast.val = columnValue;
 						//12 hourly data is look behind not look forward, so search back through previous times and add when needed.
 						let j = 0;
-						do { 
-							if (parsedForecast.date.getTime() - parsedForecastDataArray[j].date.getTime()  < 432e5 ) { 
+						do {
+							if (parsedForecast.date.getTime() - parsedForecastDataArray[j].date.getTime()  < 432e5 ) {
 								parsedForecastDataArray[j].val = columnValue;
 							}
 							j++;
@@ -406,7 +410,7 @@ class AVGParser {
 			parsedForecastData[weatherType] = parsedForecastDataArray;
 		});
 		return parsedForecastData;
-		
+
 	}
 	/**
 	 * A utility function to change a string to a capitalized first letter and lower case body
@@ -439,11 +443,11 @@ class AVGParser {
 			case 'CDT':
 			case 'EST':
 				offset = 5;
-				break;				
+				break;
 			case 'CST':
 			case 'MDT':
 				offset = 6;
-				break;				
+				break;
 			case 'MST':
 			case 'PDT':
 				offset = 7;
@@ -451,13 +455,13 @@ class AVGParser {
 			case 'PST':
 			case 'PDT':
 				offset = 7;
-				break;	
+				break;
 			case 'AKDT':
 				offset = 8;
 				break;
 			case 'AKST':
 				offset = 9;
-				break;							
+				break;
 			default:
 				offset = 0;
 		}
