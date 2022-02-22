@@ -1,7 +1,7 @@
-let mainMap,clickLayer,standardLayer; 
+let mainMap,clickLayer,standardLayer;
 
 //An list of event types ordered by priority on the map
-let queryEventTypes = ['Snow Squall Warning','Avalanche Warning','Avalanche Advisory','Avalanche Watch', 
+let queryEventTypes = ['Snow Squall Warning','Avalanche Warning','Avalanche Advisory','Avalanche Watch',
 'Winter Storm Warning','Blizzard Warning','Blizzard Watch','Extreme Wind Warning','High Wind Warning',
 'High Wind Watch','Ice Storm Warning','Extreme Cold Warning','Extreme Cold Watch','Winter Storm Watch',
 'Freezing Rain Advisory','Winter Weather Advisory','Wind Chill Warning','Wind Advisory','Wind Chill Watch','Wind Chill Advisory']
@@ -9,10 +9,10 @@ let queryEventTypes = ['Snow Squall Warning','Avalanche Warning','Avalanche Advi
 function makeMap(wfo) {
   var WFO = wfo.toUpperCase();
   $.getJSON('/source/'+wfo+'/avalanche/siteConfig.json', function (cwaINFO) {
-    var lat  = cwaINFO.MAPPING.centerLat;  
-    var lon  = cwaINFO.MAPPING.centerLon;  
-    var zoom = cwaINFO.MAPPING.mapZoom;  
-    mainMap = L.map('map',{ 
+    var lat  = cwaINFO.MAPPING.centerLat;
+    var lon  = cwaINFO.MAPPING.centerLon;
+    var zoom = cwaINFO.MAPPING.mapZoom;
+    mainMap = L.map('map',{
 			zoomControl: false,
 			zoomSnap: 0.1,
 		}).setView([lat, lon],zoom);
@@ -25,7 +25,7 @@ function makeMap(wfo) {
     }
 
 		//Set an initial opacity on the overlays.
-		mainMap.getPane('overlayPane').style.opacity = 0.65	
+		mainMap.getPane('overlayPane').style.opacity = 0.65
 
 		//var outline = BOUNDARY.features[0].geometry;
 		var options={
@@ -67,9 +67,9 @@ function plotAVGlocations(locationData,wfo) {
   } else if (type == 'ShapeFile') {
     $.getJSON('/source/'+wfo+'/avalanche/'+locationData.geometry.coordinates, function(shape) {
       let color_style={color: "#0000FF", fillColor:"white",fillOpacity:0, weight:2};
-			let border = L.GeoJSON.geometryToLayer(shape.features[0],color_style)	
+			let border = L.GeoJSON.geometryToLayer(shape.features[0],color_style)
 			border.locationId = locationData.location.toLowerCase();
-			border.layerType = 'polygon';			
+			border.layerType = 'polygon';
       border.on('click', populateAvgContentFromMap)
       border.bindTooltip(name,{
         direction: 'top',
@@ -87,36 +87,39 @@ function queryWWA(WFO){
 	let cwaAlerts = new NwsApi.Alert({
 		active: true,
 		event: queryEventTypes
-	}).getByCwa(WFO,getWwa,WFO);	 
+	}).getByCwa(WFO,getWwa,WFO);
 	//}).getAll(getWWA,WFO); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
 }
 
 // Get Winter Wx Specific WWA for the CWA, plot on map
 function getWwa(WWA,WFO) {
   $.getJSON('/source/slc/common_data/support.json', function (support) {
-		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Winter Related Watches & Warnings<br>Displayed Only in the Highlighted Area'; 
+		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Winter Related Watches & Warnings<br>Displayed Only in the Highlighted Area';
 		var NUM = WWA.features.length;
 		if (NUM != "0") {
 			//Sort hazards into highest to lowest priority so the highest priority show up on the map last.
 			let sortedWWAFeatures = WWA.features.sort((featA,featB) => queryEventTypes.indexOf(featA.properties.event) - queryEventTypes.indexOf(featB.properties.event));
 			sortedWWAFeatures.forEach(feat => {
 				let props = feat.properties;
-				var Phenom = (props.event);					
+				let Phenom = (props.event);
+				let ZONES = props.affectedZones.length;
+				//let description = (props.description) ? props.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;") : '';
+				//This is a temporary fix because NCO does not correctly parse "issued an avalanche warning"
+				if (Phenom == 'Avalanche Advisory' && props.description.toLowerCase().replace(/(?:\r\n|\r|\n)/g," ").includes('issued an avalanche warning')) { Phenom = 'Avalanche Warning'; }
 				for (m=0; m < support.fill.length; m++) {
 					if (Phenom == support.fill[m].product) {
 						FC = support.fill[m].hex;
-						var ZONES = props.affectedZones.length;
-						let description = (props.description) ? props.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;") : ''; 
+
 						if (Legend.includes(Phenom)) {
-							Legend += '' 
+							Legend += ''
 						} else {
 							Legend += '<tr class="interactiveLegend" onClick="toggleLegend(this)"><td bgcolor="'+FC+'" width="10px"></td><td>'+Phenom+'</td></tr>';
 						}
 						for (j=0; j< ZONES; j++) {
-							var Affected = (props.affectedZones[j])
+							let Affected = (props.affectedZones[j])
 							showCountyZone(Affected,FC,props)
 						}
-					} 
+					}
 				}
 			});
 			Legend += '</table>';
@@ -138,7 +141,7 @@ function showPolygon (DATA,COLOR,OPAC) {
   plot = DATA.features[0].geometry;
   var originalMsg = JSON.stringify(plot);
   originalMsg = originalMsg.replace('rings','Polygon');
-  var newObj = JSON.parse(originalMsg); 
+  var newObj = JSON.parse(originalMsg);
   var color_style={"color": COLOR, "weight":2,"fillColor":COLOR, fillOpacity: 0.9};
   var foreFront = L.geoJson(newObj, {style: color_style});
   foreFront.addTo(standardLayer);
@@ -183,11 +186,11 @@ function getLayerByLocationId(locationId){
 }
 
 /**
- * Handle the population of the AVG forecast from a select menu choice.  Note that in order to query alerts, the select 
- * menu will actually trigger the populateAvgContentFromMap with a click event.  This function just handles moving the 
+ * Handle the population of the AVG forecast from a select menu choice.  Note that in order to query alerts, the select
+ * menu will actually trigger the populateAvgContentFromMap with a click event.  This function just handles moving the
  * map.
- * @param {String} location - the location id that matches the AVG and siteConfig files. 
- *  
+ * @param {String} location - the location id that matches the AVG and siteConfig files.
+ *
  */
 function populateAvgContentFromSelectMenu(locationId){
 	layer = getLayerByLocationId(locationId);
@@ -195,7 +198,7 @@ function populateAvgContentFromSelectMenu(locationId){
 	//Depending on if it's a marker or polygon layer, find the location differently
 	if (layer.layerType == 'marker') { center = layer.getLatLng(); }
 	else { center = layer.getBounds().getCenter(); }
-	
+
 	//Change the map view to center on the location
 	mainMap.setView(center,10);
 
@@ -208,8 +211,8 @@ function populateAvgContentFromSelectMenu(locationId){
 }
 /**
  * Handle the population of the AVG forecast and alerts from a click event on the map (programatically or user interactive)
- * This will also query the area under the "clicked" location to determine if there are any alert areas under the click, and 
- * populate the alert areas with them. 
+ * This will also query the area under the "clicked" location to determine if there are any alert areas under the click, and
+ * populate the alert areas with them.
  * @param {Leaflet Eventd} e - Click event object
  */
 function populateAvgContentFromMap(e){
@@ -222,11 +225,11 @@ function populateAvgContentFromMap(e){
 
 	populateForecast(locationId);
 
-	//Determine if this is a map based click or select menu.  Map clicks have a e.latlng, 
+	//Determine if this is a map based click or select menu.  Map clicks have a e.latlng,
 	let latlng;
 	if (layer.layerType == 'marker') { latlng = layer.getLatLng(); }
 	else { latlng = layer.getBounds().getCenter(); } //TODO Need to switch this from Center to entire polygon.
-	
+
 	//Query Alert polygons below marker to determine whether or not to display alerts
 	let alerts = findAlertsByLatLng(latlng);
 	populateAlerts(alerts,locationId)
@@ -245,24 +248,24 @@ function findAlertsByLatLng(latlng){
 
 function toggleLegend(el){
 	let color = el.firstChild.getAttribute('bgcolor');
-	if (el.classList.contains('disabledLegend')) { 
+	if (el.classList.contains('disabledLegend')) {
 		el.classList.remove('disabledLegend');
-		toggleLeafletLayerByColor(true,color); 
+		toggleLeafletLayerByColor(true,color);
 	}
-	else { 
+	else {
 		el.classList.add('disabledLegend');
-		toggleLeafletLayerByColor(false,color); 
+		toggleLeafletLayerByColor(false,color);
 	}
 }
 
 function toggleLeafletLayerByColor(show = true, color){
 	if (standardLayer){
 		standardLayer.getLayers().forEach(lg =>{
-			if (lg.options.style.fillColor == color) { 
+			if (lg.options.style.fillColor == color) {
 				let opacity = 0 ;
 				if (show) { opacity = 0.9; }
 				lg.setStyle({ fillOpacity : opacity });
 			}
 		})
-	}	
+	}
 }
