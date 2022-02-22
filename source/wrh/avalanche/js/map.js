@@ -154,7 +154,7 @@ function showCountyZone (LOCATION,COLOR,alertProduct) {
     standardLayer = L.featureGroup().addTo(mainMap);
   }
   $.getJSON(LOCATION, function(plot) {
-    var color_style={"color": COLOR, "weight":0,"fillColor":COLOR, fillOpacity: 0.9};
+    var color_style={"color": COLOR, "weight":1,"fillColor":COLOR, fillOpacity: 0.9};
     var foreFront = L.geoJson(plot, {
 			style: color_style,
 			interactive:false,
@@ -263,8 +263,15 @@ function toggleLeafletLayerByColor(show = true, color){
 		standardLayer.getLayers().forEach(lg =>{
 			if (lg.options.style.fillColor == color) {
 				let opacity = 0 ;
-				if (show) { opacity = 0.9; }
-				lg.setStyle({ fillOpacity : opacity });
+				let stroke = 0;
+				if (show) {
+					opacity = 0.9;
+					stroke = 1;
+				}
+				lg.setStyle({
+					fillOpacity : opacity,
+					stroke: stroke
+				});
 			}
 		})
 	}
