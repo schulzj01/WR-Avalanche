@@ -101,11 +101,11 @@ function getWwa(WWA,WFO) {
 			let sortedWWAFeatures = WWA.features.sort((featA,featB) => queryEventTypes.indexOf(featA.properties.event) - queryEventTypes.indexOf(featB.properties.event));
 			sortedWWAFeatures.forEach(feat => {
 				let props = feat.properties;
+				if (props.event == 'Avalanche Advisory' && props.description.toLowerCase().replace(/(?:\r\n|\r|\n)/g," ").includes('issued an avalanche warning')) { props.event = 'Avalanche Warning'; }
 				let Phenom = (props.event);
 				let ZONES = props.affectedZones.length;
 				//let description = (props.description) ? props.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;") : '';
 				//This is a temporary fix because NCO does not correctly parse "issued an avalanche warning"
-				if (Phenom == 'Avalanche Advisory' && props.description.toLowerCase().replace(/(?:\r\n|\r|\n)/g," ").includes('issued an avalanche warning')) { Phenom = 'Avalanche Warning'; }
 				for (m=0; m < support.fill.length; m++) {
 					if (Phenom == support.fill[m].product) {
 						FC = support.fill[m].hex;
