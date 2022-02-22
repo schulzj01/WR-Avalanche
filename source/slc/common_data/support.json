@@ -1,6 +1,7 @@
 {
  "fill":[
   {"product":"Avalanche Warning","hex":"#1E90FF"},
+  {"product":"Avalanche Advisory","hex":"#CD853F"},
   {"product":"Avalanche Watch","hex":"#F4A460"},
   {"product":"Air Quality Alert","hex":"#808080"},
   {"product":"Air Stagnation Advisory","hex":"#808080"},
@@ -55,6 +56,7 @@
   {"product":"Small Craft Advisory for Winds","hex":"#D8BFD8"},
   {"product":"Hazardous Seas Advisory","hex":"#D8BFD8"},
   {"product":"Hazardous Seas Warning","hex":"#D8BFD8"},
+  {"product":"Special Avalanche Bulletin","hex":"#1E90FF"},
   {"product":"Special Marine Warning","hex":"#FFA500"},
   {"product":"Special Weather Statement","hex":"#FFE4B5"},
   {"product":"Storm Surge Watch","hex":"#DB7FF7"},

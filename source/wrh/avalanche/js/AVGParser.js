@@ -379,7 +379,6 @@ class AVGParser {
 				};
 				let columnValue = forecastLine.substring(forecastTimes[i].start,forecastTimes[i].end).trim();
 				let columnWidth = forecastTimes[i].end - forecastTimes[i].start;
-				console.log(columnWidth)
 				if (!weatherType.includes('12 hour')){ parsedForecast.val = columnValue; }
 				else  {
 					let regex;
