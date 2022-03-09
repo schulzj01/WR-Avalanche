@@ -15,6 +15,7 @@ function makeMap(wfo) {
     mainMap = L.map('map',{
 			zoomControl: false,
 			zoomSnap: 0.1,
+			tap: false,
 		}).setView([lat, lon],zoom);
     L.esri.basemapLayer('Topographic',).addTo(mainMap);
     L.control.zoom({
