@@ -521,15 +521,15 @@ class ChartManager  {
 			let plotYAxisMax = 16;
 
 			if (elevation.high) {
-				plotLineHighVal = elevation.high;
-				zoneLevelVal = elevation.high;
+				plotLineHighVal = elevation.high.toFixed(1);
+				zoneLevelVal = elevation.high.toFixed(1);
 			}
 			if (elevation.low) {
-				plotLineLowVal = elevation.low;
-				zoneLevelVal = elevation.low;
+				plotLineLowVal = elevation.low.toFixed(1);
+				zoneLevelVal = elevation.low.toFixed(1);
 			}
 			if (elevation.max) {
-				plotYAxisMax = Math.ceil(elevation.max);
+				plotYAxisMax = Math.ceil(elevation.max.toFixed(1));
 			}
 
 			//Change the values of our plot lines

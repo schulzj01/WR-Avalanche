@@ -441,7 +441,7 @@ class AVGParser {
 	strToKft(string){
 		let int = parseInt(string.replace(/[^0-9]/g, ""));
 		if (isNaN(int)) { int = 0; }
-		return +Number(int / 1000).toFixed(1);
+		return +Number(int / 1000);
 	}
 	/**
 	 * Returns an hour offset from a given AWIPS timezone code

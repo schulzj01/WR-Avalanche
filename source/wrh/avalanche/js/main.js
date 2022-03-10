@@ -161,7 +161,9 @@ function makeSnowfallSummaryTable(){
 		let location = PARSED_AVG.forecast(locationId);
 		let name = location.name
 		let fcst = location.forecast;
-		let elevation = location.elevation.text;
+		let elevation = (location.elevation.low) ? parseInt(location.elevation.low * 1000)
+		                : (location.elevation.high) ? parseInt(location.elevation.high * 1000)
+										: null;
 		if (i == 0){
 			hourLength = location.hourLength;
 			startDateStr = formatDate(location.startDate)
@@ -221,7 +223,7 @@ function sortTable(n,table) {
 	//table = document.getElementById("tableId");
 	switching = true;
 	// Set the sorting direction to ascending:
-	dir = "asc";
+	dir = "desc";
 	/* Make a loop that will continue until
 	no switching has been done: */
 	while (switching) {
@@ -240,13 +242,27 @@ function sortTable(n,table) {
 			/* Check if the two rows should switch place,
 			based on the direction, asc or desc: */
 			if (dir == "asc") {
-				if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+				if (!isNaN(x.innerHTML) && !isNaN(y.innerHTML)){
+					if (Number(x.innerHTML) > Number(y.innerHTML)){
+						console.log('switching asc')
+						shouldSwitch = true;
+						break;
+					}
+				}
+				else if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
 					// If so, mark as a switch and break the loop:
 					shouldSwitch = true;
 					break;
 				}
 			} else if (dir == "desc") {
-				if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+				if (!isNaN(x.innerHTML) && !isNaN(y.innerHTML)){
+					if (Number(x.innerHTML) < Number(y.innerHTML)){
+						console.log('switching desc')
+						shouldSwitch = true;
+						break;
+					}
+				}
+				else if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
 					// If so, mark as a switch and break the loop:
 					shouldSwitch = true;
 					break;
@@ -261,10 +277,10 @@ function sortTable(n,table) {
 			// Each time a switch is done, increase this count by 1:
 			switchcount++;
 		} else {
-			/* If no switching has been done AND the direction is "asc",
-			set the direction to "desc" and run the while loop again. */
-			if (switchcount == 0 && dir == "asc") {
-				dir = "desc";
+			/* If no switching has been done AND the direction is "desc",
+			set the direction to "asc" and run the while loop again. */
+			if (switchcount == 0 && dir == "desc") {
+				dir = "asc";
 				switching = true;
 			}
 		}
