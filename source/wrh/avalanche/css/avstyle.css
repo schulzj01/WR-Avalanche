@@ -82,7 +82,7 @@ h4 {
   filter: brightness(4) grayscale(1);
 	text-decoration:line-through;
 }
-.interactiveLegend{
+.clickable{
 	cursor:pointer;
 }
 .interactiveLegend td:last-child:hover:after{

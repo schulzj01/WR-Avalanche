@@ -114,7 +114,7 @@ function getWwa(WWA,WFO) {
 						if (Legend.includes(Phenom)) {
 							Legend += ''
 						} else {
-							Legend += '<tr class="interactiveLegend" onClick="toggleLegend(this)"><td bgcolor="'+FC+'" width="10px"></td><td>'+Phenom+'</td></tr>';
+							Legend += '<tr class="interactiveLegend clickable" onClick="toggleLegend(this)"><td bgcolor="'+FC+'" width="10px"></td><td>'+Phenom+'</td></tr>';
 						}
 						for (j=0; j< ZONES; j++) {
 							let Affected = (props.affectedZones[j])

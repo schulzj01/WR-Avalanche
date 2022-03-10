@@ -190,17 +190,85 @@ function makeSnowfallSummaryTable(){
 	});
 
 	let headRow = table.createTHead().insertRow(0);
-	headRow.insertCell().innerHTML = 'Location';
-	headRow.insertCell().innerHTML = 'Elevation<br>(feet)';
-	if (hasSnow){ headRow.insertCell().innerHTML = `Total Snowfall<br>(inches)`; }
-	if (hasQpf){ headRow.insertCell().innerHTML = `Total Liquid Precip<br>(inches)`; }
-	if (hasIce) { headRow.insertCell().innerHTML = `Total Ice Accum<br>(inches)`; }
+
+
+	let headerRows = ['Location','Elevation<br>(feet)'];
+	if (hasSnow){ headerRows.push('Total Snowfall<br>(inches)'); }
+	if (hasQpf){ headerRows.push('Total Liquid Precip<br>(inches)') }
+	if (hasIce) { headerRows.push('Total Ice Accum<br>(inches)'); }
+
+	headerRows.map((rowText,i) => {
+		let headLocation = headRow.insertCell();
+		headLocation.innerHTML = rowText;
+		headLocation.classList.add("clickable");
+		headLocation.addEventListener('click',function () { sortTable(i,table) });
+	})
 
 	let header = document.createElement('h4');
 	header.innerHTML = `${hourLength} Hour Precipitation Forecast Summary<br><br><small><small>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}</small></small>`;
 	let summaryTableWrapper = document.getElementById('summaryTableWrapper');
 	summaryTableWrapper.appendChild(header);
 	summaryTableWrapper.appendChild(table);
+}
+/**
+ * Just a quick/simple sortable table element from https://www.w3schools.com/howto/howto_js_sort_table.asp
+ * @param {Integer} n - row index to sort
+ * @param {HTMLTableElement} table - table html element to sort.
+ */
+function sortTable(n,table) {
+	console.log(table)
+	var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	//table = document.getElementById("tableId");
+	switching = true;
+	// Set the sorting direction to ascending:
+	dir = "asc";
+	/* Make a loop that will continue until
+	no switching has been done: */
+	while (switching) {
+		// Start by saying: no switching is done:
+		switching = false;
+		rows = table.rows;
+		/* Loop through all table rows (except the
+		first, which contains table headers): */
+		for (i = 1; i < (rows.length - 1); i++) {
+			// Start by saying there should be no switching:
+			shouldSwitch = false;
+			/* Get the two elements you want to compare,
+			one from current row and one from the next: */
+			x = rows[i].getElementsByTagName("TD")[n];
+			y = rows[i + 1].getElementsByTagName("TD")[n];
+			/* Check if the two rows should switch place,
+			based on the direction, asc or desc: */
+			if (dir == "asc") {
+				if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+					// If so, mark as a switch and break the loop:
+					shouldSwitch = true;
+					break;
+				}
+			} else if (dir == "desc") {
+				if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+					// If so, mark as a switch and break the loop:
+					shouldSwitch = true;
+					break;
+				}
+			}
+		}
+		if (shouldSwitch) {
+			/* If a switch has been marked, make the switch
+			and mark that a switch has been done: */
+			rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			switching = true;
+			// Each time a switch is done, increase this count by 1:
+			switchcount++;
+		} else {
+			/* If no switching has been done AND the direction is "asc",
+			set the direction to "desc" and run the while loop again. */
+			if (switchcount == 0 && dir == "asc") {
+				dir = "desc";
+				switching = true;
+			}
+		}
+	}
 }
 
 function getAccumulation(forecast,precision) {
@@ -257,6 +325,11 @@ function populateStaticContent(cwa){
 	//Set the correct full product URL.
 	$('#fullProductLink').attr('href',`https://forecast.weather.gov/product.php?site=${cwa}&issuedby=${cwa}&product=AVG&format=txt&version=1&glossary=0`);
 }
+
+
+
+
+
 
 
 //National Standard Content Html
