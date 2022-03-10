@@ -42,12 +42,32 @@ class ChartManager  {
 				style: { color: this._chartProps.wxColors.temperature },
 			},
 			offset: 0,
-			gridLineWidth: 2,			
+			gridLineWidth: 2,
 			softMax: 40,
 			softMin: 0,
 			lineWidth: 2,
 			height: this._chartProps.axisHeights[0],
 			top: this._chartProps.axisTops[0],
+			plotLines: [{
+				id : 'l-elevation-low',
+				color: this._chartProps.wxColors.temperature,
+				dashStyle: 'Dash',
+				value: 32,
+				zIndex: 5,
+				label: {
+					align: 'left',
+					x: -7,
+					y: 3,
+					style: {
+						color: this._chartProps.wxColors.temperature,
+						//fontWeight: 'bold',
+						paintOrder: 'stroke',
+						stroke:'#FFFFFF',
+						strokeWidth:'5px'
+					},
+					formatter: function () { return (this.options.value); },
+				}
+			}]
 		},{
 			id: 'y-snowlevel',
 			labels: {
@@ -59,10 +79,10 @@ class ChartManager  {
 				style: { color: this._chartProps.wxColors.snowlevel },
 			},
 			opposite: true,
-			gridLineWidth: 2,			
+			gridLineWidth: 2,
 			offset: 0,
 			softMax: 14,
-			softMin: 8,	
+			softMin: 8,
 			lineWidth: 2,
 			height: this._chartProps.axisHeights[0],
 			top: this._chartProps.axisTops[0],
@@ -76,7 +96,7 @@ class ChartManager  {
 					align: 'right',
 					x: 12,
 					y: 3,
-					style: { 
+					style: {
 						color: this._chartProps.wxColors.snowlevel,
 						//fontWeight: 'bold',
 						paintOrder: 'stroke',
@@ -90,12 +110,12 @@ class ChartManager  {
 				color: this._chartProps.wxColors.snowlevel,
 				dashStyle: 'Dash',
 				value: -20,
-				zIndex: 5,			
+				zIndex: 5,
 				label: {
 					align: 'right',
 					x: 12,
 					y: 3,
-					style: { 
+					style: {
 						color: this._chartProps.wxColors.snowlevel,
 						//fontWeight: 'bold',
 						paintOrder: 'stroke',
@@ -104,7 +124,7 @@ class ChartManager  {
 					},
 					formatter: function () { return (this.options.value); },
 				}
-			}]				
+			}]
 		},{
 			id: 'y-wind',
 			labels: {
@@ -115,25 +135,25 @@ class ChartManager  {
 				text: 'Wind Speed mph',
 				style: { color: this._chartProps.wxColors.wind },
 			},
-			gridLineWidth: 2,			
+			gridLineWidth: 2,
 			offset: 0,
 			softMax: 35,
 			softMin: 0,
 			lineWidth: 2,
 			height: this._chartProps.axisHeights[1],
-			top: this._chartProps.axisTops[1],		
+			top: this._chartProps.axisTops[1],
 		},{
 			id: 'y-windgust',
 			labels: {	enabled: false },
 			title: { enabled: false },
-			offset: 0,			
+			offset: 0,
 			opposite: true,
 			linkedTo: 2,
-			gridLineWidth: 0,			
+			gridLineWidth: 0,
 			lineWidth: 2,
 			height: this._chartProps.axisHeights[1],
-			top: this._chartProps.axisTops[1],		
-		},{ 
+			top: this._chartProps.axisTops[1],
+		},{
 			id: 'y-snowfall',
 			title: {
 				text: 'Snowfall',
@@ -167,11 +187,11 @@ class ChartManager  {
 				style: {
 					color: this._chartProps.wxColors.qpf,
 				}
-			},			
+			},
 			opposite: true,
 			offset: 0,
 			softMax: 1,
-			min: 0,	
+			min: 0,
 			lineWidth: 2,
 			height: this._chartProps.axisHeights[2],
 			top: this._chartProps.axisTops[2],
@@ -194,20 +214,20 @@ class ChartManager  {
 			min: 0,
 			lineWidth: 2,
 			height: this._chartProps.axisHeights[3],
-			top: this._chartProps.axisTops[3],	
+			top: this._chartProps.axisTops[3],
 		},];
 
-		
+
 		const xAxis = [{
 			id : 'x-main',
 			crosshair: true,
 			gridLineWidth: 0,
 			type : 'datetime',
 			minPadding: 0,
-			maxPadding: 0,	
+			maxPadding: 0,
 			tickInterval: 216e5,
 			//tickLength: 10,
-			labels: { 
+			labels: {
 				enabled: true,
 				format: '{value: %a <br>%l%P }'
 			},
@@ -221,14 +241,14 @@ class ChartManager  {
 			linkedTo: 0,
 			opposite: false,
 			tickInterval: 864e5,
-			labels: { 
+			labels: {
 				enabled: true,
 				format: '{value:%A, %B %e}'
 			},
-			lineWidth: 2,	
+			lineWidth: 2,
 			minPadding: 0,
-			maxPadding: 0,	
-			opposite: true,			
+			maxPadding: 0,
+			opposite: true,
 		}]
 
 		const series = [{
@@ -246,7 +266,7 @@ class ChartManager  {
 			id: 's-snowlevel',
 			type: 'areaspline',
 			yAxis: 'y-snowlevel',
-			xAxis : 0,			
+			xAxis : 0,
 			data: [],
 			color: this._chartProps.wxColors.snowlevel,
 			fillOpacity: 0.2,
@@ -255,17 +275,17 @@ class ChartManager  {
 			zones: [{
 				value: 25,
 				fillColor: 'rgba(0,0,0,0)'
-		}]				
+		}]
 		},{
 			name: 'Wind Speed',
 			id : 's-wind',
 			type: 'spline',
 			yAxis: 'y-wind',
-			xAxis : 0,			
+			xAxis : 0,
 			data: [],
 			color: this._chartProps.wxColors.wind,
 			//pointInterval: 438e5, // three hours
-			tooltip: { 
+			tooltip: {
 				valuePrefix: '{point.custom.directionS} ',
 				valueSuffix: ' mph',
 			}
@@ -274,7 +294,7 @@ class ChartManager  {
 			id: 's-windgust',
 			type: 'spline',
 			yAxis: 'y-wind',
-			xAxis : 0,			
+			xAxis : 0,
 			data: [],
 			lineWidth: 0,
 			states: {
@@ -282,19 +302,19 @@ class ChartManager  {
 			},
 			color: this._chartProps.wxColors.wind,
 			//pointInterval: 438e5, // three hours
-			tooltip: { 
-				valuePrefix: '{point.custom.directionS} ',				
-				valueSuffix: ' mph' 
+			tooltip: {
+				valuePrefix: '{point.custom.directionS} ',
+				valueSuffix: ' mph'
 			}
 		},{
 			name: '12 Hour Snowfall',
 			id: 's-snowfall12',
 			type: 'area',
 			yAxis: 'y-snowfall',
-			xAxis : 0,			
+			xAxis : 0,
 			data:  [],
 			color: this._chartProps.wxColors.snowfall,
-			tooltip: { 
+			tooltip: {
 				valueSuffix: ' in',
 			},
 			lineWidth: 0,
@@ -307,9 +327,9 @@ class ChartManager  {
 					hover: { enabled: false }
 				}
 			},
-			states: { 
+			states: {
 				hover: { enabled: false }
-			},			
+			},
 			fillOpacity: 0.30,
 			//Add in some lines at the top of the columns to make them stand out.
 			dataLabels: {
@@ -325,28 +345,28 @@ class ChartManager  {
 				formatter: function() {
 					let thisPoint = this.point;
 					let width = 0;
-					let prevPointX = 0; 
-					if (thisPoint.index !== 0) { 
+					let prevPointX = 0;
+					if (thisPoint.index !== 0) {
 						prevPointX = thisPoint.series.data[thisPoint.index-1].plotX;
 					}
-					width = Math.ceil(thisPoint.plotX - prevPointX); 
+					width = Math.ceil(thisPoint.plotX - prevPointX);
 					if (this.y !== 0) {
-						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}">&nbsp;</div>`; 
+						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}">&nbsp;</div>`;
 					}
 				},
 				y: 1,
-			}		
+			}
 		},{
 			name: '12 Hour Liquid Precip',
 			id: 's-qpf12',
 			type: 'area',
 			yAxis: 'y-qpf',
-			xAxis : 0,			
+			xAxis : 0,
 			data: [],
 			color: this._chartProps.wxColors.qpf,
-			tooltip: { 
+			tooltip: {
 				valueSuffix: ' in',
-			}, 
+			},
 			lineWidth: 0,
 			step: 'right',
 			connectNulls: true,
@@ -357,7 +377,7 @@ class ChartManager  {
 					hover: { enabled: false }
 				}
 			},
-			states: { 
+			states: {
 				hover: { enabled: false }
 			},
 			fillOpacity: 0.30,
@@ -375,13 +395,13 @@ class ChartManager  {
 				formatter: function() {
 					let thisPoint = this.point;
 					let width = 0;
-					let prevPointX = 0; 
-					if (thisPoint.index !== 0) { 
+					let prevPointX = 0;
+					if (thisPoint.index !== 0) {
 						prevPointX = thisPoint.series.data[thisPoint.index-1].plotX;
 					}
 					width = Math.ceil(thisPoint.plotX - prevPointX);
 					if (this.y !== 0) {
-						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}">&nbsp;</div>`; 
+						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}">&nbsp;</div>`;
 					}
 				},
 				y: 1,
@@ -393,22 +413,22 @@ class ChartManager  {
 			yAxis: 'y-cloudcover',
 			xAxis : 0,
 			data: [],
-			states: { 
+			states: {
 				hover: { brightness : 0 }
 			},
 			borderWidth: 1,
 			borderColor: 'lightgray',
 			groupPadding: 0,
 			pointPadding: 0,
-			tooltip: { 
+			tooltip: {
 				pointFormat: '<span style="color:{point.color}">●</span> {series.name}: <b>{point.custom.pct}</b> %<br/>',
 			}
-			
+
 		}]
 
 		const chartConfig = {
 			/*time: { TODO : Set the timezone of the office in here once we switch to the API. https://api.highcharts.com/class-reference/Highcharts.Time#dateFormat
-        timezone: 'Europe/London' 
+        timezone: 'Europe/London'
     	}*/
 			title: {
 				text: '',
@@ -438,13 +458,13 @@ class ChartManager  {
 				//stickOnContact: true,
 			},
 			series : series,
-			yAxis : yAxis,	
+			yAxis : yAxis,
 		}
 
 
 		let chartDiv = document.getElementById('forecastChart');
 		this._chart = Highcharts.chart(chartDiv,chartConfig);
-		
+
 	}
 
 	buildChart(chartConfig){
@@ -462,37 +482,37 @@ class ChartManager  {
 	updateChartData(locationForecast,productTime){
 
 		//Get list of all times for Temperatures
-		let windSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind (mph)'],locationForecast.forecast['wind dir']);	
-		let windGustSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind gust (mph)'],locationForecast.forecast['wind dir']);	
-		let cloudCoverSeries = this.createCloudCoverSeriesFromAvg(locationForecast.forecast['cloud cover (%)']);	
+		let windSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind (mph)'],locationForecast.forecast['wind dir']);
+		let windGustSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind gust (mph)'],locationForecast.forecast['wind dir']);
+		let cloudCoverSeries = this.createCloudCoverSeriesFromAvg(locationForecast.forecast['cloud cover (%)']);
 
-		
-		let snow12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour snow'],'float');	
-		let qpf12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour qpf'],'float');	
+
+		let snow12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour snow'],'float');
+		let qpf12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour qpf'],'float');
 		let tempSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'int');
-		
-		/*let dateSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'date');	
+
+		/*let dateSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'date');
 
 		let xAxisMin = dateSeries[0];
 		let xAxisMax = dateSeries[dateSeries.length-1];*/
-				
+
 		this._chart.get('s-temperature').setData(tempSeries);
 		this._chart.get('s-wind').setData(windSeries);
 		this._chart.get('s-windgust').setData(windGustSeries);
 		this._chart.get('s-snowfall12').setData(snow12Series);
 		this._chart.get('s-qpf12').setData(qpf12Series);
-		this._chart.get('s-cloudcover').setData(cloudCoverSeries);		
+		this._chart.get('s-cloudcover').setData(cloudCoverSeries);
 
-		
+
 
 
 		let elevation = locationForecast.elevation;
-		
+
 		//If we have snow level in our product, edit some of the chart to include things like elevation or elevation ranges.
-		if (locationForecast.forecast.hasOwnProperty('snow level (kft)')) { 
-			let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'float');	
+		if (locationForecast.forecast.hasOwnProperty('snow level (kft)')) {
+			let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'float');
 			this._chart.get('s-snowlevel').setData(snowLevelSeries);
-		
+
 			//Hide all the plot lines and zones first, and then turn them on if they have a value.
 			//Set our plot line values.  Our chart is in KFT, so convert to KFT.
 			let zoneLevelVal = 25;
@@ -500,7 +520,7 @@ class ChartManager  {
 			let plotLineLowVal = -20;
 			let plotYAxisMax = 16;
 
-			if (elevation.high) { 
+			if (elevation.high) {
 				plotLineHighVal = elevation.high;
 				zoneLevelVal = elevation.high;
 			}
@@ -511,10 +531,10 @@ class ChartManager  {
 			if (elevation.max) {
 				plotYAxisMax = Math.ceil(elevation.max);
 			}
-			
+
 			//Change the values of our plot lines
 			this._chart.get('y-snowlevel').plotLinesAndBands[0].options.value = plotLineHighVal;
-			this._chart.get('y-snowlevel').plotLinesAndBands[1].options.value = plotLineLowVal;	
+			this._chart.get('y-snowlevel').plotLinesAndBands[1].options.value = plotLineLowVal;
 
 			//Update our snow level y-axis to 1k more than the rounded max elevation.
 			this._chart.get('y-snowlevel').userOptions.softMax = plotYAxisMax;
@@ -523,7 +543,7 @@ class ChartManager  {
 			this._chart.get('s-snowlevel').zones[0].value = zoneLevelVal;
 		}
 		//Snow Level is optional in the AVG and ER doesn't do it.  Hide it if not available, but don't remove the Y axis as we want the border line still there.
-		else { 
+		else {
 			this._chart.get('y-snowlevel').userOptions.title.text = '';
 		}
 
@@ -531,18 +551,18 @@ class ChartManager  {
 		this._chart.get('x-main').crosshair.width = this._chart.get('s-cloudcover').barW;
 
 		//Update the chart
-		this._chart.get('y-snowlevel').update();			
+		this._chart.get('y-snowlevel').update();
 
 
-	
+
 		//Set our title text for the chart
 		let elevationTitleText = (elevation.text !== '') ? `(${elevation.text})` : '';
 		this._chart.setTitle({ text: `Forecast Guidance For ${locationForecast.name} ${elevationTitleText}` });
-		
-		//Update the subtitle
-		this._chart.setTitle(null, { text: `Source: National Weather Service &nbsp;&nbsp;&nbsp;&nbsp; Issued: ${productTime}` });		
 
-		
+		//Update the subtitle
+		this._chart.setTitle(null, { text: `Source: National Weather Service &nbsp;&nbsp;&nbsp;&nbsp; Issued: ${productTime}` });
+
+
 		this._chart.redraw();
 
 	}
@@ -551,8 +571,8 @@ class ChartManager  {
 	createSeriesFromAvg(forecastData,type){
 		let retVal = [];
 		if (type == 'int') { retVal = forecastData.map(l => ({x: l.date.getTime(), y: parseInt(l.val)})); }
-		else if (type == 'float') { retVal = forecastData.map(l => ({x: l.date.getTime(), y: parseFloat(l.val)}) ); }		
-		else if (type == 'date') { retVal = forecastData.map(l => l.date.getTime()); }		
+		else if (type == 'float') { retVal = forecastData.map(l => ({x: l.date.getTime(), y: parseFloat(l.val)}) ); }
+		else if (type == 'date') { retVal = forecastData.map(l => l.date.getTime()); }
 		else { retVal = forecastData.map(l => ({x: l.date.getTime(),y: l.val})); }
 		return retVal;
 	}
@@ -564,31 +584,31 @@ class ChartManager  {
 			let degrees = null;
 			if (index !== -1) { degrees = index * 22.5; }
 			return degrees;
-		}	
+		}
 		function createSvgWindArrow(direction = 0,color = 'red'){
 			//let img = new Image();
 			//let svg = `<svg xmlns="http://www.w3.org/2000/svg"  transform="rotate(${direction})" height="30" width="30"><text x="50%" y="50%" text-anchor="middle"  fill="${color}">&#10137;</text></svg>`;
 			let svg = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 22 22" width="20" height="20" style="transform:rotate(${direction}deg)" fill="${color}">
-									<circle width="100%" height="100%" fill="#F2F5FF"/>		
+									<circle width="100%" height="100%" fill="#F2F5FF"/>
 									<path d="M 10.996369,21 C 7.665697,17.681044 4.330672,14.363847 1,11.044011 c 2.127567,-0.0018 4.256584,9.09e-4 6.38415,-9.09e-4 0.0044,-3.347113 0.0015,-6.694226 0.0015,-10.041338 2.409113,-0.0026 4.816776,-0.0018 7.225889,-9.09e-4 0.0029,3.347112 0,6.695105 0.0015,10.042218 2.128926,9.09e-4 4.257943,-9.09e-4 6.386961,9.09e-4 C 17.664975,14.362087 14.335754,17.683684 10.996375,21 Z" style="stroke-width:2;stroke:#FFFFFF;stroke-opacity:1;stroke-miterlimit:4;stroke-linejoin:round" />
 								</svg>`
 			//img.src = "data:image/svg+xml;base64,"+btoa(svg);
 			let uri = 'url(data:image/svg+xml;base64,'+btoa(svg)+')';
 			return uri
-		}		
+		}
 
 		let retVal = windSpeedData.map((l,i) => {
 
 			let directionDeg = stringDirectionToDegrees(windDirData[i].val);
 			let svgArrow =  createSvgWindArrow(directionDeg,this._chartProps.wxColors.wind);
 			return ({
-				x: l.date.getTime(), 
+				x: l.date.getTime(),
 				y: parseInt(l.val),
 				marker: {
 					symbol: svgArrow
 				},
 				custom: {
-					directionS : windDirData[i].val, 
+					directionS : windDirData[i].val,
 					direction : directionDeg
 				}
 			})
@@ -596,23 +616,23 @@ class ChartManager  {
 		return retVal;
 	}
 	createCloudCoverSeriesFromAvg(cloudCoverData){
-		function cloudCoverToGrayscale(pct){ 
+		function cloudCoverToGrayscale(pct){
 			let val = (255 - pct).toString(16)
 			let hexString = '#'+[val,val,val].join('');
 			return hexString;
-		}	
+		}
 		function cloudCoverToColor(pct){
 			//let gradient = ['#009aff', '#4da4ff','#6fafff','#89baff','#a0c5ff','#b4d0ff','#c8dcff','#dbe7ff','#edf3ff','#ffffff','#ffffff','#eaeaea','#d6d6d6','#c2c2c2','#aeaeae','#9a9a9a','#888888','#757575','#636363','#525252','#414141']
 			//let gradient = ['#5ca6ff', '#64a7fb', '#6ba8f8', '#72a8f4', '#78a9f1', '#7eaaed', '#83abe9', '#88ace6', '#8dace2', '#91addf', '#95aedb', '#99afd8', '#9db0d4', '#a1b1d0', '#a4b2cd', '#a8b2c9', '#abb3c6', '#aeb4c2', '#b1b5be', '#b4b6bb', '#b7b7b7'];
 			let gradient = ['#ffffff', '#f5f5f5', '#ececec', '#e2e2e2', '#d8d8d8', '#cfcfcf', '#c5c5c5', '#bcbcbc', '#b3b3b3', '#aaaaaa', '#a1a1a1', '#989898', '#8f8f8f', '#868686', '#7e7e7e', '#757575', '#6d6d6d', '#646464', '#5c5c5c', '#545454', '#4c4c4c' ]
-			let index = (pct / 5); 
+			let index = (pct / 5);
 			return gradient[index];
 		}
 		let retVal = cloudCoverData.map((l,i) => {
 
 			let yVal = (isNaN(parseInt(l.val))) ? null : 1;
 			return ({
-				x: l.date.getTime(), 
+				x: l.date.getTime(),
 				y: yVal,
 				custom: {
 					pct : l.val
@@ -623,4 +643,3 @@ class ChartManager  {
 		return retVal;
 	}
 }
-	
