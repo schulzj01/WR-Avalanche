@@ -195,7 +195,7 @@ function makeSnowfallSummaryTable(){
 	if (hasIce) { headRow.insertCell().innerHTML = `${hourLength} Hour Total Ice`; }
 
 	let header = document.createElement('h4');
-	header.innerHTML = `${hourLength} Hour Precipitation Summary<br>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}`;
+	header.innerHTML = `${hourLength} Hour Forecast Precipitation Summary<br>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}`;
 	let summaryTableWrapper = document.getElementById('summaryTableWrapper');
 	summaryTableWrapper.appendChild(header);
 	summaryTableWrapper.appendChild(table);

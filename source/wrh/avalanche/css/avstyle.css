@@ -121,6 +121,9 @@ h4 { margin: 15px 0 15px 0; }
 #summaryTable tr td:not(:first-child) {
   text-align:center;
 }
+#summaryTable tr td:first-child {
+  text-align:left;
+}
 #summaryTable td {
 	padding:6px;
 }
