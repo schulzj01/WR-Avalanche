@@ -95,7 +95,7 @@ function queryWWA(WFO){
 // Get Winter Wx Specific WWA for the CWA, plot on map
 function getWwa(WWA,WFO) {
   $.getJSON('/source/slc/common_data/support.json', function (support) {
-		var Legend = '<table bgcolor="white" border="1px"><tr><td colspan="2">Winter Related Watches & Warnings<br>Displayed Only in the Highlighted Area';
+		var Legend = '<table bgcolor="white" border="1px" id="mapLegend"><tr><td colspan="2">Winter Related Watches & Warnings<br>Displayed Only in the Highlighted Area';
 		var NUM = WWA.features.length;
 		if (NUM != "0") {
 			//Sort hazards into highest to lowest priority so the highest priority show up on the map last.

@@ -1,13 +1,13 @@
 /**
- * 
+ *
  * National Avalanche Webpage Template (www.weather.gov/{cwa}/avalancheweather/)
- * 
+ *
  * Developed for the National Avalanche Coordination Team (NACT)
- * 
+ *
  * Authors: Allister.Martinelli@noaa.gov
  *          Jeremy.Schulz@noaa.gov
- * 
- * 
+ *
+ *
  */
 
 
@@ -22,11 +22,11 @@ let CHART_MANAGER;
 
 
 /**
- * This is a callback that recieves an AVG product from the API, attempts to parse it out, and then 
+ * This is a callback that recieves an AVG product from the API, attempts to parse it out, and then
  * populate the following elements in the page - Discussion, Tabular & Graphical Forecasts, Leaflet Map
- * 
- * At the moment, this will default back to test data since the API isn't returning anything. 
- * 
+ *
+ * At the moment, this will default back to test data since the API isn't returning anything.
+ *
  * @param {NwsApi.Product} avgProducts - An AVG Product from the NWS API
  */
 //Parse out the AVG product text, assign it to a global, and populate the appropriate divs
@@ -49,17 +49,17 @@ function parseAndPopulateAvg(avgProducts,cwa){
 		$('#forecastDisplay').addClass('hidden');
 		throw Error('Parsing of the AVG Product Failed.  This is likely the result of non-standardized AVG Product. Please reach out to wr.web.support@noaa.gov for help resolving this');
 	}
-	
+
 	//Populate the discussion display, and show the tab if there is a discussion.
-	if (PARSED_AVG.discussion) { 
-		$('#forecastDiscussionTabContent').html(`<div class="alertSection">${PARSED_AVG.discussion}</div><small>Discussion Issued: <span class="productTime"></span></small>`);
-		$('#forecastDiscussionTab').removeClass('hidden');
-		$('#forecastDiscussionTabContent').removeClass('hidden');
+	if (PARSED_AVG.discussion) {
+		let issuedDateStr = formatDate(PARSED_AVG.productTime.time);
+		$('#forecastDiscussionContent').html(`<h4>Forecast Discussion<br>Issued: ${issuedDateStr}</h4><div class="alertSection">${PARSED_AVG.discussion}</div>`);
+		$('#forecastDiscussionContent').removeClass('hidden');
 	}
 
-	//List of locations in the AVG and also serves as a list of keys to reference the parsed product.  
+	//List of locations in the AVG and also serves as a list of keys to reference the parsed product.
 	//These keys are what the map/config can use.
-	let locations = PARSED_AVG.locations;
+	//let locations = PARSED_AVG.locations;
 
 	//Add the locations to the map
 	makeMap(cwa);
@@ -70,25 +70,22 @@ function parseAndPopulateAvg(avgProducts,cwa){
 	//Add the locations to the select menu, and populate the first location
 	initializeSelectMenu();
 
-	// TEMPORARY DEVELOPMENT DEBUGGING INFO 
-	//The below is just some debugging stuff to see the the output of a AVGParser Object and populate it in the forecast table.
-	locations.forEach(locationId => {
-		let fcst = PARSED_AVG.forecast(locationId);
-	});
-	// TEMPORARY DEVELOPMENT DEBUGGING INFO 	
+	//Add forecast snowfall data to overview table;
+	makeSnowfallSummaryTable();
+
 }
 
 //TODO We'll likely want to populate this with the map click?
 /**
- * 
+ *
  * Parses out active the NWS Alerts, and will populate the the Alert information with the products.
  * If there are active alerts, add the alert class to style the tab and content
- * @param {NwsApi.Alert} alerts - A set of NWS API alert products. 
+ * @param {NwsApi.Alert} alerts - A set of NWS API alert products.
  */
 function populateAlerts(alerts,locationId){
 	let locationName = PARSED_AVG.locationName(locationId);
 
-	if (alerts.length > 0) { 
+	if (alerts.length > 0) {
 		$('#forecastAlertsTab').addClass('activeAlerts');
 		$('#forecastAlertsTabContent').addClass('activeAlerts');
 		$('#forecastAlertsTab').html('<span>Active Alerts</span>');
@@ -102,7 +99,7 @@ function populateAlerts(alerts,locationId){
 		});
 		$('#forecastAlertsTabContent').html(alertHtmls)
 	}
-	else { 
+	else {
 		$('#forecastAlertsTab').removeClass('activeAlerts');
 		$('#forecastAlertsTabContent').removeClass('activeAlerts');
 		$('#forecastAlertsTab').html('<span>No Active Alerts</span>');
@@ -112,7 +109,7 @@ function populateAlerts(alerts,locationId){
 
 /**
  * Pulls the forecast out of the PARSED_AVG object and then populates the page with forecast info
- * 
+ *
  * @param {String} location - A text string of an AVG location. Also found by a PARSED_AVG.locations call.
  */
 function populateForecast(locationId){
@@ -131,13 +128,13 @@ function changeForecastSelectMenu(e,force = false){
 	if (e.originalEvent || force) { populateAvgContentFromSelectMenu(e.target.value) }
 }
 
-//Initialize Select Menu with AVG locations 
+//Initialize Select Menu with AVG locations
 function initializeSelectMenu(){
-	let locations = PARSED_AVG.locations; 
-	$selectMenu = $('#forecastPointSelectMenu');	
+	let locations = PARSED_AVG.locations;
+	$selectMenu = $('#forecastPointSelectMenu');
 	locations.forEach( loc => {
 		let fcst = PARSED_AVG.forecast(loc);
-		let elevationTitleText = (fcst.elevation.text !== '') ? `(${fcst.elevation.text})` : '';		
+		let elevationTitleText = (fcst.elevation.text !== '') ? `(${fcst.elevation.text})` : '';
 		let $option = $('<option>', {
 			value: fcst.id,
 			text: `${fcst.name} ${elevationTitleText}`
@@ -148,6 +145,75 @@ function initializeSelectMenu(){
 	$selectMenu.change(changeForecastSelectMenu);
 }
 
+function makeSnowfallSummaryTable(){
+		//Loop through each location and add it to our overview snowfall table.
+	//$('#forecastOverviewTab').removeClass('hidden');	//	@todo remove this line and force overview to be shown for all sites.
+
+
+
+	let table = document.createElement('table');
+	table.id = 'summaryTable';
+	let tBody = table.createTBody();
+	let locations = PARSED_AVG.locations;
+	let hourLength,startDateStr,endDateStr;
+	let hasSnow = false, hasQpf = false, hasIce = false;
+	locations.forEach((locationId,i) => {
+		let location = PARSED_AVG.forecast(locationId);
+		let name = location.name
+		let fcst = location.forecast;
+
+		if (i == 0){
+			hourLength = location.hourLength;
+			startDateStr = formatDate(location.startDate)
+			endDateStr = formatDate(location.endDate);
+
+			if (fcst.hasOwnProperty('12 hour snow')) { hasSnow = true; }
+			if (fcst.hasOwnProperty('12 hour qpf')) { hasQpf = true; }
+			if (fcst.hasOwnProperty('12 hour ice')) { hasIce = true; }
+		}
+
+		let row = tBody.insertRow();
+		let cell = row.insertCell().innerHTML = name
+		if (hasSnow) {
+			let snowAccum = getAccumulation(fcst['12 hour snow'],1);
+			row.insertCell().innerHTML = snowAccum;
+		}
+		if (hasQpf){
+			let qpfAccum = getAccumulation(fcst['12 hour qpf'],2);
+			row.insertCell().innerHTML = qpfAccum;
+		}
+		if (hasIce){
+			let iceAccum = getAccumulation(fcst['12 hour ice'],2);
+			row.insertCell().innerHTML = iceAccum;
+		}
+	});
+
+	let headRow = table.createTHead().insertRow(0);
+	headRow.insertCell().innerHTML = 'Location';
+	if (hasSnow){ headRow.insertCell().innerHTML = `${hourLength} Hour Total Snowfall`; }
+	if (hasQpf){ headRow.insertCell().innerHTML = `${hourLength} Hour Total QPF`; }
+	if (hasIce) { headRow.insertCell().innerHTML = `${hourLength} Hour Total Ice`; }
+
+	let header = document.createElement('h4');
+	header.innerHTML = `${hourLength} Hour Precipitation Summary<br>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}`;
+	let summaryTableWrapper = document.getElementById('summaryTableWrapper');
+	summaryTableWrapper.appendChild(header);
+	summaryTableWrapper.appendChild(table);
+}
+
+function getAccumulation(forecast,precision) {
+	let value = forecast.filter(f => (f.accum))
+	.map(f => f.val )
+	.reduce((a,b) => {
+		return Number(a) + Number(b);
+	},0.0 )
+	return value.toFixed(precision);
+}
+
+function formatDate(myDate){
+	let dateOptions = { weekday: 'long', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+	return myDate.toLocaleString('en-US',dateOptions);
+}
 
 //Fill our staticContent with the base html then opulate and manipulate the base html with content
 function populateStaticContent(cwa){
@@ -162,55 +228,55 @@ function populateStaticContent(cwa){
     tabContentContainers: '.c-tab',
   });
 	t.init();
-	t.goToTab(2);	
+	t.goToTab(2);
 
 	// Pull in an AVG Product, and run a parser on it to populate the page.
-	// TODO <- Reopen this up once the AVG is in the API. 
-/*	let avgProduct = new NwsApi.Product({ 
-		location : cwa, 
+	// TODO <- Reopen this up once the AVG is in the API.
+/*	let avgProduct = new NwsApi.Product({
+		location : cwa,
 		type: 'AVG',
 		limit : 1
 	}).getAll(parseAndPopulateAvg,cwa)*/
 
-	//The below fetch is in leiu of the AVG not in the API.  This should eventually get converted.  
+	//The below fetch is in leiu of the AVG not in the API.  This should eventually get converted.
 	let url = `https://w1.weather.gov/data/${CWA}/AVG${CWA}`;
 	let avgProduct = fetch(url)
   .then(response => {
-		if (response.ok) { return response.text(); } 
-		else { 
+		if (response.ok) { return response.text(); }
+		else {
 			console.error(`Unable to view product from URL: ${url}.  Is the CWA variable incorrect?`)
 			parseAndPopulateAvg(false,cwa);
-			throw new Error(response); 
+			throw new Error(response);
 		}
 	})
 	.then(text => { parseAndPopulateAvg(text,cwa)})
-	//The above fetch is in leiu of the AVG not in the API.  This should eventually get converted.  
+	//The above fetch is in leiu of the AVG not in the API.  This should eventually get converted.
 
-	//Set the correct full product URL. 
+	//Set the correct full product URL.
 	$('#fullProductLink').attr('href',`https://forecast.weather.gov/product.php?site=${cwa}&issuedby=${cwa}&product=AVG&format=txt&version=1&glossary=0`);
 }
 
 
-//National Standard Content Html 
+//National Standard Content Html
 const pageHtml = {};
 pageHtml.staticContent= `
 <div id="forecastDisplay" class="center-content text-center">
 	<h2 style="margin-bottom:30px; color:firebrick;">** Experimental Webpage - For Evaluation Only ** <br><br><a href="https://www.surveymonkey.com/r/WFOAvalancheWebpages_Exp2021-2022">Provide Feedback on this Webpage</a></h2>
 	<div id="introductionText">
 		<p style="text-align:left">
-			The following page is designed to provide snow safety officials with a weather forecast over specific areas of backcountry recreation interest.  
-			This forecast is not meant to be indicative of actual snow and avalanche conditions in the backcountry.  For the latest official Avalanche Danger Rating and Avalanche Forecasts for your area, visit <a href="https://www.avalanche.org">Avalanche.org</a>. 
+			The following page is designed to provide snow safety officials with a weather forecast over specific areas of backcountry recreation interest.
+			This forecast is not meant to be indicative of actual snow and avalanche conditions in the backcountry.  For the latest official Avalanche Danger Rating and Avalanche Forecasts for your area, visit <a href="https://www.avalanche.org">Avalanche.org</a>.
 		</p>
 		<br>
 		<a alt="Avalanche.org" title="Avalanche.org" href="https://www.avalanche.org"><img width="250" src="/images/wrh/avalanche/avy-org-logo-dark.png"></a></p>
 	</div>
-	
+
 
 	<div class="clear"></div>
 	<small style="font-style:italic">Choose an avalanche weather forecast location from the map or select menu below.</small>
 	<div id="map">Map Placeholder</div>
 	<h3>
-		Avalanche Weather Forecast For: 
+		Avalanche Weather Forecast For:
 		<select class="select-css" id="forecastPointSelectMenu">
 			<option value="" disabled selected hidden>Select a Forecast Location</option>
 		</select>
@@ -219,13 +285,13 @@ pageHtml.staticContent= `
 		<div class="c-tabs-nav">
 			<div id="forecastAlertsTab" class="c-tabs-nav__link"><span>Active Alerts</span></div>
 			<div id="forecastTabularTab" class="c-tabs-nav__link"><span>Tabular Forecast</span></div>
-			<div id="forecastGraphicalTab" class="c-tabs-nav__link"><span>Graphical Forecast</span></div>			
-			<div id="forecastDiscussionTab" class="c-tabs-nav__link hidden"><span>Discussion</span></div>
+			<div id="forecastGraphicalTab" class="c-tabs-nav__link"><span>Graphical Forecast</span></div>
+			<div id="forecastOverviewTab" class="c-tabs-nav__link"><span>Overview</span></div>
 		</div>
-		<div class="c-tab">	
+		<div class="c-tab">
 			<div id="forecastAlertsTabContent" class="c-tab__content"></div>
-		</div>		
-		<div class="c-tab">	
+		</div>
+		<div class="c-tab">
 			<div id="forecastTabularTabContent" class="c-tab__content">
 				<div id="forecastTable" class="preFormatted"></div>
 				<br>
@@ -238,12 +304,15 @@ pageHtml.staticContent= `
 		</div>
 		<div class="c-tab">
 			<div id="forecastGraphicalTabContent" class="c-tab__content">
-			<div id="forecastChart"></div>
+				<div id="forecastChart"></div>
 			</div>
 		</div>
 		<div class="c-tab">
-			<div id="forecastDiscussionTabContent" class="c-tab__content hidden"></div>
-		</div>		
+			<div id="forecastOverviewTabContent" class="c-tab__content">
+				<div id="forecastDiscussionContent" class="c-tab__content"></div>
+				<div id="summaryTableWrapper"></div>
+			</div>
+		</div>
 	</div>
 </div>
 <div id="forecastDisplayParserFailure" class="hidden outline preFormatted"></div>

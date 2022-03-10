@@ -15,7 +15,6 @@ class AVGParser {
 		this._productTime = this.parseProductTime(); //TODO Need to grab this from the API object once operational.
 		this._discussion = this.parseDiscussion();
 		this._forecast = this.parseForecastData();
-		console.log(this._forecast)
 	}
 
 	/**
@@ -135,13 +134,21 @@ class AVGParser {
 				let forecast = this.parseForecastTable(tabularPart,times);
 				let rawForecast = [datePart,timePart,tabularPart].join('\n');
 
+				//Total forecast length in hours
+				let startDate = new Date(times[0].date);
+				let endDate = new Date(times[times.length - 1].date);
+				let hourLength = (endDate.getTime() - startDate.getTime()) / 36e5;
+
 				let id = String(location.name.toLowerCase());
 				forecastData[id] ={
 					elevation : location.elevation,
 					id : id,
 					name : location.name,
 					forecast : forecast,
-					raw : rawForecast
+					raw : rawForecast,
+					hourLength : hourLength,
+					startDate : startDate,
+					endDate : endDate
 				};
 			});
 		}
@@ -375,7 +382,8 @@ class AVGParser {
 			for (let i=0; i < forecastTimes.length; i++){
 				let parsedForecast = {
 					val : '',
-					date : forecastTimes[i].date
+					date : forecastTimes[i].date,
+					accum : false
 				};
 				let columnValue = forecastLine.substring(forecastTimes[i].start,forecastTimes[i].end).trim();
 				let columnWidth = forecastTimes[i].end - forecastTimes[i].start;
@@ -391,8 +399,13 @@ class AVGParser {
 						if (columnWidth <= 4) {
 							columnValue = forecastLine.substring(forecastTimes[i].start-2,forecastTimes[i].end).trim();
 						}
-						//if (columnValue == '') { columnValue = null; }
+
+						//We've successfully gotten the value for that column, assign it to our value for this time period.
 						parsedForecast.val = columnValue;
+
+						//If we need to find a total accumulation later on, this flag will allow us to know which fields are accumulatable;
+						parsedForecast.accum = true;
+
 						//12 hourly data is look behind not look forward, so search back through previous times and add when needed.
 						let j = 0;
 						do {
