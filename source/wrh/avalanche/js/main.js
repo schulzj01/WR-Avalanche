@@ -161,7 +161,7 @@ function makeSnowfallSummaryTable(){
 		let location = PARSED_AVG.forecast(locationId);
 		let name = location.name
 		let fcst = location.forecast;
-
+		let elevation = location.elevation.text;
 		if (i == 0){
 			hourLength = location.hourLength;
 			startDateStr = formatDate(location.startDate)
@@ -173,7 +173,8 @@ function makeSnowfallSummaryTable(){
 		}
 
 		let row = tBody.insertRow();
-		let cell = row.insertCell().innerHTML = name
+		row.insertCell().innerHTML = name
+		row.insertCell().innerHTML = elevation
 		if (hasSnow) {
 			let snowAccum = getAccumulation(fcst['12 hour snow'],1);
 			row.insertCell().innerHTML = snowAccum;
@@ -190,12 +191,13 @@ function makeSnowfallSummaryTable(){
 
 	let headRow = table.createTHead().insertRow(0);
 	headRow.insertCell().innerHTML = 'Location';
-	if (hasSnow){ headRow.insertCell().innerHTML = `${hourLength} Hour Total Snowfall`; }
-	if (hasQpf){ headRow.insertCell().innerHTML = `${hourLength} Hour Total QPF`; }
-	if (hasIce) { headRow.insertCell().innerHTML = `${hourLength} Hour Total Ice`; }
+	headRow.insertCell().innerHTML = 'Elevation<br>(feet)';
+	if (hasSnow){ headRow.insertCell().innerHTML = `Total Snowfall<br>(inches)`; }
+	if (hasQpf){ headRow.insertCell().innerHTML = `Total Liquid Precip<br>(inches)`; }
+	if (hasIce) { headRow.insertCell().innerHTML = `Total Ice Accum<br>(inches)`; }
 
 	let header = document.createElement('h4');
-	header.innerHTML = `${hourLength} Hour Forecast Precipitation Summary<br><br><small><small>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}</small></small>`;
+	header.innerHTML = `${hourLength} Hour Precipitation Forecast Summary<br><br><small><small>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}</small></small>`;
 	let summaryTableWrapper = document.getElementById('summaryTableWrapper');
 	summaryTableWrapper.appendChild(header);
 	summaryTableWrapper.appendChild(table);
