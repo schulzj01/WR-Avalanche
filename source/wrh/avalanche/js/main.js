@@ -53,7 +53,7 @@ function parseAndPopulateAvg(avgProducts,cwa){
 	//Populate the discussion display, and show the tab if there is a discussion.
 	if (PARSED_AVG.discussion) {
 		let issuedDateStr = formatDate(PARSED_AVG.productTime.time);
-		$('#forecastDiscussionContent').html(`<h4>Forecast Discussion<br>Issued: ${issuedDateStr}</h4><div class="alertSection">${PARSED_AVG.discussion}</div>`);
+		$('#forecastDiscussionContent').html(`<h4>Forecast Discussion<br><br><small><small>Issued: ${issuedDateStr}</small></small></h4><div class="alertSection">${PARSED_AVG.discussion}</div>`);
 		$('#forecastDiscussionContent').removeClass('hidden');
 	}
 
@@ -195,7 +195,7 @@ function makeSnowfallSummaryTable(){
 	if (hasIce) { headRow.insertCell().innerHTML = `${hourLength} Hour Total Ice`; }
 
 	let header = document.createElement('h4');
-	header.innerHTML = `${hourLength} Hour Forecast Precipitation Summary<br>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}`;
+	header.innerHTML = `${hourLength} Hour Forecast Precipitation Summary<br><br><small><small>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}</small></small>`;
 	let summaryTableWrapper = document.getElementById('summaryTableWrapper');
 	summaryTableWrapper.appendChild(header);
 	summaryTableWrapper.appendChild(table);
