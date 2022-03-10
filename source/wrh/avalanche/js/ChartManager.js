@@ -49,7 +49,7 @@ class ChartManager  {
 			height: this._chartProps.axisHeights[0],
 			top: this._chartProps.axisTops[0],
 			plotLines: [{
-				id : 'l-elevation-low',
+				id : 'l-temperature-low',
 				color: this._chartProps.wxColors.temperature,
 				dashStyle: 'Dash',
 				value: 32,
@@ -254,13 +254,18 @@ class ChartManager  {
 		const series = [{
 			name: 'Temperature',
 			id : 's-temperature',
-			type: 'spline',
+			type: 'areaspline',
 			yAxis: 'y-temperature',
 			xAxis : 0,
 			data: [],
 			color: this._chartProps.wxColors.temperature,
 			//pointInterval: 438e5, // three hours
 			tooltip: { valueSuffix: ' °F' },
+			fillOpacity: 0.15,
+			zones: [{
+				value: 32,
+				fillColor: 'rgba(0,0,0,0)'
+			}]
 		},{
 			name: 'Snow Level',
 			id: 's-snowlevel',
@@ -269,13 +274,13 @@ class ChartManager  {
 			xAxis : 0,
 			data: [],
 			color: this._chartProps.wxColors.snowlevel,
-			fillOpacity: 0.2,
+			fillOpacity: 0.15,
 		//pointInterval: 438e5, // three hours
 			tooltip: { valueSuffix: ' kft' },
 			zones: [{
 				value: 25,
 				fillColor: 'rgba(0,0,0,0)'
-		}]
+			}]
 		},{
 			name: 'Wind Speed',
 			id : 's-wind',
