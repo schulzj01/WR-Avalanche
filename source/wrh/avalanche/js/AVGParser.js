@@ -124,13 +124,16 @@ class AVGParser {
 			avgFcsts.forEach( avgFcst => {
 
 				avgFcst = avgFcst.trim();
-				let locationPart = avgFcst.split('\n')[0].trim();
+				let avgFcstParts = avgFcst.split('\n\n');
+				let locationPart = avgFcstParts[0].trim();
+
 				let location = this.parseLocation(locationPart);
-				let timePart = avgFcst.match(timesRegex)[0];
-				let datePart = avgFcst.match(datesRegex)[0];
+
+				let timePart = avgFcstParts[1].match(timesRegex)[0];
+				let datePart = avgFcstParts[1].match(datesRegex)[0];
 				let times = this.parseForecastTimes(datePart,timePart)
 
-				let tabularPart = avgFcst.match(tabularRegex)[0].trim();
+				let tabularPart = avgFcstParts[2].match(tabularRegex)[0].trim();
 				let forecast = this.parseForecastTable(tabularPart,times);
 				let rawForecast = [datePart,timePart,tabularPart].join('\n');
 
