@@ -37,7 +37,9 @@ function makeMap(wfo) {
 			restrictBounds: false,
 			fitBounds: false,
 		};
-		var border = L.mask('https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=CWA+LIKE+%27'+WFO+'%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=4&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson', options).addTo(mainMap);
+		let maskUrl = 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/1/query?where=CWA+LIKE+%27'+WFO+'%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=4&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson';
+		if (WFO == 'BOU'){ maskUrl = 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS/nws_reference_map/MapServer/3/query?where=state+LIKE+%27CO%27&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=4&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson'; }
+		var border = L.mask(maskUrl, options).addTo(mainMap);
   })
   queryWWA(WFO);
 }
@@ -85,10 +87,20 @@ function plotAVGlocations(locationData,wfo) {
  */
 function queryWWA(WFO){
 	//Alerts filtered out by active CWA. We probably want to move this to a map call? Or better yet, use it to populate the map with the CWA hazards?
-	let cwaAlerts = new NwsApi.Alert({
-		active: true,
-		event: queryEventTypes
-	}).getByCwa(WFO,getWwa,WFO);
+	//Boulder is a state based WFO
+	if (WFO == 'BOU'){
+		new NwsApi.Alert({
+			active: true,
+			area: 'CO',
+			event: queryEventTypes
+		}).getAll(getWwa,WFO);
+	}
+	else {
+		new NwsApi.Alert({
+			active: true,
+			event: queryEventTypes
+		}).getByCwa(WFO,getWwa,WFO);
+	}
 	//}).getAll(getWWA,WFO); //Switch to getAll instead of getByCwa to get all alerts over the country.  Good for testing.
 }
 
