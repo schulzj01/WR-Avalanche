@@ -414,6 +414,7 @@ class AVGParser {
 			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim().toLowerCase();
 			parsedForecastData[weatherType] = null;
 			let parsedForecastDataArray = [];
+			let accumValue = 0.0;
 			for (let i=0; i < forecastTimes.length; i++){
 				let parsedForecast = {
 					val : '',
@@ -422,13 +423,14 @@ class AVGParser {
 				};
 				let columnValue = forecastLine.substring(forecastTimes[i].start,forecastTimes[i].end).trim();
 				let columnWidth = forecastTimes[i].end - forecastTimes[i].start;
-				if (!weatherType.includes('12 hour')){ parsedForecast.val = columnValue; }
+				if (!weatherType.includes('12 hour') && !weatherType.includes('snow')){ parsedForecast.val = columnValue; }
 				else  {
 					let regex;
 					//Only look for ice and QPF where the data column starts with .## Then we know we have a start to 12 hour block.
 					if (weatherType.includes('qpf') || weatherType.includes('ice')) {  regex = new RegExp(/\.[0-9]{2}/); }
 					//Only look for snow  where the data column starts with #.#
 					else if (weatherType.includes('snow')) { regex = new RegExp(/[0-9]{1}\.[0-9]{1}/); }
+
 					if (regex.test(columnValue)) {
 						//If our value is QPF look back an extra couple spaces to get the full string.
 						if (columnWidth <= 4) {
@@ -439,7 +441,8 @@ class AVGParser {
 						parsedForecast.val = columnValue;
 
 						//If we need to find a total accumulation later on, this flag will allow us to know which fields are accumulatable;
-						parsedForecast.accum = true;
+						accumValue = parseFloat(parseFloat(parsedForecast.val) + accumValue);
+						parsedForecast.accum = accumValue;
 
 						//12 hourly data is look behind not look forward, so search back through previous times and add when needed. #Deprecated with the move to Prob Snow
 						/*let j = 0;
@@ -453,11 +456,32 @@ class AVGParser {
 						}
 						while (i > j);*/
 					}
+					else {
+						parsedForecast.accum = accumValue;
+					}
 				}
 				parsedForecastDataArray.push(parsedForecast);
 			};
 			parsedForecastData[weatherType] = parsedForecastDataArray;
 		});
+
+		//This is a hackish fix to get around those times when there is no forecast data loaded for an initial time period (e.g.).  Not really
+		//sure where else to get this done, but it f's with our graphs
+		//Date               Tuesday 09/13/22                        Wednesday 09/14/22
+		//Time (LT)          06   09   12   15   18   21   00   03   06   09   12   15   18   21   00   03   06
+		//Cloud Cover                  SC   OV   OV   BK   OV   OV   OV   OV   OV   BK   SC   SC   OV   OV   OV
+		//Cloud Cover (%)              45   90   90   65   80   95  100   95   80   65   40   40   70   70   85
+		let attempts = 0;
+		while (attempts <= 3) {
+			if ((parsedForecastData['cloud cover'][0].val == '') && (parsedForecastData['temperature'][0].val == '')){
+				for (const property in parsedForecastData) {
+					parsedForecastData[property].shift()
+				}
+			}
+			attempts++;
+		}
+
+		console.log(parsedForecastData)
 		return parsedForecastData;
 
 	}
