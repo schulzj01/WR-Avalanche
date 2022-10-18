@@ -11,6 +11,7 @@
 class AVGParser {
 	constructor(productText) {
 		this._maxElevation = 0;
+		this._hasExtended = false;
 		this._productText = productText;
 		this._productTime = this.parseProductTime(); //TODO Need to grab this from the API object once operational.
 		this._discussion = this.parseDiscussion();
@@ -45,6 +46,10 @@ class AVGParser {
 			throw Error(`Location ${locationId} not available in AVG or is improperly formatted`);
 		}
 	}
+	hasExtended() {
+		return this._hasExtended;
+	}
+
 	/**
 	 * Shortcut to get the location name for a given id
 	 * @param {*} locationId - a locationId defined in the AVG
@@ -112,11 +117,7 @@ class AVGParser {
 		//Parse out the forecast points
 		const forecastData = {};
 		let avgFcsts = this.textBetweenStrings(this._productText,String.raw`^\.\.\.`,String.raw`(\n\n\n|\$\$|\*\*\*)`,'gms');
-		//For each parsed out forecast section, parse it out further into a location and forecast text.
-		//perhaps we also want to parse out the elevation from the location?
-		let timesRegex = new RegExp(/^(TIME).*/im);
-		let datesRegex = new RegExp(/^(DATE).*/im);
-		let tabularRegex = new RegExp(/^(CLOUD)[\S\s]*/im)
+
 		if (avgFcsts) {
 			//Because of the bass ackwards way we need to do this since safari doesnt support lookbacks,
 			//Remove it if the discussion gets in there.
@@ -129,33 +130,56 @@ class AVGParser {
 
 				let location = this.parseLocation(locationPart);
 
-				let timePart = avgFcstParts[1].match(timesRegex)[0];
-				let datePart = avgFcstParts[1].match(datesRegex)[0];
-				let times = this.parseForecastTimes(datePart,timePart)
-
-				let tabularPart = avgFcstParts[2].match(tabularRegex)[0].trim();
-				let forecast = this.parseForecastTable(tabularPart,times);
-				let rawForecast = [datePart,timePart,tabularPart].join('\n');
-
-				//Total forecast length in hours
-				let startDate = new Date(times[0].date);
-				let endDate = new Date(times[times.length - 1].date);
-				let hourLength = (endDate.getTime() - startDate.getTime()) / 36e5;
-
+				//Allow for both near term and extended AVGs by grouping them separately.
+				let forecastTimeGroups = [];
+				if (avgFcstParts.length >= 3){
+					let pftg = this.parseForecastTimeGroup(avgFcstParts[1],avgFcstParts[2]);
+					forecastTimeGroups.push(pftg)
+				}
+				if (avgFcstParts.length >= 5){
+					let pftg = this.parseForecastTimeGroup(avgFcstParts[3],avgFcstParts[4]);
+					forecastTimeGroups.push(pftg)
+					this._hasExtended = true;
+				}
 				let id = String(location.name.toLowerCase());
 				forecastData[id] ={
 					elevation : location.elevation,
 					id : id,
 					name : location.name,
-					forecast : forecast,
-					raw : rawForecast,
-					hourLength : hourLength,
-					startDate : startDate,
-					endDate : endDate
+					forecastTimeGroups : forecastTimeGroups
 				};
 			});
 		}
 		return forecastData;
+	}
+
+	/**
+	 *
+	 * @returns
+	 */
+	parseForecastTimeGroup(timedatePart,forecastPart){
+		let timesRegex = new RegExp(/^(TIME).*/im);
+		let datesRegex = new RegExp(/^(DATE).*/im);
+
+		let timePart = timedatePart.match(timesRegex)[0];
+		let datePart = timedatePart.match(datesRegex)[0];
+		let times = this.parseForecastTimes(datePart,timePart)
+
+		let tabularPart = forecastPart.trim();
+		let forecast = this.parseForecastTable(tabularPart,times);
+		let rawForecast = [datePart,timePart,tabularPart].join('\n');
+
+		//Total forecast length in hours
+		let startDate = new Date(times[0].date);
+		let endDate = new Date(times[times.length - 1].date);
+		let hourLength = (endDate.getTime() - startDate.getTime()) / 36e5;
+		return {
+			forecast : forecast,
+			raw : rawForecast,
+			hourLength : hourLength,
+			startDate : startDate,
+			endDate : endDate
+		}
 	}
 
 
@@ -258,13 +282,14 @@ class AVGParser {
 		//This is going to be a bit hokey, but we're going to set previous and future dates in the dateMatches, essentially adding creating where
 		//they "should" be in the string index if they were in fact there.  We'll find out the length of the date based on character values between
 		//the first and second date.
-		let lengthBetweenDateText = dateMatches[1].index - dateMatches[0].index;
+		let lengthBetweenDateText = dateMatches[dateMatches.length-1].index - dateMatches[dateMatches.length-2].index;
 
 		let allAvailableDates = [{
 			date: this.convertTextDateToObject(dateMatches[0][0],-1),
 			start: dateMatches[0].index - lengthBetweenDateText,
 			end: dateMatches[0].index
 		}]
+
 		dateMatches.forEach(dMatch => {
 			allAvailableDates.push({
 				date: this.convertTextDateToObject(dMatch[0]),
@@ -277,6 +302,11 @@ class AVGParser {
 			start: dateMatches[dateMatches.length - 1].index + lengthBetweenDateText,
 			end: dateMatches[dateMatches.length - 1].index + (lengthBetweenDateText * 2)
 		})
+
+		//Sometimes the length between the first and second dates isn't consistent. Loop through each date, and if it's successor has a starting index later on
+		for(let i=0; i<allAvailableDates.length-2; i++){
+			if (allAvailableDates[i].end > allAvailableDates[i+1].start) { allAvailableDates[i].end = allAvailableDates[i+1].start }
+		}
 
 		//Find all listed times in the time string and convert to an array.
 		let tPosRegex = new RegExp(/([0-9]{1,2})/g);
@@ -292,7 +322,6 @@ class AVGParser {
 				start : tMatch.index,
 				end : tMatch.index + tMatch[0].length
 			});
-
 		});
 		//Forecast data is actually left justified compared to the times. So instead of using the same start/end indices of the time
 		//string.  We need to use the same end index, and then count back until the the previous end index.
@@ -304,6 +333,7 @@ class AVGParser {
 
 		//Loop through the available timestamps, and determine the correct date and character placement of the tabular data.
 		let forecastTimes = [];
++
 		allAvailableTimes.forEach((availableTime,i) => {
 			let dMatchIndex = allAvailableDates.findIndex( availableDate => {
 				if ((availableDate.start <= availableTime.start) && (availableDate.end > availableTime.end)) { return true; }
@@ -311,7 +341,9 @@ class AVGParser {
 
 			//If < 06Z use the "next" date because Datestamp text seems to always fall at 06Z instead of 00z. So if we're < 06Z, give it our next date.
 			let forecastTimeDate;
-			if (availableTime.hour < 6) { forecastTimeDate = new Date(+allAvailableDates[dMatchIndex + 1].date) }
+			if (availableTime.hour < 6) {
+				forecastTimeDate = new Date(+allAvailableDates[dMatchIndex + 1].date)
+			}
 			else { forecastTimeDate = new Date(+allAvailableDates[dMatchIndex].date); }
 			forecastTimeDate.setHours(forecastTimeDate.getHours() + availableTime.hour);
 
@@ -409,15 +441,17 @@ class AVGParser {
 						//If we need to find a total accumulation later on, this flag will allow us to know which fields are accumulatable;
 						parsedForecast.accum = true;
 
-						//12 hourly data is look behind not look forward, so search back through previous times and add when needed.
-						let j = 0;
+						//12 hourly data is look behind not look forward, so search back through previous times and add when needed. #Deprecated with the move to Prob Snow
+						/*let j = 0;
+						console.log(j)
 						do {
+							console.warn(parsedForecastDataArray[j])//.getTime(), parsedForecastDataArray[j].date.getTime())
 							if (parsedForecast.date.getTime() - parsedForecastDataArray[j].date.getTime()  < 432e5 ) {
 								parsedForecastDataArray[j].val = columnValue;
 							}
 							j++;
 						}
-						while (i > j);
+						while (i > j);*/
 					}
 				}
 				parsedForecastDataArray.push(parsedForecast);

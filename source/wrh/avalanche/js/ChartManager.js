@@ -1,7 +1,8 @@
 class ChartManager  {
 
-	constructor() {
+	constructor(timePeriod) {
 		this._chart = null;
+		this._timePeriod = timePeriod;
 		this._chartProps;
 		this.configureHighcharts();
 		this.initializeCharts();
@@ -20,8 +21,8 @@ class ChartManager  {
 				snowlevel: '#00b774',
 				cloudcover: 'black',
 			},
-			axisHeights : [120,120,120,30],
-			axisTops : [105,255,405,560],
+			axisHeights : [120,120,120,120,30],
+			axisTops : [105,255,405,555,710],
 			chartBottomPadding: 80,
 		};
 
@@ -188,13 +189,12 @@ class ChartManager  {
 					color: this._chartProps.wxColors.qpf,
 				}
 			},
-			opposite: true,
 			offset: 0,
 			softMax: 1,
 			min: 0,
 			lineWidth: 2,
-			height: this._chartProps.axisHeights[2],
-			top: this._chartProps.axisTops[2],
+			height: this._chartProps.axisHeights[3],
+			top: this._chartProps.axisTops[3],
 		},{
 			id: 'y-cloudcover',
 			labels: {
@@ -213,8 +213,8 @@ class ChartManager  {
 			offset:3,
 			min: 0,
 			lineWidth: 2,
-			height: this._chartProps.axisHeights[3],
-			top: this._chartProps.axisTops[3],
+			height: this._chartProps.axisHeights[4],
+			top: this._chartProps.axisTops[4],
 		},];
 
 
@@ -467,14 +467,14 @@ class ChartManager  {
 		}
 
 
-		let chartDiv = document.getElementById('forecastChart');
+		let chartDiv = document.getElementById(`forecastChart${this._timePeriod}`);
 		this._chart = Highcharts.chart(chartDiv,chartConfig);
 
 	}
 
 	buildChart(chartConfig){
 		var chartDiv = document.createElement('div');
-		chartDiv.className = 'forecastChart';
+		chartDiv.className = `forecastChart${this._timePeriod}`;
 		document.getElementById('forecastGraphicalTabContent').appendChild(chartDiv);
 		let chart = Highcharts.chart(chartDiv,chartConfig)
 		this._charts.push(chart)
@@ -486,17 +486,19 @@ class ChartManager  {
 
 	updateChartData(locationForecast,productTime){
 
+		let forecast = locationForecast.forecastTimeGroups[this._timePeriod].forecast;
+
 		//Get list of all times for Temperatures
-		let windSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind (mph)'],locationForecast.forecast['wind dir']);
-		let windGustSeries = this.createWindSeriesFromAvg(locationForecast.forecast['wind gust (mph)'],locationForecast.forecast['wind dir']);
-		let cloudCoverSeries = this.createCloudCoverSeriesFromAvg(locationForecast.forecast['cloud cover (%)']);
+		let windSeries = this.createWindSeriesFromAvg(forecast['wind (mph)'],forecast['wind dir']);
+		let windGustSeries = this.createWindSeriesFromAvg(forecast['wind gust (mph)'],forecast['wind dir']);
+		let cloudCoverSeries = this.createCloudCoverSeriesFromAvg(forecast['cloud cover (%)']);
 
 
-		let snow12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour snow'],'float');
-		let qpf12Series = this.createSeriesFromAvg(locationForecast.forecast['12 hour qpf'],'float');
-		let tempSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'int');
+		let snow12Series = this.createSeriesFromAvg(forecast['12 hour snow'],'float');
+		let qpf12Series = this.createSeriesFromAvg(forecast['12 hour qpf'],'float');
+		let tempSeries = this.createSeriesFromAvg(forecast['temperature'],'int');
 
-		/*let dateSeries = this.createSeriesFromAvg(locationForecast.forecast['temperature'],'date');
+		/*let dateSeries = this.createSeriesFromAvg(forecast['temperature'],'date');
 
 		let xAxisMin = dateSeries[0];
 		let xAxisMax = dateSeries[dateSeries.length-1];*/
@@ -514,8 +516,8 @@ class ChartManager  {
 		let elevation = locationForecast.elevation;
 
 		//If we have snow level in our product, edit some of the chart to include things like elevation or elevation ranges.
-		if (locationForecast.forecast.hasOwnProperty('snow level (kft)')) {
-			let snowLevelSeries = this.createSeriesFromAvg(locationForecast.forecast['snow level (kft)'],'float');
+		if (forecast.hasOwnProperty('snow level (kft)')) {
+			let snowLevelSeries = this.createSeriesFromAvg(forecast['snow level (kft)'],'float');
 			this._chart.get('s-snowlevel').setData(snowLevelSeries);
 
 			//Hide all the plot lines and zones first, and then turn them on if they have a value.

@@ -68,11 +68,12 @@ h4 {
 .preFormatted {
 	font-family:monospace;
 	white-space: pre-wrap;
-	font-size:14px;
+	font-size:13px;
 	line-height: 1.5em;
 	background-color:#ffffff;
 	padding: 10px 0 10px 0;
 	margin-top: 15px;
+	text-align: left;
 }
 
 .disabledLegend td:first-child{
@@ -100,6 +101,13 @@ h4 {
   border: 1px solid #f7a35c;/* #9ab;*/
   border-radius: 3px;
   box-shadow: 1px 1px 2px #888;
+}
+
+#forecastTable0 {
+	padding-left:10px;
+}
+#forecastTable1 {
+	padding-left:10px;
 }
 
 #forecastTabularTabContent {

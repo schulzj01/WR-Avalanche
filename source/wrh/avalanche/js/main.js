@@ -15,10 +15,16 @@
  *  PARSED_AVG - Global variable that stores all parts of a parsed AVG forecast product.
  */
 let PARSED_AVG;
+
 /**
  *  CHART_MANAGER - Global variable that stores the Chart JS objects and updates the data.
  */
-let CHART_MANAGER;
+let CHART_MANAGERS = [];
+
+/**
+ * PERIOD - Global variable that stores which time period the users are viewing (short term or extended)
+ */
+let TIME_GROUP = 0;
 
 
 /**
@@ -65,7 +71,8 @@ function parseAndPopulateAvg(avgProducts,cwa){
 	makeMap(cwa);
 
 	//Initialize the graphical forecast charts
-	CHART_MANAGER = new ChartManager();
+	CHART_MANAGERS = [new ChartManager(0)]
+	if (PARSED_AVG.hasExtended()) { CHART_MANAGERS.push(new ChartManager(1)); }
 
 	//Add the locations to the select menu, and populate the first location
 	initializeSelectMenu();
@@ -113,13 +120,18 @@ function populateAlerts(alerts,locationId){
  * @param {String} location - A text string of an AVG location. Also found by a PARSED_AVG.locations call.
  */
 function populateForecast(locationId){
-	let locationForecast = PARSED_AVG.forecast(locationId);
-	let tabularRawFcst = locationForecast.raw;
-	let tabularHtml = `<pre>${tabularRawFcst}</pre>`
-	$('#forecastTable').html(tabularHtml)
+
 	let productTime =  PARSED_AVG.productTime.formatted;
 	$('.productTime').html(productTime);
-	CHART_MANAGER.updateChartData(locationForecast,productTime);
+
+	let locationForecast = PARSED_AVG.forecast(locationId);
+	locationForecast.forecastTimeGroups.forEach((forecastTimeGroup,i) => {
+		//console.log(locationForecast)
+		let tabularRawFcst = forecastTimeGroup.raw;
+		let tabularHtml = `<pre>${tabularRawFcst}</pre>`
+		$(`#forecastTable${i}`).html(tabularHtml)
+		CHART_MANAGERS[i].updateChartData(locationForecast,productTime);
+	});
 }
 
 function changeForecastSelectMenu(e,force = false){
@@ -147,9 +159,7 @@ function initializeSelectMenu(){
 
 function makeSnowfallSummaryTable(){
 		//Loop through each location and add it to our overview snowfall table.
-	//$('#forecastOverviewTab').removeClass('hidden');	//	@todo remove this line and force overview to be shown for all sites.
-
-
+	//$('#forecastOverviewTab').removeClass('hidden');	//	@todo remove this line and force overview to be shown for all sites
 
 	let table = document.createElement('table');
 	table.id = 'summaryTable';
@@ -218,7 +228,6 @@ function makeSnowfallSummaryTable(){
  * @param {HTMLTableElement} table - table html element to sort.
  */
 function sortTable(n,table) {
-	console.log(table)
 	var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
 	//table = document.getElementById("tableId");
 	switching = true;
@@ -244,7 +253,6 @@ function sortTable(n,table) {
 			if (dir == "asc") {
 				if (!isNaN(x.innerHTML) && !isNaN(y.innerHTML)){
 					if (Number(x.innerHTML) > Number(y.innerHTML)){
-						console.log('switching asc')
 						shouldSwitch = true;
 						break;
 					}
@@ -257,7 +265,6 @@ function sortTable(n,table) {
 			} else if (dir == "desc") {
 				if (!isNaN(x.innerHTML) && !isNaN(y.innerHTML)){
 					if (Number(x.innerHTML) < Number(y.innerHTML)){
-						console.log('switching desc')
 						shouldSwitch = true;
 						break;
 					}
@@ -310,11 +317,25 @@ function populateStaticContent(cwa){
 	//Initialize the forecast tabs
 	let t = tabs({
     el: '#forecastTabs',
-    tabNavigationLinks: '.c-tabs-nav__link',
-    tabContentContainers: '.c-tab',
+    tabNavigationLinks: '.navlink1',
+    tabContentContainers: '.content1',
   });
 	t.init();
 	t.goToTab(2);
+	//Initialize the forecast period tabs
+	let t2 = tabs({
+    el: '#forecastTabularTabContent',
+    tabNavigationLinks: '.navlink2',
+    tabContentContainers: '.content2',
+  });
+	t2.init();
+	//Initialize the chart period tabs
+	let t3 = tabs({
+		el: '#forecastGraphicalTabContent',
+		tabNavigationLinks: '.navlink3',
+		tabContentContainers: '.content3',
+	});
+	t3.init();
 
 	// Pull in an AVG Product, and run a parser on it to populate the page.
 	// TODO <- Reopen this up once the AVG is in the API.
@@ -372,19 +393,32 @@ pageHtml.staticContent= `
 			<option value="" disabled selected hidden>Select a Forecast Location</option>
 		</select>
 	</h3>
-	<div class="c-tabs outline hidden" id="forecastTabs">
+	<div class="outline hidden" id="forecastTabs">
 		<div class="c-tabs-nav">
-			<div id="forecastAlertsTab" class="c-tabs-nav__link"><span>Active Alerts</span></div>
-			<div id="forecastTabularTab" class="c-tabs-nav__link"><span>Tabular Forecast</span></div>
-			<div id="forecastGraphicalTab" class="c-tabs-nav__link"><span>Graphical Forecast</span></div>
-			<div id="forecastOverviewTab" class="c-tabs-nav__link"><span>Overview</span></div>
+			<div id="forecastAlertsTab" class="c-tabs-nav__link navlink1"><span>Active Alerts</span></div>
+			<div id="forecastTabularTab" class="c-tabs-nav__link navlink1"><span>Tabular Forecast</span></div>
+			<div id="forecastGraphicalTab" class="c-tabs-nav__link navlink1"><span>Graphical Forecast</span></div>
+			<div id="forecastOverviewTab" class="c-tabs-nav__link navlink1"><span>Overview</span></div>
 		</div>
-		<div class="c-tab">
+		<div class="c-tab content1">
 			<div id="forecastAlertsTabContent" class="c-tab__content"></div>
 		</div>
-		<div class="c-tab">
+		<div class="c-tab content1">
 			<div id="forecastTabularTabContent" class="c-tab__content">
-				<div id="forecastTable" class="preFormatted"></div>
+				<div class="c-tabs-nav">
+					<div id="forecastAlertsTab" class="c-tabs-nav__link navlink2 is-active"><span>Near Term Forecast</span></div>
+					<div id="forecastTabularTab" class="c-tabs-nav__link navlink2"><span>Extended Forecast</span></div>
+				</div>
+				<div class="c-tab content2 is-active">
+					<div class="c-tab__content">
+						<div id="forecastTable0" class="preFormatted"></div>
+					</div>
+				</div>
+				<div class="c-tab content2">
+					<div class="c-tab__content">
+						<div id="forecastTable1" class="preFormatted"></div>
+					</div>
+				</div>
 				<br>
 				<small>
 					<a id="fullProductLink" target="_blank" href="">
@@ -393,12 +427,25 @@ pageHtml.staticContent= `
 				</small>
 			</div>
 		</div>
-		<div class="c-tab">
+		<div class="c-tab content1">
 			<div id="forecastGraphicalTabContent" class="c-tab__content">
-				<div id="forecastChart"></div>
+				<div class="c-tabs-nav">
+					<div id="forecastAlertsTab" class="c-tabs-nav__link navlink3 is-active"><span>Near Term Forecast</span></div>
+					<div id="forecastTabularTab" class="c-tabs-nav__link navlink3"><span>Extended Forecast</span></div>
+				</div>
+				<div class="c-tab content3 is-active">
+					<div class="c-tab__content">
+						<div id="forecastChart0"></div>
+					</div>
+				</div>
+				<div class="c-tab content3">
+					<div class="c-tab__content">
+						<div id="forecastChart1"></div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="c-tab">
+		<div class="c-tab content1">
 			<div id="forecastOverviewTabContent" class="c-tab__content">
 				<div id="forecastDiscussionContent" class="c-tab__content"></div>
 				<div id="summaryTableWrapper"></div>
