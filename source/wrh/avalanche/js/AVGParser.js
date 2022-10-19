@@ -414,12 +414,11 @@ class AVGParser {
 			let weatherType = forecastLine.substring(0,forecastTimes[0].start).trim().toLowerCase();
 			parsedForecastData[weatherType] = null;
 			let parsedForecastDataArray = [];
-			let accumValue = 0.0;
 			for (let i=0; i < forecastTimes.length; i++){
 				let parsedForecast = {
 					val : '',
 					date : forecastTimes[i].date,
-					accum : false
+					accum : ''
 				};
 				let columnValue = forecastLine.substring(forecastTimes[i].start,forecastTimes[i].end).trim();
 				let columnWidth = forecastTimes[i].end - forecastTimes[i].start;
@@ -440,9 +439,6 @@ class AVGParser {
 						//We've successfully gotten the value for that column, assign it to our value for this time period.
 						parsedForecast.val = columnValue;
 
-						//If we need to find a total accumulation later on, this flag will allow us to know which fields are accumulatable;
-						accumValue = parseFloat(parseFloat(parsedForecast.val) + accumValue);
-						parsedForecast.accum = accumValue;
 
 						//12 hourly data is look behind not look forward, so search back through previous times and add when needed. #Deprecated with the move to Prob Snow
 						/*let j = 0;
@@ -456,15 +452,32 @@ class AVGParser {
 						}
 						while (i > j);*/
 					}
-					else {
-						parsedForecast.accum = accumValue;
-					}
 				}
 				parsedForecastDataArray.push(parsedForecast);
 			};
 			parsedForecastData[weatherType] = parsedForecastDataArray;
 		});
 
+		//Interpolate backwards for our accumulating weather elements
+		let interpoatedWeatherTypes = ['12 hour snow','12 hour qpf','low end snow','high end snow']
+		interpoatedWeatherTypes.forEach(weatherType => {
+			if (parsedForecastData.hasOwnProperty(weatherType)){
+				let accumValue = 0.00;
+				let keysToAccum = []
+				for(let i = 0; i < parsedForecastData[weatherType].length; i++){
+					if (parsedForecastData[weatherType][i].val !== '') {
+						keysToAccum.push(i)
+						let finalVal = parseFloat(parsedForecastData[weatherType][i].val);
+						keysToAccum.forEach(key => {
+							accumValue = parseFloat(accumValue + parseFloat(finalVal / keysToAccum.length));
+							parsedForecastData[weatherType][key].accum = accumValue;
+						});
+						keysToAccum = []
+					}
+					else { keysToAccum.push(i) };
+				}
+			}
+		})
 		//This is a hackish fix to get around those times when there is no forecast data loaded for an initial time period (e.g.).  Not really
 		//sure where else to get this done, but it f's with our graphs
 		//Date               Tuesday 09/13/22                        Wednesday 09/14/22
@@ -481,7 +494,6 @@ class AVGParser {
 			attempts++;
 		}
 
-		console.log(parsedForecastData)
 		return parsedForecastData;
 
 	}

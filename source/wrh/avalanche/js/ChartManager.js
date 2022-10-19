@@ -15,9 +15,9 @@ class ChartManager  {
 		this._chartProps = {
 			wxColors : {
 				qpf: '#27e85e',
-				snowfall: '#3b8ddb',
-				snowfallhigh: '#2e6ca5',
-				snowfalllow: '#6bb9ff',
+				snowfall: '#2e6ca5',
+				snowfallhigh: '#3b8ddb',
+				snowfalllow: '#74afe8',
 				wind: Highcharts.getOptions().colors[5],
 				temperature: Highcharts.getOptions().colors[3],
 				snowlevel: '#00b774',
@@ -314,9 +314,9 @@ class ChartManager  {
 				valueSuffix: ' mph'
 			}
 		},{
-			name: 'Snowfall Amount',
+			name: '12 Hour Snowfall Amount',
 			id: 's-snowfall12',
-			type: 'areaspline',
+			type: 'line',
 			yAxis: 'y-snowfall',
 			xAxis : 0,
 			data:  [],
@@ -324,10 +324,10 @@ class ChartManager  {
 			tooltip: {
 				valueSuffix: ' in',
 			},
-			//lineWidth: 0,
+			lineWidth: 0,
 			connectNulls: true,
 			//stacking: 'normal',
-			/*marker: {
+			marker: {
 				enabled: false,
 				states: {
 					hover: { enabled: false }
@@ -335,7 +335,7 @@ class ChartManager  {
 			},
 			states: {
 				hover: { enabled: false }
-			},*/
+			},
 			//fillOpacity: 0.30,
 			//Add in some lines at the top of the columns to make them stand out.
 		/*	dataLabels: {
@@ -363,32 +363,85 @@ class ChartManager  {
 				y: 1,
 			}*/
 		},{
-				name: 'Total Snowfall Accumulation',
-				id: 's-snowfallaccum',
-				type: 'area',
-				yAxis: 'y-snowfall',
-				xAxis : 0,
-				data:  [],
-				color: this._chartProps.wxColors.snowfall,
-				tooltip: {
-					valueSuffix: ' in',
-				},
-				//lineWidth: 0,
-				connectNulls: true,
-		},{
-			name: 'High End Snowfall Accum',
-			id: 's-snowfallhighaccum',
-			type: 'area',
+			name: 'Snowfall Accum - High End',
+			id: 's-snowaccumhighranges',
+			type: 'arearange',
 			yAxis: 'y-snowfall',
 			xAxis : 0,
 			data:  [],
-			color: this._chartProps.wxColors.snowfall,
+			color: this._chartProps.wxColors.snowfallhigh,
 			tooltip: {
 				valueSuffix: ' in',
 			},
-			//lineWidth: 0,
+			fillOpacity: 0.5,
+			lineWidth: 2,
 			connectNulls: true,
+			marker: {
+				enabled: false,
+				states: {
+					hover: { enabled: false }
+				}
+			},
 	},{
+			name: 'Snowfall Accum - Low End',
+			id: 's-snowaccumlowranges',
+			type: 'arearange',
+			yAxis: 'y-snowfall',
+			xAxis : 0,
+			data:  [],
+			color: this._chartProps.wxColors.snowfallhigh,
+			tooltip: {
+				valueSuffix: ' in',
+			},
+			fillOpacity: 0.2,
+			lineWidth: 2,
+			connectNulls: true,
+			marker: {
+				enabled: false,
+				states: {
+					hover: { enabled: false }
+				}
+			},
+	},{
+		name: 'Snowfall Accum - Forecast',
+		id: 's-snowaccumfcst',
+		type: 'line',
+		yAxis: 'y-snowfall',
+		xAxis : 0,
+		data:  [],
+		color: this._chartProps.wxColors.snowfall,
+		tooltip: {
+			valueSuffix: ' in',
+		},
+		lineWidth: 3,
+		connectNulls: true,
+		marker: {
+			enabled: false,
+			states: {
+				hover: { enabled: false }
+			}
+		},
+	},/*{
+		name: 'Snowfall Accum - Low End',
+		id: 's-snowaccumlow',
+		type: 'area',
+		yAxis: 'y-snowfall',
+		xAxis : 0,
+		data:  [],
+		color: this._chartProps.wxColors.snowfalllow,
+		tooltip: {
+			valueSuffix: ' in',
+		},
+		fillOpacity: 0.10,
+		//lineWidth: 0,
+		connectNulls: true,
+		marker: {
+			enabled: false,
+			states: {
+				hover: { enabled: false }
+			}
+		}
+	},*/{
 			name: 'Liquid Precip Accumulations',
 			id: 's-qpf12',
 			type: 'area',
@@ -512,7 +565,6 @@ class ChartManager  {
 
 
 	updateChartData(locationForecast,productTime){
-
 		let forecast = locationForecast.forecastTimeGroups[this._timePeriod].forecast;
 
 		//Get list of all times for Temperatures
@@ -520,18 +572,36 @@ class ChartManager  {
 		let windGustSeries = this.createWindSeriesFromAvg(forecast['wind gust (mph)'],forecast['wind dir']);
 		let cloudCoverSeries = this.createCloudCoverSeriesFromAvg(forecast['cloud cover (%)']);
 
-
 		let snow12Series = this.createSeriesFromAvg(forecast['12 hour snow'],'float');
 		let qpf12Series = this.createSeriesFromAvg(forecast['12 hour qpf'],'float');
 		let tempSeries = this.createSeriesFromAvg(forecast['temperature'],'int');
 
-		if (forecast.hasOwnProperty('high end snow')){
-			//let snowHighSeries = this.createSeriesFromAvg(forecast['high end snow'],'float');
+		let snow12AccumSeries = this.createAccumSeriesFromAvg(forecast['12 hour snow'])
+		if (forecast.hasOwnProperty('low end snow')) {
+			let snowLowAccumSeries = this.createAccumSeriesFromAvg(forecast['low end snow'])
+			let snowRangeAccumSeries = [];
+			for (let i=0; i<snowLowAccumSeries.length; i++){
+				snowRangeAccumSeries.push({
+					low : snowLowAccumSeries[i].y,
+					high : snow12AccumSeries[i].y,
+					x : snowLowAccumSeries[i].x
+				})
+			}
+			this._chart.get('s-snowaccumlowranges').setData(snowRangeAccumSeries);
+		}
+		if (forecast.hasOwnProperty('high end snow')) {
 			let snowHighAccumSeries = this.createAccumSeriesFromAvg(forecast['high end snow'])
-			this._chart.get('s-snowfallhighaccum').setData(snowHighAccumSeries);
+			let snowRangeAccumSeries = [];
+			for (let i=0; i<snowHighAccumSeries.length; i++){
+				snowRangeAccumSeries.push({
+					low : snow12AccumSeries[i].y,
+					high : snowHighAccumSeries[i].y,
+					x : snowHighAccumSeries[i].x
+				})
+			}
+			this._chart.get('s-snowaccumhighranges').setData(snowRangeAccumSeries);
 		}
 
-		let snow12AccumSeries = this.createAccumSeriesFromAvg(forecast['12 hour snow'])
 
 		/*let dateSeries = this.createSeriesFromAvg(forecast['temperature'],'date');
 
@@ -541,12 +611,10 @@ class ChartManager  {
 		this._chart.get('s-temperature').setData(tempSeries);
 		this._chart.get('s-wind').setData(windSeries);
 		this._chart.get('s-windgust').setData(windGustSeries);
-		//this._chart.get('s-snowfall').setData(snow12Series);
-		this._chart.get('s-snowfallaccum').setData(snow12AccumSeries);
+		this._chart.get('s-snowfall12').setData(snow12Series);
+		this._chart.get('s-snowaccumfcst').setData(snow12AccumSeries);
 		this._chart.get('s-qpf12').setData(qpf12Series);
 		this._chart.get('s-cloudcover').setData(cloudCoverSeries);
-
-
 
 
 		let elevation = locationForecast.elevation;
@@ -610,10 +678,8 @@ class ChartManager  {
 
 	}
 
-	createAccumSeriesFromAvg(forecastData, initialValue = 0){
-		let accumValue = initialValue;
-		let retVal = []
-		retVal = forecastData.map(l => ({x: l.date.getTime(),y: l.accum}));
+	createAccumSeriesFromAvg(forecastData,){
+		let retVal = forecastData.map(l => ({x: l.date.getTime(),y: l.accum}));
 		return retVal
 	}
 

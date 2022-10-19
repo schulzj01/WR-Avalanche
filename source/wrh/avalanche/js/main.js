@@ -170,33 +170,32 @@ function makeSnowfallSummaryTable(){
 	locations.forEach((locationId,i) => {
 		let location = PARSED_AVG.forecast(locationId);
 		let name = location.name
-		let fcst = location.forecast;
 		let elevation = (location.elevation.low) ? parseInt(location.elevation.low * 1000)
 		                : (location.elevation.high) ? parseInt(location.elevation.high * 1000)
 										: null;
 		if (i == 0){
-			hourLength = location.hourLength;
-			startDateStr = formatDate(location.startDate)
-			endDateStr = formatDate(location.endDate);
-
-			if (fcst.hasOwnProperty('12 hour snow')) { hasSnow = true; }
-			if (fcst.hasOwnProperty('12 hour qpf')) { hasQpf = true; }
-			if (fcst.hasOwnProperty('12 hour ice')) { hasIce = true; }
+			//hourLength = location.forecastTimeGroups[0].hourLength;
+			startDateStr = formatDate(location.forecastTimeGroups[0].startDate)
+			if (location.forecastTimeGroups.length > 1) { endDateStr = formatDate(location.forecastTimeGroups[1].endDate);	}
+			else { endDateStr = formatDate(location.forecastTimeGroups[0].endDate); }
+			if (location.forecastTimeGroups[0].forecast.hasOwnProperty('12 hour snow')) { hasSnow = true; }
+			if (location.forecastTimeGroups[0].forecast.hasOwnProperty('12 hour qpf')) { hasQpf = true; }
+			if (location.forecastTimeGroups[0].forecast.hasOwnProperty('12 hour ice')) { hasIce = true; }
 		}
 
 		let row = tBody.insertRow();
 		row.insertCell().innerHTML = name
 		row.insertCell().innerHTML = elevation
 		if (hasSnow) {
-			let snowAccum = getAccumulation(fcst['12 hour snow'],1);
+			let snowAccum = getAccumulation(location.forecastTimeGroups,'12 hour snow',1)
 			row.insertCell().innerHTML = snowAccum;
 		}
 		if (hasQpf){
-			let qpfAccum = getAccumulation(fcst['12 hour qpf'],2);
+			let qpfAccum =  getAccumulation(location.forecastTimeGroups,'12 hour qpf',2)
 			row.insertCell().innerHTML = qpfAccum;
 		}
 		if (hasIce){
-			let iceAccum = getAccumulation(fcst['12 hour ice'],2);
+			let iceAccum =  getAccumulation(location.forecastTimeGroups,'12 hour ice',2)
 			row.insertCell().innerHTML = iceAccum;
 		}
 	});
@@ -217,7 +216,8 @@ function makeSnowfallSummaryTable(){
 	})
 
 	let header = document.createElement('h4');
-	header.innerHTML = `${hourLength} Hour Precipitation Forecast Summary<br><br><small><small>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}</small></small>`;
+	//header.innerHTML = `${hourLength} Hour Precipitation Forecast Summary<br><br><small><small>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}</small></small>`;
+	header.innerHTML = `Precipitation Forecast Summary<br><br><small><small>Valid: ${startDateStr} &nbsp; - &nbsp; ${endDateStr}</small></small>`;
 	let summaryTableWrapper = document.getElementById('summaryTableWrapper');
 	summaryTableWrapper.appendChild(header);
 	summaryTableWrapper.appendChild(table);
@@ -294,9 +294,11 @@ function sortTable(n,table) {
 	}
 }
 
-function getAccumulation(forecast,precision) {
-	let value = forecast.filter(f => (f.accum))
-	.map(f => f.val )
+function getAccumulation(forecastTimeGroups,key,precision) {
+	let value = forecastTimeGroups.map(ftg => {
+		let we = ftg.forecast[key];
+		return we[we.length-1].accum;
+	})
 	.reduce((a,b) => {
 		return Number(a) + Number(b);
 	},0.0 )
@@ -356,9 +358,9 @@ function populateStaticContent(cwa){
 			throw new Error(response);
 		}
 	})
-	.then(text => { parseAndPopulateAvg(text,cwa)})
+	//.then(text => { parseAndPopulateAvg(text,cwa)})
 	//The above fetch is in leiu of the AVG not in the API.  This should eventually get converted.
-
+	parseAndPopulateAvg(avg.riw,'riw')
 	//Set the correct full product URL.
 	$('#fullProductLink').attr('href',`https://forecast.weather.gov/product.php?site=${cwa}&issuedby=${cwa}&product=AVG&format=txt&version=1&glossary=0`);
 }
