@@ -53,7 +53,7 @@ function parseAndPopulateAvg(avgProducts,cwa){
 		$('#forecastDisplayParserFailure').html(avgToParse);
 		$('#forecastDisplayParserFailure').removeClass('hidden');
 		$('#forecastDisplay').addClass('hidden');
-		throw Error('Parsing of the AVG Product Failed.  This is likely the result of non-standardized AVG Product. Please reach out to wr.web.support@noaa.gov for help resolving this');
+		throw Error(`Parsing of the AVG Product Failed.  This is likely the result of non-standardized AVG Product. Please reach out to wr.web.support@noaa.gov for help resolving this.  Error: ${error}`);
 	}
 
 	//Populate the discussion display, and show the tab if there is a discussion.
