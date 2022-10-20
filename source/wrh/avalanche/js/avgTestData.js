@@ -55,9 +55,9 @@ Wind Gust (mph)                                            16   16   16   17   2
 Precip Prob (%)    80   70   60   60   80   40   30   50   70   50   30   30   50   40   30   30   40   30
 Precip Type         R    R    R    S    R    S    S    S    R    T    S    S    T    T    S    S    T    T
 12 Hour QPF      0.39      0.34
-12 Hour Snow      0.0       0.0
- Low End Snow      MM        MM
- High End Snow    0.0        MM
+12 Hour Snow      0.0       2.0
+ Low End Snow     0.0       1.0
+ High End Snow    0.0       5.0
 Snow Level (kft) 11.4 11.9 11.5 10.9 11.0 11.1 10.8 10.7 10.6 11.2 10.9 10.8 10.9 11.1 10.6  9.8  9.5  9.9
 
 

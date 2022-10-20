@@ -132,12 +132,24 @@ class AVGParser {
 
 				//Allow for both near term and extended AVGs by grouping them separately.
 				let forecastTimeGroups = [];
+				let previousPeriodAccumValues = {
+					'12 hour snow' : 0.0,
+					'12 hour qpf' : 0.00,
+					'low end snow': 0.0,
+					'high end snow' : 0.0,
+				}
 				if (avgFcstParts.length >= 3){
-					let pftg = this.parseForecastTimeGroup(avgFcstParts[1],avgFcstParts[2]);
+					let pftg = this.parseForecastTimeGroup(avgFcstParts[1],avgFcstParts[2],previousPeriodAccumValues);
 					forecastTimeGroups.push(pftg)
 				}
 				if (avgFcstParts.length >= 5){
-					let pftg = this.parseForecastTimeGroup(avgFcstParts[3],avgFcstParts[4]);
+					Object.keys(previousPeriodAccumValues).forEach(weatherType => {
+						if (forecastTimeGroups[0].forecast.hasOwnProperty(weatherType)){
+							let prevWxData = forecastTimeGroups[0].forecast[weatherType];
+							previousPeriodAccumValues[weatherType] = prevWxData[prevWxData.length-1].accum;
+						}
+					});
+					let pftg = this.parseForecastTimeGroup(avgFcstParts[3],avgFcstParts[4],previousPeriodAccumValues);
 					forecastTimeGroups.push(pftg)
 					this._hasExtended = true;
 				}
@@ -157,7 +169,7 @@ class AVGParser {
 	 *
 	 * @returns
 	 */
-	parseForecastTimeGroup(timedatePart,forecastPart){
+	parseForecastTimeGroup(timedatePart,forecastPart,previousPeriodAccumValues){
 		let timesRegex = new RegExp(/^(TIME).*/im);
 		let datesRegex = new RegExp(/^(DATE).*/im);
 
@@ -166,7 +178,7 @@ class AVGParser {
 		let times = this.parseForecastTimes(datePart,timePart)
 
 		let tabularPart = forecastPart.trim();
-		let forecast = this.parseForecastTable(tabularPart,times);
+		let forecast = this.parseForecastTable(tabularPart,times,previousPeriodAccumValues);
 		let rawForecast = [datePart,timePart,tabularPart].join('\n');
 
 		//Total forecast length in hours
@@ -329,7 +341,7 @@ class AVGParser {
 		//Note that the AVG changed so that the first time period may only be 3 characters if it's old or 4 if it's new. Gotta account for this till
 		//everyone is on the latest formatter.
 		let firstStartColumnLength = (allAvailableTimes[0].start <= 18) ? 3 : 4;
-		let defaultLengthBetweenFcst = allAvailableTimes[1].end - allAvailableTimes[0].end;
+ 		let defaultLengthBetweenFcst = allAvailableTimes[1].end - allAvailableTimes[0].end;
 
 		//Loop through the available timestamps, and determine the correct date and character placement of the tabular data.
 		let forecastTimes = [];
@@ -402,7 +414,7 @@ class AVGParser {
 	 * 12 HOUR SNOW                0.0         0.0         0.1         0.2
 	 * SNOW LEVEL (KFT)  2  2  3  3  3  3  3  3  3  3  4  4  4  4  4  4  3
 	 */
-	parseForecastTable(forecastTable,forecastTimes){
+	parseForecastTable(forecastTable,forecastTimes,previousPeriodAccumValues){
 
 		let parsedForecastData = [];
 
@@ -418,7 +430,8 @@ class AVGParser {
 				let parsedForecast = {
 					val : '',
 					date : forecastTimes[i].date,
-					accum : ''
+					accum : '',
+					multiVal : ''
 				};
 				let columnValue = forecastLine.substring(forecastTimes[i].start,forecastTimes[i].end).trim();
 				let columnWidth = forecastTimes[i].end - forecastTimes[i].start;
@@ -429,7 +442,6 @@ class AVGParser {
 					if (weatherType.includes('qpf') || weatherType.includes('ice')) {  regex = new RegExp(/\.[0-9]{2}/); }
 					//Only look for snow  where the data column starts with #.#
 					else if (weatherType.includes('snow')) { regex = new RegExp(/[0-9]{1}\.[0-9]{1}/); }
-
 					if (regex.test(columnValue)) {
 						//If our value is QPF look back an extra couple spaces to get the full string.
 						if (columnWidth <= 4) {
@@ -438,19 +450,20 @@ class AVGParser {
 
 						//We've successfully gotten the value for that column, assign it to our value for this time period.
 						parsedForecast.val = columnValue;
+						parsedForecast.multiVal = columnValue;
 
+						//12 hourly data is look behind not look forward, so search back through previous times and add when needed.
+						let j = 0;
 
-						//12 hourly data is look behind not look forward, so search back through previous times and add when needed. #Deprecated with the move to Prob Snow
-						/*let j = 0;
-						console.log(j)
-						do {
-							console.warn(parsedForecastDataArray[j])//.getTime(), parsedForecastDataArray[j].date.getTime())
-							if (parsedForecast.date.getTime() - parsedForecastDataArray[j].date.getTime()  < 432e5 ) {
-								parsedForecastDataArray[j].val = columnValue;
+						if (i !== 0){
+							do {
+								if (parsedForecast.date.getTime() - parsedForecastDataArray[j].date.getTime()  < 432e5 ) {
+									parsedForecastDataArray[j].multiVal = columnValue;
+								}
+								j++;
 							}
-							j++;
+							while (i > j);
 						}
-						while (i > j);*/
 					}
 				}
 				parsedForecastDataArray.push(parsedForecast);
@@ -459,10 +472,9 @@ class AVGParser {
 		});
 
 		//Interpolate backwards for our accumulating weather elements
-		let interpoatedWeatherTypes = ['12 hour snow','12 hour qpf','low end snow','high end snow']
-		interpoatedWeatherTypes.forEach(weatherType => {
+		Object.keys(previousPeriodAccumValues).forEach(weatherType => {
 			if (parsedForecastData.hasOwnProperty(weatherType)){
-				let accumValue = 0.00;
+				let accumValue = previousPeriodAccumValues[weatherType]
 				let keysToAccum = []
 				for(let i = 0; i < parsedForecastData[weatherType].length; i++){
 					if (parsedForecastData[weatherType][i].val !== '') {
@@ -471,6 +483,8 @@ class AVGParser {
 						keysToAccum.forEach(key => {
 							accumValue = parseFloat(accumValue + parseFloat(finalVal / keysToAccum.length));
 							parsedForecastData[weatherType][key].accum = accumValue;
+							//this._previousPeriodAccumValue[weatherType] = accumValue;
+
 						});
 						keysToAccum = []
 					}

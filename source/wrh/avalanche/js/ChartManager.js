@@ -27,7 +27,6 @@ class ChartManager  {
 			axisTops : [105,255,405,555,710],
 			chartBottomPadding: 80,
 		};
-
 		Highcharts.setOptions({global : { useUTC: false } });
 
 	}
@@ -46,7 +45,7 @@ class ChartManager  {
 			},
 			offset: 0,
 			gridLineWidth: 2,
-			softMax: 40,
+			softMax: 45,
 			softMin: 0,
 			lineWidth: 2,
 			height: this._chartProps.axisHeights[0],
@@ -214,7 +213,7 @@ class ChartManager  {
 			max: 1.1,
 			offset:3,
 			min: 0,
-			lineWidth: 2,
+			lineWidth: 0,
 			height: this._chartProps.axisHeights[4],
 			top: this._chartProps.axisTops[4],
 		},];
@@ -336,32 +335,71 @@ class ChartManager  {
 			states: {
 				hover: { enabled: false }
 			},
-			//fillOpacity: 0.30,
-			//Add in some lines at the top of the columns to make them stand out.
-		/*	dataLabels: {
-				enabled: true,
-				useHTML: true,
-				align: 'right',
-				inside: 'false',
-				padding: 0,
-				verticalAlign:'bottom',
-				allowOverlap: true,
-				crop: false,
-				overflow: 'allow',
-				formatter: function() {
-					let thisPoint = this.point;
-					let width = 0;
-					let prevPointX = 0;
-					if (thisPoint.index !== 0) {
-						prevPointX = thisPoint.series.data[thisPoint.index-1].plotX;
-					}
-					width = Math.ceil(thisPoint.plotX - prevPointX);
-					if (this.y !== 0) {
-						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.snowfall}">&nbsp;</div>`;
-					}
-				},
-				y: 1,
-			}*/
+		},{
+			name: '12 Hour Snowfall - High End',
+			id: 's-snowfallhigh12',
+			type: 'line',
+			yAxis: 'y-snowfall',
+			xAxis : 0,
+			data:  [],
+			color: this._chartProps.wxColors.snowfall,
+			tooltip: {
+				valueSuffix: ' in',
+			},
+			lineWidth: 0,
+			connectNulls: true,
+			//stacking: 'normal',
+			marker: {
+				enabled: false,
+				states: {
+					hover: { enabled: false }
+				}
+			},
+			states: {
+				hover: { enabled: false }
+			},
+		},{
+			name: '12 Hour Snowfall - High End',
+			id: 's-snowfallhigh12',
+			type: 'line',
+			yAxis: 'y-snowfall',
+			xAxis : 0,
+			data:  [],
+			color: this._chartProps.wxColors.snowfall,
+			tooltip: {
+				valueSuffix: ' in',
+			},
+			lineWidth: 0,
+			connectNulls: true,
+			//stacking: 'normal',
+			marker: {
+				enabled: false,
+				states: {
+					hover: { enabled: false }
+				}
+			},
+			states: {
+				hover: { enabled: false }
+			},
+		},{
+			name: 'Snow Accum Forecast',
+			id: 's-snowaccumfcst',
+			type: 'line',
+			yAxis: 'y-snowfall',
+			xAxis : 0,
+			data:  [],
+			color: this._chartProps.wxColors.snowfall,
+			tooltip: {
+				valueSuffix: ' in',
+			},
+			lineWidth: 3,
+			connectNulls: true,
+			marker: {
+				enabled: false,
+				states: {
+					hover: { enabled: false }
+				}
+			},
 		},{
 			name: 'Snowfall Accum - High End',
 			id: 's-snowaccumhighranges',
@@ -382,6 +420,27 @@ class ChartManager  {
 					hover: { enabled: false }
 				}
 			},
+			tooltip: {
+				//valuePrefix: '{point.low} ',
+				//valueSuffix: ' mph',
+				//pointFormat:
+				pointFormatter: function (point) {
+					console.log(this)
+					let high = this.options.high;
+					let low = this.series.chart.get('s-snowaccumlowranges').data[this.index].options.low;
+					console.log(low)
+					return `<span style="color:${this.color}">●</span> Snow Accum Range: <b>${low} - ${high}</b> in<br/>`;
+				}
+
+				/*formatter: function (tooltip) {
+					console.log(this.point)
+					if (this.point.isNull) {
+							return 'Null';
+					}
+					// If not null, use the default formatter
+					return tooltip.defaultFormatter.call(this, tooltip);
+			}*/
+			}
 	},{
 			name: 'Snowfall Accum - Low End',
 			id: 's-snowaccumlowranges',
@@ -402,18 +461,21 @@ class ChartManager  {
 					hover: { enabled: false }
 				}
 			},
+			tooltip: {
+				pointFormat: ''
+			}
 	},{
-		name: 'Snowfall Accum - Forecast',
-		id: 's-snowaccumfcst',
+		name: '12 Hour Liquid Precip Total',
+		id: 's-qpf12',
 		type: 'line',
-		yAxis: 'y-snowfall',
+		yAxis: 'y-qpf',
 		xAxis : 0,
-		data:  [],
-		color: this._chartProps.wxColors.snowfall,
+		data: [],
+		color: this._chartProps.wxColors.qpf,
 		tooltip: {
 			valueSuffix: ' in',
 		},
-		lineWidth: 3,
+		lineWidth: 0,
 		connectNulls: true,
 		marker: {
 			enabled: false,
@@ -421,29 +483,13 @@ class ChartManager  {
 				hover: { enabled: false }
 			}
 		},
-	},/*{
-		name: 'Snowfall Accum - Low End',
-		id: 's-snowaccumlow',
-		type: 'area',
-		yAxis: 'y-snowfall',
-		xAxis : 0,
-		data:  [],
-		color: this._chartProps.wxColors.snowfalllow,
-		tooltip: {
-			valueSuffix: ' in',
+		states: {
+			hover: { enabled: false }
 		},
-		fillOpacity: 0.10,
-		//lineWidth: 0,
-		connectNulls: true,
-		marker: {
-			enabled: false,
-			states: {
-				hover: { enabled: false }
-			}
-		}
-	},*/{
-			name: 'Liquid Precip Accumulations',
-			id: 's-qpf12',
+		fillOpacity: 0.30,
+	},{
+			name: 'Liquid Precip Accum',
+			id: 's-qpfaccum12',
 			type: 'area',
 			yAxis: 'y-qpf',
 			xAxis : 0,
@@ -452,10 +498,8 @@ class ChartManager  {
 			tooltip: {
 				valueSuffix: ' in',
 			},
-			lineWidth: 0,
-			step: 'right',
+			lineWidth: 3,
 			connectNulls: true,
-			stacking: 'normal',
 			marker: {
 				enabled: false,
 				states: {
@@ -466,49 +510,49 @@ class ChartManager  {
 				hover: { enabled: false }
 			},
 			fillOpacity: 0.30,
-			//Add in some lines at the top of the columns to make them stand out.
-			dataLabels: {
-				enabled: true,
-				useHTML: true,
-				align: 'right',
-				inside: 'false',
-				padding: 0,
-				verticalAlign:'bottom',
-				allowOverlap: true,
-				crop: false,
-				overflow: 'allow',
-				formatter: function() {
-					let thisPoint = this.point;
-					let width = 0;
-					let prevPointX = 0;
-					if (thisPoint.index !== 0) {
-						prevPointX = thisPoint.series.data[thisPoint.index-1].plotX;
-					}
-					width = Math.ceil(thisPoint.plotX - prevPointX);
-					if (this.y !== 0) {
-						return `<div style="width:${width}px; border-bottom:2px solid ${_this._chartProps.wxColors.qpf}">&nbsp;</div>`;
-					}
-				},
-				y: 1,
-			}
 		},{
 			name: 'Cloud Cover',
 			id: 's-cloudcover',
-			type: 'column',
+			type: 'line',
 			yAxis: 'y-cloudcover',
 			xAxis : 0,
 			data: [],
 			states: {
-				hover: { brightness : 0 }
+				hover: { enabled: false }
 			},
-			borderWidth: 1,
+			lineWidth: 0,
+			borderWidth: 0,
 			borderColor: 'lightgray',
 			groupPadding: 0,
 			pointPadding: 0,
+			dataLabels: {
+				enabled: true,
+				padding:0,
+				allowOverlap: true,
+				useHTML: true,
+				crop: false,
+				overflow: 'allow',
+				formatter: function(){
+					let pct = parseInt(this.point.options.custom.pct);
+					let icon = 'missing'
+					if (pct < 25) { icon = 'sunny'; }
+					else if (pct < 65) { icon = 'mixed'; }
+					else if (pct <= 100) { icon = 'cloudy'; }
+					return `<div><img width="30px"src="/images/wrh/avalanche/${icon}.png"></img></div>`
+				},
+				//y: 0
+			},
+			marker: {
+				enabled: false,
+				states: {
+					hover: {
+						enabled: false,
+					}
+				}
+			},
 			tooltip: {
 				pointFormat: '<span style="color:{point.color}">●</span> {series.name}: <b>{point.custom.pct}</b> %<br/>',
 			}
-
 		}]
 
 		const chartConfig = {
@@ -572,13 +616,15 @@ class ChartManager  {
 		let windGustSeries = this.createWindSeriesFromAvg(forecast['wind gust (mph)'],forecast['wind dir']);
 		let cloudCoverSeries = this.createCloudCoverSeriesFromAvg(forecast['cloud cover (%)']);
 
-		let snow12Series = this.createSeriesFromAvg(forecast['12 hour snow'],'float');
-		let qpf12Series = this.createSeriesFromAvg(forecast['12 hour qpf'],'float');
+		let snow12Series = this.createSeriesFromAvg(forecast['12 hour snow'],'float',1,'multiVal');
+		let qpf12Series = this.createSeriesFromAvg(forecast['12 hour qpf'],'float',2,'multiVal');
+		let qpfAccum12Series = this.createSeriesFromAvg(forecast['12 hour qpf'],'float',2,'accum');
 		let tempSeries = this.createSeriesFromAvg(forecast['temperature'],'int');
 
-		let snow12AccumSeries = this.createAccumSeriesFromAvg(forecast['12 hour snow'])
+		let snow12AccumSeries = this.createSeriesFromAvg(forecast['12 hour snow'],'float',1,'accum')
+
 		if (forecast.hasOwnProperty('low end snow')) {
-			let snowLowAccumSeries = this.createAccumSeriesFromAvg(forecast['low end snow'])
+			let snowLowAccumSeries = this.createSeriesFromAvg(forecast['low end snow'],'float',1,'accum')
 			let snowRangeAccumSeries = [];
 			for (let i=0; i<snowLowAccumSeries.length; i++){
 				snowRangeAccumSeries.push({
@@ -590,7 +636,7 @@ class ChartManager  {
 			this._chart.get('s-snowaccumlowranges').setData(snowRangeAccumSeries);
 		}
 		if (forecast.hasOwnProperty('high end snow')) {
-			let snowHighAccumSeries = this.createAccumSeriesFromAvg(forecast['high end snow'])
+			let snowHighAccumSeries = this.createSeriesFromAvg(forecast['high end snow'],'float',1,'accum')
 			let snowRangeAccumSeries = [];
 			for (let i=0; i<snowHighAccumSeries.length; i++){
 				snowRangeAccumSeries.push({
@@ -599,6 +645,7 @@ class ChartManager  {
 					x : snowHighAccumSeries[i].x
 				})
 			}
+
 			this._chart.get('s-snowaccumhighranges').setData(snowRangeAccumSeries);
 		}
 
@@ -613,12 +660,12 @@ class ChartManager  {
 		this._chart.get('s-windgust').setData(windGustSeries);
 		this._chart.get('s-snowfall12').setData(snow12Series);
 		this._chart.get('s-snowaccumfcst').setData(snow12AccumSeries);
+		this._chart.get('s-qpfaccum12').setData(qpfAccum12Series);
 		this._chart.get('s-qpf12').setData(qpf12Series);
 		this._chart.get('s-cloudcover').setData(cloudCoverSeries);
 
 
 		let elevation = locationForecast.elevation;
-
 		//If we have snow level in our product, edit some of the chart to include things like elevation or elevation ranges.
 		if (forecast.hasOwnProperty('snow level (kft)')) {
 			let snowLevelSeries = this.createSeriesFromAvg(forecast['snow level (kft)'],'float');
@@ -678,17 +725,12 @@ class ChartManager  {
 
 	}
 
-	createAccumSeriesFromAvg(forecastData,){
-		let retVal = forecastData.map(l => ({x: l.date.getTime(),y: l.accum}));
-		return retVal
-	}
-
-	createSeriesFromAvg(forecastData,type){
+	createSeriesFromAvg(forecastData,type,precision = 1,key = 'val'){
 		let retVal = [];
-		if (type == 'int') { retVal = forecastData.map(l => ({x: l.date.getTime(), y: parseInt(l.val)})); }
-		else if (type == 'float') { retVal = forecastData.map(l => ({x: l.date.getTime(), y: parseFloat(l.val)}) ); }
+		if (type == 'int') { retVal = forecastData.map(l => ({x: l.date.getTime(), y: parseInt(l[key])})); }
+		else if (type == 'float') { retVal = forecastData.map(l => ({x: l.date.getTime(), y: Number(parseFloat(l[key]).toFixed(precision)) })); }
 		else if (type == 'date') { retVal = forecastData.map(l => l.date.getTime()); }
-		else { retVal = forecastData.map(l => ({x: l.date.getTime(),y: l.val})); }
+		else { retVal = forecastData.map(l => ({x: l.date.getTime(),y: l[key]})); }
 		return retVal;
 	}
 
