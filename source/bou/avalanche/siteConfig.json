@@ -1,0 +1,359 @@
+{"wfo": "BOU",
+  "MAPPING":{
+    "centerLat":39.5301,
+    "centerLon":-106.75,
+    "mapZoom":6
+  },
+  "AVG_Sites": [
+    {
+      "location":"Mt. Farwell",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.8526,40.8324 ]
+      }
+    },
+    {
+      "location":"Trappers Peak",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.2507,39.9417  ]
+      }
+    },
+    {
+      "location":"Mt. Werner",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.7399,40.4561  ]
+      }
+    },
+    {
+      "location":"Park Range",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.6718,40.7270  ]
+      }
+    },
+    {
+      "location":"Rabbit Ears Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.6117,40.3847  ]
+      }
+    },
+    {
+      "location":"Cameron Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.8990,40.5120  ]
+      }
+    },
+    {
+      "location":"Bear Lake",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.6483,40.3132  ]
+      }
+    },
+    {
+      "location":"Berthoud Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.7775,39.7985  ]
+      }
+    },
+    {
+      "location":"Loveland Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.8792,39.6636  ]
+      }
+    },
+    {
+      "location":"Eisenhower Tunnel",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.9292,39.6778  ]
+      }
+    },
+    {
+      "location":"Gravel Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.9955,40.2750  ]
+      }
+    },
+    {
+      "location":"Vail Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.2170,39.5310  ]
+      }
+    },
+    {
+      "location":"Breckenridge Peak 8",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.1026,39.4727  ]
+      }
+    },
+    {
+      "location":"Red Benchmark",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.3014,39.6014  ]
+      }
+    },
+    {
+      "location":"Elliot Ridge",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.4102,39.8229  ]
+      }
+    },
+    {
+      "location":"Battle Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.3922,39.5489  ]
+      }
+    },
+    {
+      "location":"Snowmass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.9491,39.1729  ]
+      }
+    },
+    {
+      "location":"Chair Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.2821,39.0580  ]
+      }
+    },
+    {
+      "location":"Mt. Yeckel",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.6998,39.2869  ]
+      }
+    },
+    {
+      "location":"Schofield Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.0469,39.0149  ]
+      }
+    },
+    {
+      "location":"Red Table Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.9028,39.4442  ]
+      }
+    },
+    {
+      "location":"Galena Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.4322,39.3150  ]
+      }
+    },
+    {
+      "location":"Independence Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.5630,39.1090  ]
+      }
+    },
+    {
+      "location":"Fremont Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.1880,39.3798  ]
+      }
+    },
+    {
+      "location":"Cottonwood Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.4090,38.8280  ]
+      }
+    },
+    {
+      "location":"Monarch Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.3250,38.4970  ]
+      }
+    },
+    {
+      "location":"Star Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.7955,38.9680  ]
+      }
+    },
+    {
+      "location":"Crested Butte Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.9434,38.8833  ]
+      }
+    },
+    {
+      "location":"Kebler Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.1012,38.9069  ]
+      }
+    },
+    {
+      "location":"West Elk Peak",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.1993,38.7181  ]
+      }
+    },
+    {
+      "location":"Fairview Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.5367,38.6833  ]
+      }
+    },
+    {
+      "location":"Skyway Point",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -108.0669,39.0457  ]
+      }
+    },
+    {
+      "location":"Spruce Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.5324,39.1972  ]
+      }
+    },
+    {
+      "location":"Slumgullion Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.2113,37.9873  ]
+      }
+    },
+    {
+      "location":"Red Mountain Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.7110,37.8990  ]
+      }
+    },
+    {
+      "location":"San Luis Peak",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.9316,37.9869  ]
+      }
+    },
+    {
+      "location":"Monument",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.6589,37.9682  ]
+      }
+    },
+    {
+      "location":"Lizard Head Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.9084,37.8111  ]
+      }
+    },
+    {
+      "location":"Expectation Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -108.0634,37.6945  ]
+      }
+    },
+    {
+      "location":"Sunshine Peak",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.4255,37.9229  ]
+      }
+    },
+    {
+      "location":"Wolf Creek Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.7983,37.4825  ]
+      }
+    },
+    {
+      "location":"Cumbres Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -106.4510,37.0200  ]
+      }
+    },
+    {
+      "location":"Coal Bank Pass",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.7680,37.7036  ]
+      }
+    },
+    {
+      "location":"Columbus Basin",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -108.0200,37.4400  ]
+      }
+    },
+    {
+      "location":"Middle Creek Snotel",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.0433,37.6167  ]
+      }
+    },
+    {
+      "location":"Middle Mountain",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -107.5079,37.4699  ]
+      }
+    },
+    {
+      "location":"Blanca",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.4858,37.5772  ]
+      }
+    },
+    {
+      "location":"Bushnell Peak",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.8894,38.3414  ]
+      }
+    },
+    {
+      "location":"South Colony",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.5378,37.9680  ]
+      }
+    },
+    {
+      "location":"Culebra Peak",
+      "geometry": {
+        "type": "GridPoint",
+        "coordinates": [ -105.7220,38.1920  ]
+      }
+    }
+  ]
+}
