@@ -210,8 +210,8 @@ class ChartManager  {
 			showLastLabel: false,
 			gridLineWidth: 0,
 			endOnTick: false,
-			max: 1.1,
-			offset:3,
+			max: 2,
+			offset:0,
 			min: 0,
 			lineWidth: 0,
 			height: this._chartProps.axisHeights[4],
@@ -400,6 +400,27 @@ class ChartManager  {
 					hover: { enabled: false }
 				}
 			},
+			dataLabels: {
+				enabled: true,
+				padding:0,
+				allowOverlap: true,
+				useHTML: true,
+				crop: false,
+				color: '#666666',
+				overflow: 'allow',
+				verticalAlign: 'top',
+			//	formatter: function(){
+			//		console.log(this.point)
+			//		let pct = parseInt(this.point.options.custom.pct);
+/*					let icon = 'missing'
+					if (pct < 20) { icon = 'sunny'; }
+					else if (pct < 40) { icon = 'partly'; }
+					else if (pct < 70) { icon = 'mostly'; }
+					else if (pct <= 100) { icon = 'cloudy'; }
+					return `<div><img width="30" height="30" src="/images/wrh/avalanche/${icon}.png"></img></div>`*/
+			//	},
+				//y: 0
+			},
 		},{
 			name: 'Snowfall Accum - High End',
 			id: 's-snowaccumhighranges',
@@ -425,10 +446,8 @@ class ChartManager  {
 				//valueSuffix: ' mph',
 				//pointFormat:
 				pointFormatter: function (point) {
-					console.log(this)
 					let high = this.options.high;
 					let low = this.series.chart.get('s-snowaccumlowranges').data[this.index].options.low;
-					console.log(low)
 					return `<span style="color:${this.color}">●</span> Snow Accum Range: <b>${low} - ${high}</b> in<br/>`;
 				}
 
@@ -510,6 +529,27 @@ class ChartManager  {
 				hover: { enabled: false }
 			},
 			fillOpacity: 0.30,
+			dataLabels: {
+				enabled: true,
+				padding:0,
+				allowOverlap: true,
+				useHTML: true,
+				crop: false,
+				color: '#666666',
+				overflow: 'allow',
+				verticalAlign: 'top',
+			//	formatter: function(){
+			//		console.log(this.point)
+			//		let pct = parseInt(this.point.options.custom.pct);
+/*					let icon = 'missing'
+					if (pct < 20) { icon = 'sunny'; }
+					else if (pct < 40) { icon = 'partly'; }
+					else if (pct < 70) { icon = 'mostly'; }
+					else if (pct <= 100) { icon = 'cloudy'; }
+					return `<div><img width="30" height="30" src="/images/wrh/avalanche/${icon}.png"></img></div>`*/
+			//	},
+				//y: 0
+			},
 		},{
 			name: 'Cloud Cover',
 			id: 's-cloudcover',
@@ -532,13 +572,15 @@ class ChartManager  {
 				useHTML: true,
 				crop: false,
 				overflow: 'allow',
+				verticalAlign: 'middle',
 				formatter: function(){
 					let pct = parseInt(this.point.options.custom.pct);
 					let icon = 'missing'
-					if (pct < 25) { icon = 'sunny'; }
-					else if (pct < 65) { icon = 'mixed'; }
+					if (pct < 20) { icon = 'sunny'; }
+					else if (pct < 40) { icon = 'partly'; }
+					else if (pct < 70) { icon = 'mostly'; }
 					else if (pct <= 100) { icon = 'cloudy'; }
-					return `<div><img width="30px"src="/images/wrh/avalanche/${icon}.png"></img></div>`
+					return `<div><img width="30" height="30" src="/images/wrh/avalanche/${icon}.png"></img></div>`
 				},
 				//y: 0
 			},
@@ -706,7 +748,7 @@ class ChartManager  {
 		}
 
 		//Update the crosshair to match the actual width of the columns
-		this._chart.get('x-main').crosshair.width = this._chart.get('s-cloudcover').barW;
+		//this._chart.get('x-main').crosshair.width = this._chart.get('s-cloudcover').barW;
 
 		//Update the chart
 		this._chart.get('y-snowlevel').update();
