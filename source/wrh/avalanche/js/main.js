@@ -73,6 +73,10 @@ function parseAndPopulateAvg(avgProducts,cwa){
 	//Initialize the graphical forecast charts
 	CHART_MANAGERS = [new ChartManager(0)]
 	if (PARSED_AVG.hasExtended()) { CHART_MANAGERS.push(new ChartManager(1)); }
+	else {
+		$('#forecastTabularTabContent2').hide();
+		$('#forecastGraphicalTabContent2').hide();
+	}
 
 	//Add the locations to the select menu, and populate the first location
 	initializeSelectMenu();
@@ -145,6 +149,7 @@ function initializeSelectMenu(){
 	let locations = PARSED_AVG.locations;
 	$selectMenu = $('#forecastPointSelectMenu');
 	locations.forEach( loc => {
+		console.log(loc);
 		let fcst = PARSED_AVG.forecast(loc);
 		let elevationTitleText = (fcst.elevation.text !== '') ? `(${fcst.elevation.text})` : '';
 		let $option = $('<option>', {
@@ -358,9 +363,9 @@ function populateStaticContent(cwa){
 			throw new Error(response);
 		}
 	})
-	//.then(text => { parseAndPopulateAvg(text,cwa)})
+	.then(text => { parseAndPopulateAvg(text,cwa)})
 	//The above fetch is in leiu of the AVG not in the API.  This should eventually get converted.
-	parseAndPopulateAvg(avg.riw,'riw')
+	//parseAndPopulateAvg(avg.riw,'riw')
 	//Set the correct full product URL.
 	$('#fullProductLink').attr('href',`https://forecast.weather.gov/product.php?site=${cwa}&issuedby=${cwa}&product=AVG&format=txt&version=1&glossary=0`);
 }
@@ -408,8 +413,8 @@ pageHtml.staticContent= `
 		<div class="c-tab content1">
 			<div id="forecastTabularTabContent" class="c-tab__content">
 				<div class="c-tabs-nav">
-					<div id="forecastAlertsTab" class="c-tabs-nav__link navlink2 is-active"><span>Near Term Forecast</span></div>
-					<div id="forecastTabularTab" class="c-tabs-nav__link navlink2"><span>Extended Forecast</span></div>
+					<div id="forecastTabularTabContent1" class="c-tabs-nav__link navlink2 is-active"><span>Near Term Forecast</span></div>
+					<div id="forecastTabularTabContent2" class="c-tabs-nav__link navlink2"><span>Extended Forecast</span></div>
 				</div>
 				<div class="c-tab content2 is-active">
 					<div class="c-tab__content">
@@ -432,8 +437,8 @@ pageHtml.staticContent= `
 		<div class="c-tab content1">
 			<div id="forecastGraphicalTabContent" class="c-tab__content">
 				<div class="c-tabs-nav">
-					<div id="forecastAlertsTab" class="c-tabs-nav__link navlink3 is-active"><span>Near Term Forecast</span></div>
-					<div id="forecastTabularTab" class="c-tabs-nav__link navlink3"><span>Extended Forecast</span></div>
+					<div id="forecastGraphicalTabContent1" class="c-tabs-nav__link navlink3 is-active"><span>Near Term Forecast</span></div>
+					<div id="forecastGraphicalTabContent2" class="c-tabs-nav__link navlink3"><span>Extended Forecast</span></div>
 				</div>
 				<div class="c-tab content3 is-active">
 					<div class="c-tab__content">
