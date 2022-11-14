@@ -84,7 +84,7 @@ class AVGParser {
 		let min = timeParts[0].substr(-2);
 		//Change Time to 24 hour time;
 		let hour24 = hour;
-		if (timeParts[1] == 'PM') { hour24 = String(parseInt(hour)+12) }
+		if (timeParts[1] == 'PM' && parseInt(hour) !== 12 ) { hour24 = String(parseInt(hour)+12) }
 
 		//Create a date using our string.
 		//let productTime = new Date('Feb 28 2013 19:00:00 EST');
