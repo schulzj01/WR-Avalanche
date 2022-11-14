@@ -105,7 +105,17 @@ function populateAlerts(alerts,locationId){
 			let $div = $('<div>')
 			$div.addClass('alertSection');
 			$div.append(`<h3>${alert.event}</h3>`);
-			$div.append(alert.description.replace(/(?:\r\n|\r|\n)/g,"<br>&nbsp;"))
+			console.log(alert.description)
+			console.dir(alert.description)
+			console.log(String.raw`${alert.description}`)
+			let content = '<p>'
+			content+= alert.description.replace(/(?:\r\n\n|\r\r|\n\n)/g,"<p>");
+			console.log(content)
+			boldText = ['* WHAT...','* WHERE...', '* WHEN...','* IMPACTS...']
+			boldText.forEach(text => {
+				content = content.replace(text,`<strong>${text}</strong>`)
+			})
+			$div.append(content)
 			alertHtmls.push($div);
 		});
 		$('#forecastAlertsTabContent').html(alertHtmls)

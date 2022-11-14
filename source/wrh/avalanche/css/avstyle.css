@@ -60,9 +60,14 @@ h4 {
 	text-align:left;
 }
 .alertSection h3 {
-	font-size: 20px;
+	font-size: 25px;
 	color:#ff2121;
 	text-align:center;
+}
+.alertSection p {
+	font-size:16px;
+	background-color:#ffffff;
+	margin: 25px;
 }
 
 .preFormatted {
