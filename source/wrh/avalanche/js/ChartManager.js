@@ -394,11 +394,16 @@ class ChartManager  {
 			},
 			lineWidth: 3,
 			connectNulls: true,
-			marker: {
+			//We use a huge enabled threshold rather than disabling markers otherwise HC will hide our datalabels on mouseover
+			marker: { enabledThreshold: 20 },
+			/*marker: {
 				enabled: false,
 				states: {
 					hover: { enabled: false }
 				}
+			},*/
+			states: {
+				hover: { enabled: false }
 			},
 			dataLabels: {
 				enabled: true,
@@ -519,12 +524,14 @@ class ChartManager  {
 			},
 			lineWidth: 3,
 			connectNulls: true,
-			marker: {
+			//We use a huge enabled threshold rather than disabling markers otherwise HC will hide our datalabels on mouseover
+			marker: { enabledThreshold: 20 },
+			/*marker: {
 				enabled: false,
 				states: {
-					hover: { enabled: false }
+					//hover: { enabled: false }
 				}
-			},
+			},*/
 			states: {
 				hover: { enabled: false }
 			},
@@ -584,14 +591,14 @@ class ChartManager  {
 				},
 				//y: 0
 			},
-			marker: {
+			/*marker: {
 				enabled: false,
 				states: {
 					hover: {
 						enabled: false,
 					}
 				}
-			},
+			},*/
 			tooltip: {
 				pointFormat: '<span style="color:{point.color}">●</span> {series.name}: <b>{point.custom.pct}</b> %<br/>',
 			}
@@ -626,6 +633,7 @@ class ChartManager  {
 				followTouchMove: true,
 				useHTML: true,
 				padding:0,
+
 				//stickOnContact: true,
 			},
 			series : series,
