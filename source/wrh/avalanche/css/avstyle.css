@@ -38,12 +38,12 @@ h4 {
 	background-color:	#f2f5ff;
 	padding: 0.75em;
 }
-.c-tabs .c-tabs-nav .activeAlerts {
+.c-tabs-nav__link.activeAlerts {
 	color:#ff2121;
 	background-color: #FFFFFF;
 	border-bottom: 1px solid #ff2121;
 }
-.c-tabs .c-tabs-nav .is-active.activeAlerts  {
+.is-active.activeAlerts  {
 	color: #FFFFFF;
 	background-color: #ff2121;
 }
@@ -53,7 +53,7 @@ h4 {
 
 .alertSection {
 	margin: 0 auto;
-	font-size:15px;
+	font-size:16px;
 	background-color:#ffffff;
 	padding: 55px;
 	margin: 25px;
