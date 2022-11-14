@@ -633,7 +633,7 @@ class ChartManager  {
 				followTouchMove: true,
 				useHTML: true,
 				padding:0,
-
+				backgroundColor: '#FFFFFF'
 				//stickOnContact: true,
 			},
 			series : series,
