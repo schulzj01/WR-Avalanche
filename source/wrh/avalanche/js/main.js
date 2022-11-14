@@ -367,7 +367,7 @@ function populateStaticContent(cwa){
 	//The above fetch is in leiu of the AVG not in the API.  This should eventually get converted.
 	//parseAndPopulateAvg(avg.riw,'riw')
 	//Set the correct full product URL.
-	$('#fullProductLink').attr('href',`https://forecast.weather.gov/product.php?site=${cwa}&issuedby=${cwa}&product=AVG&format=txt&version=1&glossary=0`);
+	$('.fullProductLink').attr('href',`https://forecast.weather.gov/product.php?site=${cwa}&issuedby=${cwa}&product=AVG&format=txt&version=1&glossary=0`);
 }
 
 
@@ -380,14 +380,16 @@ function populateStaticContent(cwa){
 const pageHtml = {};
 pageHtml.staticContent= `
 <div id="forecastDisplay" class="center-content text-center">
-	<h2 style="margin-bottom:30px; color:firebrick;">** Experimental Webpage - For Evaluation Only ** <br><br><a href="https://www.surveymonkey.com/r/wfoavalanchewebpages2022-2023">Provide Feedback on this Webpage</a></h2>
+	<h2 style="margin-bottom:0px; color:firebrick;">** Experimental Webpage (For Evaluation Only) ** <a href="https://www.surveymonkey.com/r/wfoavalanchewebpages2022-2023">Provide Feedback</a></h2>
 	<div id="introductionText">
-		<p style="text-align:left">
-			The following page is designed to provide snow safety officials with a weather forecast over specific areas of backcountry recreation interest.
-			This forecast is not meant to be indicative of actual snow and avalanche conditions in the backcountry.  For the latest official Avalanche Danger Rating and Avalanche Forecasts for your area, visit <a href="https://www.avalanche.org">Avalanche.org</a>.
+		<p style="text-align:left;">
+			The following page is designed to provide snow safety officials with a weather forecast over specific areas of backcountry recreation interest. This forecast is not meant to be indicative of actual snow and avalanche conditions in the backcountry. <a href="https://nws.weather.gov/products/PDD/PDD_ExpWFOAvalancheWebpages_2022-2023.pdf" target="_blank">More information.</a>
 		</p>
 		<br>
-		<a alt="Avalanche.org" title="Avalanche.org" href="https://www.avalanche.org"><img width="250" src="/images/wrh/avalanche/avy-org-logo-dark.png"></a></p>
+		<div>
+			<a alt="Avalanche.org" title="Avalanche.org" href="https://www.avalanche.org"><img width="350" src="/images/wrh/avalanche/avy-org-logo-dark.png"></a><br>
+			<small>For the latest official Avalanche Danger Rating and Avalanche Forecasts for your area, visit <a href="https://www.avalanche.org">Avalanche.org</a></small>
+		</div>
 	</div>
 
 
@@ -418,20 +420,25 @@ pageHtml.staticContent= `
 				</div>
 				<div class="c-tab content2 is-active">
 					<div class="c-tab__content">
+						<small>
+							<a class="fullProductLink" target="_blank" href="">
+								Forecast Issued: <span class="productTime"></span>
+							</a>
+						</small>
 						<div id="forecastTable0" class="preFormatted"></div>
 					</div>
 				</div>
 				<div class="c-tab content2">
 					<div class="c-tab__content">
+						<small>
+							<a class="fullProductLink" target="_blank" href="">
+								Forecast Issued: <span class="productTime"></span>
+							</a>
+						</small>
 						<div id="forecastTable1" class="preFormatted"></div>
 					</div>
 				</div>
-				<br>
-				<small>
-					<a id="fullProductLink" target="_blank" href="">
-						Forecast Issued: <span class="productTime"></span>
-					</a>
-				</small>
+					<small><span style="color:#00A3E3;">&#9432;</span> <a target="_blank" href="/media/wrh/avalanche/AVG_Guide.pdf"> How to decode this Avalanche Weather Guidance product</a></small>
 			</div>
 		</div>
 		<div class="c-tab content1">
