@@ -105,12 +105,8 @@ function populateAlerts(alerts,locationId){
 			let $div = $('<div>')
 			$div.addClass('alertSection');
 			$div.append(`<h3>${alert.event}</h3>`);
-			console.log(alert.description)
-			console.dir(alert.description)
-			console.log(String.raw`${alert.description}`)
 			let content = '<p>'
 			content+= alert.description.replace(/(?:\r\n\n|\r\r|\n\n)/g,"<p>");
-			console.log(content)
 			boldText = ['* WHAT...','* WHERE...', '* WHEN...','* IMPACTS...']
 			boldText.forEach(text => {
 				content = content.replace(text,`<strong>${text}</strong>`)
@@ -140,7 +136,6 @@ function populateForecast(locationId){
 
 	let locationForecast = PARSED_AVG.forecast(locationId);
 	locationForecast.forecastTimeGroups.forEach((forecastTimeGroup,i) => {
-		//console.log(locationForecast)
 		let tabularRawFcst = forecastTimeGroup.raw;
 		let tabularHtml = `<pre>${tabularRawFcst}</pre>`
 		$(`#forecastTable${i}`).html(tabularHtml)
@@ -159,7 +154,6 @@ function initializeSelectMenu(){
 	let locations = PARSED_AVG.locations;
 	$selectMenu = $('#forecastPointSelectMenu');
 	locations.forEach( loc => {
-		console.log(loc);
 		let fcst = PARSED_AVG.forecast(loc);
 		let elevationTitleText = (fcst.elevation.text !== '') ? `(${fcst.elevation.text})` : '';
 		let $option = $('<option>', {
