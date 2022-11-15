@@ -244,7 +244,7 @@ class ChartManager  {
 			tickInterval: 864e5,
 			labels: {
 				enabled: true,
-				format: '{value:%A, %B %e}'
+				format: '{value:%A, %b %e}'
 			},
 			lineWidth: 2,
 			minPadding: 0,
