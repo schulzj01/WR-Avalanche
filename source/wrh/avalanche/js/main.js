@@ -107,7 +107,7 @@ function populateAlerts(alerts,locationId){
 			$div.append(`<h3>${alert.event}</h3>`);
 			let content = '<p>'
 			content+= alert.description.replace(/(?:\r\n\n|\r\r|\n\n)/g,"<p>");
-			boldText = ['* WHAT...','* WHERE...', '* WHEN...','* IMPACTS...']
+			boldText = ['* WHAT...','* WHERE...', '* WHEN...','* IMPACTS...','* ADDITIONAL DETAILS...']
 			boldText.forEach(text => {
 				content = content.replace(text,`<strong>${text}</strong>`)
 			})
