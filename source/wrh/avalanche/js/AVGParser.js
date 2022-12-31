@@ -287,9 +287,10 @@ class AVGParser {
 	 */
 	parseForecastTimes(datePart,timePart){
 		//Find all listed dates in the date string and convert to an array.
-		let dPosRegex = new RegExp(/([A-Z]+ [0-9]{1,2}\/[0-9]{1,2})/ig);
+		let dPosRegex = new RegExp(/([A-Z]+ [0-9]{1,2}\/[0-9]{1,2}\/[0-9]{1,2})/ig);
 
 		let dateMatches = [...datePart.matchAll(dPosRegex)];
+
 
 		//This is going to be a bit hokey, but we're going to set previous and future dates in the dateMatches, essentially adding creating where
 		//they "should" be in the string index if they were in fact there.  We'll find out the length of the date based on character values between
@@ -384,12 +385,14 @@ class AVGParser {
 	 */
 	convertTextDateToObject(dateText,dateOffset = 0){
 		let datestamp = dateText.split(' ')[1];
-		let mon = datestamp.split('/')[0];
-		let day = datestamp.split('/')[1];
+		let datestampParts = datestamp.split('/');
+		let mon = datestampParts[0];
+		let day = datestampParts[1];
 		let now = new Date();
+		let fullYear = (datestampParts.length == 3) ? `20${datestampParts[2]}` :  now.getFullYear();
 		//Need to account for a year change here.
 		let tzOffset = this._productTime.tzOffset;
-		let d = new Date(`${now.getFullYear()}-${mon}-${day}T00:00:00.000-0${tzOffset}:00`)
+		let d = new Date(`${fullYear}-${mon}-${day}T00:00:00.000-0${tzOffset}:00`)
 		let dOff = new Date(+d);
 		dOff.setDate(dOff.getDate()+dateOffset);
 		return dOff;
