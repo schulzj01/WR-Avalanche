@@ -42,6 +42,12 @@
 				"coordinates": [ -115.69,43.96 ]
 			}
 		},{
+			"location":"Trinity Mountain - Boise Mountains",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.43,43.60	]
+			}
+		},{
 			"location":"Muldoon Summit - Little Wood",
 			"geometry": {
 				"type": "GridPoint",
