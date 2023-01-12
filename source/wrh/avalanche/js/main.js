@@ -304,14 +304,13 @@ function sortTable(n,table) {
 }
 
 function getAccumulation(forecastTimeGroups,key,precision) {
-	let value = forecastTimeGroups.map(ftg => {
+	let accumVal = 0;
+	forecastTimeGroups.forEach(ftg => {
 		let we = ftg.forecast[key];
-		return we[we.length-1].accum;
-	})
-	.reduce((a,b) => {
-		return Number(a) + Number(b);
-	},0.0 )
-	return value.toFixed(precision);
+		let lastAccum = we.slice().reverse().find(w => typeof w.accum == "number");
+		if (lastAccum) { accumVal = lastAccum.accum; }
+	});
+	return accumVal.toFixed(precision);
 }
 
 function formatDate(myDate){
