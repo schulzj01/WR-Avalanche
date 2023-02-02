@@ -114,6 +114,9 @@ function getWwa(WWA,WFO) {
 			let sortedWWAFeatures = WWA.features.sort((featA,featB) => queryEventTypes.indexOf(featA.properties.event) - queryEventTypes.indexOf(featB.properties.event));
 			sortedWWAFeatures.forEach(feat => {
 				let props = feat.properties;
+				let UGCs = (props?.geocode?.UGC) ? props?.geocode?.UGC : []
+				//We never want to show Attu island (Western Aleutians) out there in the Bearing Sea on the Anchorage maps
+				if (UGCs.includes('AKZ191')) { return; }
 				if (props.event == 'Avalanche Advisory' && props.description.toLowerCase().replace(/(?:\r\n|\r|\n)/g," ").includes('issued an avalanche warning')) { props.event = 'Avalanche Warning'; }
 				let Phenom = (props.event);
 				let ZONES = props.affectedZones.length;
