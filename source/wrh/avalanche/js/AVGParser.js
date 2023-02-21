@@ -342,11 +342,11 @@ class AVGParser {
 		//Note that the AVG changed so that the first time period may only be 3 characters if it's old or 4 if it's new. Gotta account for this till
 		//everyone is on the latest formatter.
 		let firstStartColumnLength = (allAvailableTimes[0].start <= 18) ? 3 : 4;
- 		let defaultLengthBetweenFcst = allAvailableTimes[1].end - allAvailableTimes[0].end;
+		let defaultLengthBetweenFcst = allAvailableTimes[1].end - allAvailableTimes[0].end;
 
 		//Loop through the available timestamps, and determine the correct date and character placement of the tabular data.
 		let forecastTimes = [];
-+
+
 		allAvailableTimes.forEach((availableTime,i) => {
 			let dMatchIndex = allAvailableDates.findIndex( availableDate => {
 				if ((availableDate.start <= availableTime.start) && (availableDate.end > availableTime.end)) { return true; }
@@ -438,7 +438,7 @@ class AVGParser {
 				};
 				let columnValue = forecastLine.substring(forecastTimes[i].start,forecastTimes[i].end).trim();
 				let columnWidth = forecastTimes[i].end - forecastTimes[i].start;
-				if (!weatherType.includes('12 hour') && !weatherType.includes('snow')){ parsedForecast.val = columnValue; }
+				if (!weatherType.includes('12 hour') && !weatherType.includes('end snow')){ parsedForecast.val = columnValue; }
 				else  {
 					let regex;
 					//Only look for ice and QPF where the data column starts with .## Then we know we have a start to 12 hour block.
