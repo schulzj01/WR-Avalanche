@@ -38,14 +38,14 @@
 		const cwa = 'BOU';
 		//End Configuration Options
 
-		window.onload = function() {
+		window.addEventListener('DOMContentLoaded', () => {
 			//Nationally Standardized Avalanche Weather Content.  Do not edit between these lines.
 			populateStaticContent(cwa);
 			//Nationally Standardized Avalanche Weather Content.  Do not edit between these lines.
 
 			//Local offices can include office based content including it here
 			//$('#officeContent').html('Here is my local avalanche content')
-		}
+		});
 	</script>
 <!-- TODO the body styles and classes are only added to allow for better offline development, and can be removed before release-->
 <body class="center-content" style="overflow:auto;">
