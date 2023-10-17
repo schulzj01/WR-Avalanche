@@ -1,0 +1,136 @@
+{
+	"MAPPING":{
+		"centerLat":46.8,
+		"centerLon":-114.6,
+		"mapZoom":6.7
+	},
+	"AVG_Sites": [
+		{
+			"location":"Whitefish Mountain",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.342,48.502 ]
+			}
+		},{
+			"location":"Flattop Mtn",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -113.857,48.802 ]
+			}
+		},{
+			"location":"Noisy Basin",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -113.946,48.157 ]
+			}
+		},{
+			"location":"Snowslip",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -113.502,48.255 ]
+			}
+		},{
+			"location":"Tunnel Ridge",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -113.720,48.311 ]
+			}
+		},{
+			"location":"Mt. Brown",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -113.818,48.638 ]
+			}
+		},{
+			"location":"Link Mtn",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.575,48.760 ]
+			}
+		},{
+			"location":"Stuart Mtn",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -113.927,46.995 ]
+			}
+		},{
+			"location":"Lolo Pass",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.581,46.634 ]
+			}
+		},{
+			"location":"North Fork Jocko",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -113.756,47.273 ]
+			}
+		},{
+			"location":"Deer Mtn",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.055,46.025 ]
+			}
+		},{
+			"location":"Twin Lakes",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.505,46.144 ]
+			}
+		},{
+			"location":"Lost Trail",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -113.948,45.693 ]
+			}
+		},{
+			"location":"Hawkins Lake",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.953,48.972 ]
+			}
+		},{
+			"location":"Banfield Mtn",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.446,48.571 ]
+			}
+		},{
+			"location":"Poorman Creek",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.623,48.127 ]
+			}
+		},{
+			"location":"Dominion Peak",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.578,47.367 ]
+			}
+		},{
+			"location":"Thompson Pass",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.716,47.577 ]
+			}
+		},{
+			"location":"Bear Mtn area east of ID border",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -116.034,48.313 ]
+			}
+		},{
+			"location":"Powell",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -114.686,46.512 ]
+			}
+		},{
+			"location":"Grave Butte",
+			"geometry": {
+				"type": "GridPoint",
+				"coordinates": [ -115.112,46.458 ]
+			}
+		}
+	]
+}
