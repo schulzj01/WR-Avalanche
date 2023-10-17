@@ -314,7 +314,7 @@ class ChartManager  {
 			}
 		},{
 			name: '12 Hour Snowfall Amount',
-			id: 's-snowfall12',
+			id: 's-snowfallmulti',
 			type: 'line',
 			yAxis: 'y-snowfall',
 			xAxis : 0,
@@ -490,7 +490,7 @@ class ChartManager  {
 			}
 	},{
 		name: '12 Hour Liquid Precip Total',
-		id: 's-qpf12',
+		id: 's-qpfmulti',
 		type: 'line',
 		yAxis: 'y-qpf',
 		xAxis : 0,
@@ -513,7 +513,7 @@ class ChartManager  {
 		fillOpacity: 0.30,
 	},{
 			name: 'Liquid Precip Accum',
-			id: 's-qpfaccum12',
+			id: 's-qpfaccummulti',
 			type: 'area',
 			yAxis: 'y-qpf',
 			xAxis : 0,
@@ -665,13 +665,32 @@ class ChartManager  {
 		let windSeries = this.createWindSeriesFromAvg(forecast['wind (mph)'],forecast['wind dir']);
 		let windGustSeries = this.createWindSeriesFromAvg(forecast['wind gust (mph)'],forecast['wind dir']);
 		let cloudCoverSeries = this.createCloudCoverSeriesFromAvg(forecast['cloud cover (%)']);
-
-		let snow12Series = this.createSeriesFromAvg(forecast['12 hour snow'],'float',1,'multiVal');
-		let qpf12Series = this.createSeriesFromAvg(forecast['12 hour qpf'],'float',2,'multiVal');
-		let qpfAccum12Series = this.createSeriesFromAvg(forecast['12 hour qpf'],'float',2,'accum');
 		let tempSeries = this.createSeriesFromAvg(forecast['temperature'],'int');
 
-		let snow12AccumSeries = this.createSeriesFromAvg(forecast['12 hour snow'],'float',1,'accum')
+		let forecastSnow = null;
+		let forecastQpf = null;
+
+		if (forecast.hasOwnProperty('6 hour snow')) {
+			forecastSnow = forecast['6 hour snow'];
+			//Change our chart from 12 to 6 hours.
+			this._chart.get('s-snowfallmulti').name = this._chart.get('s-snowfallmulti').name.replace('12','6')
+		}
+		else { forecastSnow = forecast['12 hour snow'] }
+
+		if (forecast.hasOwnProperty('6 hour qpf')) {
+			forecastQpf = forecast['6 hour qpf'];
+			this._chart.get('s-qpfmulti').name = this._chart.get('s-qpfmulti').name.replace('12','6')
+		}
+		else { forecastQpf = forecast['12 hour qpf'] }
+
+
+		let snowMultiSeries = this.createSeriesFromAvg(forecastSnow,'float',1,'multiVal');
+		let qpfMultiSeries = this.createSeriesFromAvg(forecastQpf,'float',2,'multiVal');
+		let snowAccumMultiSeries = this.createSeriesFromAvg(forecastSnow,'float',1,'accum')
+		let qpfAccumMultiSeries = this.createSeriesFromAvg(forecastQpf,'float',2,'accum');
+
+
+
 
 		if (forecast.hasOwnProperty('low end snow')) {
 			let snowLowAccumSeries = this.createSeriesFromAvg(forecast['low end snow'],'float',1,'accum')
@@ -679,7 +698,7 @@ class ChartManager  {
 			for (let i=0; i<snowLowAccumSeries.length; i++){
 				snowRangeAccumSeries.push({
 					low : snowLowAccumSeries[i].y,
-					high : snow12AccumSeries[i].y,
+					high : snowAccumMultiSeries[i].y,
 					x : snowLowAccumSeries[i].x
 				})
 			}
@@ -690,7 +709,7 @@ class ChartManager  {
 			let snowRangeAccumSeries = [];
 			for (let i=0; i<snowHighAccumSeries.length; i++){
 				snowRangeAccumSeries.push({
-					low : snow12AccumSeries[i].y,
+					low : snowAccumMultiSeries[i].y,
 					high : snowHighAccumSeries[i].y,
 					x : snowHighAccumSeries[i].x
 				})
@@ -708,10 +727,10 @@ class ChartManager  {
 		this._chart.get('s-temperature').setData(tempSeries);
 		this._chart.get('s-wind').setData(windSeries);
 		this._chart.get('s-windgust').setData(windGustSeries);
-		this._chart.get('s-snowfall12').setData(snow12Series);
-		this._chart.get('s-snowaccumfcst').setData(snow12AccumSeries);
-		this._chart.get('s-qpfaccum12').setData(qpfAccum12Series);
-		this._chart.get('s-qpf12').setData(qpf12Series);
+		this._chart.get('s-snowfallmulti').setData(snowMultiSeries);
+		this._chart.get('s-snowaccumfcst').setData(snowAccumMultiSeries);
+		this._chart.get('s-qpfaccummulti').setData(qpfAccumMultiSeries);
+		this._chart.get('s-qpfmulti').setData(qpfMultiSeries);
 		this._chart.get('s-cloudcover').setData(cloudCoverSeries);
 
 

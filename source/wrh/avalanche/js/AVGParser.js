@@ -135,6 +135,8 @@ class AVGParser {
 				let previousPeriodAccumValues = {
 					'12 hour snow' : 0.0,
 					'12 hour qpf' : 0.00,
+					'6 hour snow' : 0.0,
+					'6 hour qpf' : 0.00,
 					'low end snow': 0.0,
 					'high end snow' : 0.0,
 				}
@@ -438,7 +440,7 @@ class AVGParser {
 				};
 				let columnValue = forecastLine.substring(forecastTimes[i].start,forecastTimes[i].end).trim();
 				let columnWidth = forecastTimes[i].end - forecastTimes[i].start;
-				if (!weatherType.includes('12 hour') && !weatherType.includes('end snow')){ parsedForecast.val = columnValue; }
+				if (!weatherType.includes('12 hour') && !weatherType.includes('6 hour') && !weatherType.includes('end snow')){ parsedForecast.val = columnValue; }
 				else  {
 					let regex;
 					//Only look for ice and QPF where the data column starts with .## Then we know we have a start to 12 hour block.
