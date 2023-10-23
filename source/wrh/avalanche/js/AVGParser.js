@@ -140,15 +140,21 @@ class AVGParser {
 					'low end snow': 0.0,
 					'high end snow' : 0.0,
 				}
+				//If we have a near term forecast
 				if (avgFcstParts.length >= 3){
 					let pftg = this.parseForecastTimeGroup(avgFcstParts[1],avgFcstParts[2],previousPeriodAccumValues);
 					forecastTimeGroups.push(pftg)
 				}
+
+				//If we have a long term forecast
 				if (avgFcstParts.length >= 5){
 					Object.keys(previousPeriodAccumValues).forEach(weatherType => {
 						if (forecastTimeGroups[0].forecast.hasOwnProperty(weatherType)){
 							let prevWxData = forecastTimeGroups[0].forecast[weatherType];
 							previousPeriodAccumValues[weatherType] = prevWxData[prevWxData.length-1].accum;
+							//This is a workaround for folks having mixed 6 hour snow accums in the near term and 12 hour in the extended
+							if (previousPeriodAccumValues['6 hour snow'] > 0) { previousPeriodAccumValues['12 hour snow'] = previousPeriodAccumValues['6 hour snow']; }
+							if (previousPeriodAccumValues['6 hour qpf'] > 0) { previousPeriodAccumValues['12 hour qpf'] = previousPeriodAccumValues['6 hour qpf']; }
 						}
 					});
 					let pftg = this.parseForecastTimeGroup(avgFcstParts[3],avgFcstParts[4],previousPeriodAccumValues);
@@ -164,6 +170,7 @@ class AVGParser {
 				};
 			});
 		}
+		console.warn(forecastData)
 		return forecastData;
 	}
 
