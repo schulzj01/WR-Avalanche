@@ -187,9 +187,12 @@ function makeSnowfallSummaryTable(){
 			startDateStr = formatDate(location.forecastTimeGroups[0].startDate)
 			if (location.forecastTimeGroups.length > 1) { endDateStr = formatDate(location.forecastTimeGroups[1].endDate);	}
 			else { endDateStr = formatDate(location.forecastTimeGroups[0].endDate); }
-			if (location.forecastTimeGroups[0].forecast.hasOwnProperty('12 hour snow')) { hasSnow = true; }
-			if (location.forecastTimeGroups[0].forecast.hasOwnProperty('12 hour qpf')) { hasQpf = true; }
-			if (location.forecastTimeGroups[0].forecast.hasOwnProperty('12 hour ice')) { hasIce = true; }
+			if (location.forecastTimeGroups[0].forecast.hasOwnProperty('12 hour snow')
+			   || location.forecastTimeGroups[0].forecast.hasOwnProperty('6 hour snow')) { hasSnow = true; }
+			if (location.forecastTimeGroups[0].forecast.hasOwnProperty('12 hour qpf')
+		 	   || location.forecastTimeGroups[0].forecast.hasOwnProperty('6 hour qpf')) { hasQpf = true; }
+			if (location.forecastTimeGroups[0].forecast.hasOwnProperty('12 hour ice')
+			   || location.forecastTimeGroups[0].forecast.hasOwnProperty('6 hour ice')) { hasIce = true; }
 		}
 
 		let row = tBody.insertRow();
@@ -307,8 +310,10 @@ function getAccumulation(forecastTimeGroups,key,precision) {
 	let accumVal = 0;
 	forecastTimeGroups.forEach(ftg => {
 		let we = ftg.forecast[key];
-		let lastAccum = we.slice().reverse().find(w => typeof w.accum == "number");
-		if (lastAccum) { accumVal = lastAccum.accum; }
+		if (we){
+			let lastAccum = we.slice().reverse().find(w => typeof w.accum == "number");
+			if (lastAccum) { accumVal = lastAccum.accum; }
+		}
 	});
 	return accumVal.toFixed(precision);
 }
